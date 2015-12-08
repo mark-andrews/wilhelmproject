@@ -1,0 +1,19 @@
+{% extends 'bartlett/widget.html' %}
+
+{% block widget_id %}'wordlist_widget'{% endblock widget_id %} 
+
+{% block instructions_content %}
+<li>
+	<p>You will now be presented with a list of around
+	{{widget_template_data.wordlist_length}} words. These will be shown one
+	word at a time. Each word will stay on screen for about
+	{{widget_template_data.stimulus_duration}}.</p>
+</li>
+
+{% endblock instructions_content %}
+
+{% block stimulus_content %}
+    <div id='word_box' class="WordBox">
+	<span class='MemoryWord'>&nbsp;<span id='foo_word'></span><span id='memory_word'></span>&nbsp;</span>
+    </div>
+{% endblock stimulus_content %}

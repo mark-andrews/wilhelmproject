@@ -1,0 +1,51 @@
+{% extends 'front/front.html' %}
+
+{% block content %}
+
+<div class='container'>
+
+	<div class="row img-jumbotron">
+
+		<div class="col-md-4 hidden-sm hidden-xs">
+			<img src='static/front/Phrenologychart.png' class='img-responsive col-md-12'>
+		</div>
+
+		<div class="col-md-8">
+			<div class="jumbotron">
+			<h1>Cognition Experiments <span class='in-beta'>Beta</span></h1>
+			<div class='take-part'>
+			<a href="/experiments" class="btn btn-lg btn-default">Take Part in an Experiment &raquo;</a>
+			</div>
+
+			</div>
+		</div>
+
+	</div>
+
+        <section id="frontpage-blurb" class="container">
+		<div class='row'>
+
+			{% for blurb_title, blurb_short_text in welcome_blurbs %}
+
+			<div class='col-md-4'>
+
+				<h3>{{ blurb_title }}</h3>
+				{{ blurb_short_text | safe }}
+
+				<!--
+                                <div id='read-more'>
+                                    <a href='#'>more info</a>
+                                </div>
+				-->
+
+			</div>
+
+			{% endfor %} 
+
+		</div>
+	</section>
+       
+</div>
+
+
+{% endblock content %}

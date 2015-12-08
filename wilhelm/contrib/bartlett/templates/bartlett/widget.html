@@ -1,0 +1,42 @@
+<div id={% block widget_id %}{% endblock widget_id %} class="widget">
+    <div class='container'>
+	<div class='row'>
+	    <div id='StartBox' class='col-lg-8 col-lg-offset-2'>
+		<div class="InstructionBox" id='InstruxtionBox'>        
+            		<ol id='instructions-list'>
+
+			    {% block instructions_content %}
+			    {% endblock instructions_content %}
+
+			</ol>
+
+		</div>
+		<div class='text-center' id='widget-start-button'>
+		    <span id='StartButton' class='button'>Start</span>
+		</div>
+	    </div>
+	</div>
+
+	<div class='row'>
+	    <div id='StimulusBox' class='col-lg-12'>
+
+		{% block stimulus_content %}
+		{% endblock stimulus_content %}
+
+                <!--
+		<div id='FinishBox' class='MessageBox'>
+		    <p id='FinishMsg'></p>
+		</div>
+                -->
+
+	    </div>
+	</div>
+
+	<div class='row'>
+	    <div id='FinishBox' class='col-lg-8 col-lg-offset-2 MessageBox'>
+		<p id='FinishMsg'></p>
+	    </div>
+	</div>
+
+    </div>
+</div>

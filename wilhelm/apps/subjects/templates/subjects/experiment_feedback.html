@@ -1,0 +1,66 @@
+{% extends 'front/front.html' %}
+{% load humanize %}
+
+
+{% block head %}
+
+{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="/static/bartlett/css/bartlett.css">
+{% endblock %}
+
+
+{% block content %}
+
+<div class='container profile'>
+
+<div class="row">
+	<div class='feedback_page'>
+
+	<div class='col-xs-12 col-sm-8 col-sm-offset-2'>
+
+	<h1>Experiment Feedback</h1>
+
+        <p>
+        You did this experiment {{feedbacks|length}} time{{feedbacks|pluralize}}.
+        </p>
+
+        {% for feedback in feedbacks %}
+
+        <h2>Experiment attempt {{forloop.revcounter}}</h2>
+
+	<p>
+	This was your {{feedback.attempt|add:"1"|ordinal}} attempt at experiment "{{feedback.experiment_name}}".
+	You started it at {{feedback.Start_datetime | date:"P, D d M, Y"}} and completed it
+	at {{feedback.Completed_datetime | date:"P, D d M, Y"}}.
+	In this experiment, there were {{feedback.Slides | length}} memory tests in total.
+	There were {{feedback.test_type_counter.Recognition}} recognition memory 
+	test{{feedback.test_type_counter.Recognition|pluralize}}
+	and {{feedback.test_type_counter.Recall}}
+	recall memory test{{feedback.test_type_counter.Recall|pluralize}}.
+	</p>
+
+	{% for slide in feedback.Slides %}
+            <h3>Test {{forloop.counter}}</h3>
+            {% if slide == None %}
+            <p> Unfortunately, due to an error in processing, we can not
+            provide any feedback for this part of the experiment.</p> 
+            {% else %}
+		{% if slide.Test_type == 'Recognition' %}
+			{% include 'bartlett/recognition_test_feedback.html' with feedback=slide test_count=forloop.counter %}
+		{% elif slide.Test_type == 'Recall' %}
+			{% include 'bartlett/recall_test_feedback.html' with feedback=slide test_count=forloop.counter %}
+		{% endif %}
+
+            {% endif %}
+	{% endfor %}
+
+        {% endfor %}
+
+
+	</div>
+</div>
+
+
+	</div>
+
+{% endblock content %}

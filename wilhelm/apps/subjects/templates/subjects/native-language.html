@@ -1,0 +1,44 @@
+<div class='form-group'>
+	<label for='native_language-pick'>Native Language</label>
+
+	<div class='form-group' id='native_language-pick'>
+
+        {% if Native_Language_placeholder == 'english' %}
+
+            <div class='radio'>
+            <label> 
+            <input type="radio" name="native_language" id="english" value="english" checked>English
+            </label>
+            </div>
+
+            {% if Native_Language_error_msg %}
+                <span id='native_language_error' class="help-block">{{Native_Language_error_msg}}</span>
+            {% endif %}
+
+            <div class="radio">
+            <label><input type="radio" name="native_language" id="english" value="other">Other: </label>
+            <input id='other_language_box' maxlength='25' size='10' type='text' name='other_language' /> 
+            </div>
+
+        {% elif Native_Language_placeholder == 'other' %}
+
+            <div class='radio'>
+            <label> 
+            <input type="radio" name="native_language" id="english" value="english">English
+            </label>
+            </div>
+
+            {% if Native_Language_error_msg %}
+                <span id='native_language_error' class="help-block">{{Native_Language_error_msg}}</span>
+            {% endif %}
+
+            <div class="radio">
+            <label><input type="radio" name="native_language" id="english" value="other" checked>Other: </label>
+            <input id='other_language_box' maxlength='25' size='10' type='text' name='other_language' /> 
+            </div>
+
+        {% endif %}
+
+
+	</div>
+</div>

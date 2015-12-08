@@ -1,0 +1,44 @@
+{% extends 'front/front.html' %}
+
+{% block collapsing-nav-links %}
+	<li><a href='#'>Experiments</a></li>
+{% endblock collapsing-nav-links %}
+
+{% block content %}
+
+<div class="container login">
+
+    <div class="row">
+
+	{% block login-or-signup-form %}
+        <div id='admin-login' class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">	
+
+            <h3> {{ login_title }} </h3>
+
+            <form class="loginForm" action="" autocomplete="off" method="POST">
+
+            <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa-lg"></i></span>
+                    <input type="text" class="form-control" name="username" placeholder="username">
+            </div>
+            <span class="username-error help-block"></span>
+                                                                
+            <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg"></i></span>
+                    <input  type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+            <span class="passwd-error help-block"></span>
+
+            <button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
+
+            </form>
+   
+        </div>
+
+	{% endblock login-or-signup-form %}
+
+    </div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,117 @@
+/* Sometimes seeing the border of a css box helps.
+ Set this to 0pt when you are ready to run. */
+@testborderwidth: 0px;
+/*@BodyWidth: 900px;*/
+@DisplayBoxMargin: 200px;
+@DisplayBoxMarginBottom: 100px;
+
+.TestingBorder() {
+	border-width: @testborderwidth;
+	border-style: solid;
+}
+
+.CenteredBlock(@width) {
+	// A block with specified width that is to be centered.//
+	width:@width;
+        display:block;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.DisplayBox {
+	text-align:center;	
+	margin-top:@DisplayBoxMargin;
+	margin-bottom:@DisplayBoxMarginBottom;
+}
+
+.TextBox(@fontsize, @fontfamily) {
+    font-family: @fontfamily;
+    font-size: @fontsize;
+    .TestingBorder();
+}
+
+.LauncherNextSlide() {
+	@media (min-width: 1200px) {
+		margin-top: 100px;
+	}
+
+	/* Landscape tablets and medium desktops */
+	@media (min-width: 992px) and (max-width: 1199px) {
+		margin-top: 75px;
+	}
+
+	/* Portrait tablets and small desktops */
+	@media (min-width: 768px) and (max-width: 991px) {
+		margin-top: 50px;
+	}
+
+	/* Landscape phones and portrait tablets */
+	@media (max-width: 767px) {
+		margin-top: 15px;
+	}
+
+	/* Portrait phones and smaller */
+	@media (max-width: 480px) {
+		margin-top: 15px;
+	}
+}
+
+.widgetvis {
+	.LauncherNextSlide();
+}
+
+.widget {
+	display:none;
+	.LauncherNextSlide();
+}
+
+
+
+.ButtonBox {
+	text-align:center;	
+}
+
+.WordBox {
+
+        .TestingBorder();
+	text-align:center;	
+
+	margin-top:100px;
+
+	@media (max-width: 767px) {
+		margin-top: 50px;
+	}
+
+}
+
+.MemoryWord {
+        font-family: @sansfont;
+	font-size: 48px;
+ }
+
+body {
+	font-family:@seriffont;
+	.TestingBorder();
+}
+
+
+
+#next_slide {
+	.LauncherNextSlide();
+
+	.ButtonBox {
+		margin-top: 20px;
+		text-align:center;	
+	}
+
+}
+
+#FinishBox {
+	text-align:center;
+}
+
+#FinishMsg {
+	text-align:center;
+}
+
+@import "buttons.less";

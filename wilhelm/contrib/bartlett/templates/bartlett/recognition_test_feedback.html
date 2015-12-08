@@ -1,0 +1,143 @@
+{% load bartlett_tags %}
+
+<div class='recognition_test_feedback'>
+
+	<p>
+	Test {{test_count}} was a recognition memory test. You were first shown a 
+	{{feedback.Memoranda_type|memorandumname}}
+
+	{% if feedback.Memoranda_type == 'Text' %}
+		entitled <em>{{feedback.Text_title}}</em> 
+		that began "{{feedback.Text_abbreviated}}".
+	{% elif feedback.Memoranda_type == 'Wordlist' %}
+		with {{feedback.List_length}} items.
+	{% endif %}
+
+	You were then shown a list of {{feedback.total}} words and asked if each word appeared in the 
+	{% if feedback.Memoranda_type == 'Text' %}
+		text you just read.
+	{% elif feedback.Memoranda_type == 'Wordlist' %}
+		word list you just saw.
+	{% endif %}
+
+	{% if not feedback.hit_rate == None %}
+
+		 You responded in time to {{feedback.hit_total}} of the items, which
+		 is a hit rate of {% widthratio feedback.hit_rate 1 100 %}%.
+
+	{% endif %}
+	</p>
+
+	<p>
+
+	{% if not feedback.accuracy == None %}
+	<span class='main-feedback-take-home'>Your overall accuracy was {% widthratio feedback.accuracy 1 100 %}%</span>:
+		You responded correctly to {{feedback.total_true}} out of {{feedback.total}} items.
+
+	{% endif %}
+
+	{% if feedback.false_positive_rate == None %}
+		You had no "false positives".
+	{% else %}
+		Your "false positive" rate was {% widthratio feedback.false_positive_rate 1 100 %}%. 
+	{% endif %}
+		
+	A "false positive" is where you falsely remembered seeing a word
+	that was not actually in the {{feedback.Memoranda_type|memorandumname}}.
+
+
+	{% if feedback.false_negative_rate == None %}
+		You had no "false negatives".
+	{% else %}
+		Your "false negative" rate was {% widthratio feedback.false_negative_rate 1 100 %}%. 
+	{% endif %}
+
+	A "false negative" is where you did not remember seeing a
+	word that was in fact in the {{feedback.Memoranda_type|memorandumname}}.
+	</p>
+
+	<p>
+	From the table below, you can see exactly which words you got right and
+	which you got wrong. 
+	
+	The first row shows your <em>True positives</em> and <em>False positives</em>. 
+	These are, respectively, the words you
+	correctly and incorrectly said were in the
+	{{feedback.Memoranda_type|memorandumname}}.
+
+	The second row shows your <em>False negatives</em>, and <em>True
+		negatives</em>. These are, respectively, the words you
+	incorrectly and correctly said were not in the
+	{{feedback.Memoranda_type|memorandumname}}.
+
+	<table>
+	<tr>
+
+	  <tr>
+	    <th>True positives</th>
+	    <th>False positives</th>
+	  </tr>
+
+	  <td>
+	   <ul>
+		   {% if feedback.true_positive_count == 0 %}
+			   <li>(No true positives)</li>
+		   {% else %}
+			   {% for word in feedback.true_positive %}
+			   <li>{{ word }}</li>
+			   {% endfor %}
+		   {% endif %}
+	   </ul>
+	  </td>
+
+	  <td>
+	   <ul>
+		   {% if feedback.false_positive_count == 0 %}
+			   <li>(No false positives)</li>
+		   {% else %}
+			   {% for word in feedback.false_positive %}
+			   <li>{{ word }}</li>
+			   {% endfor %}
+		   {% endif %}
+
+	   </ul>
+	  </td>
+
+	</tr>
+
+	<tr>
+
+	  <tr>
+	    <th>False negatives</th>
+	    <th>True negatives</th>
+	  </tr>
+
+	  <td>
+	   <ul>
+		   {% if feedback.false_negative_count == 0 %}
+			   <li>(No false negatives)</li>
+		   {% else %}
+			   {% for word in feedback.false_negative %}
+			   <li>{{ word }}</li>
+			   {% endfor %}
+		   {% endif %}
+
+	   </ul>
+	  </td>
+
+	  <td>
+	   <ul>
+		   {% if feedback.true_negative_count == 0 %}
+			   <li>(No true negatives)</li>
+		   {% else %}
+			   {% for word in feedback.true_negative %}
+			   <li>{{ word }}</li>
+			   {% endfor %}
+		   {% endif %}
+	   </ul>
+	  </td>
+
+	</tr>
+	</table>
+	</p>
+</div>

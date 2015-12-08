@@ -1,0 +1,49 @@
+{% extends 'bartlett/widget.html' %}
+
+{% block widget_id %}'recalltest_widget'{% endblock widget_id %} 
+
+{% block instructions_content %}
+
+<li>
+	<p>You will now be presented with a set of empty text boxes
+	where you should enter all the words that you can recall from the
+	{{slide_template_data.memorandum_type}} you just saw.</p>
+</li>
+
+{% endblock instructions_content %}
+
+{% block stimulus_content %}
+<div class='container'>
+	<div id='recalledwordsbox' class='row'>
+			<div id='recall-help-box-sm' class='col-lg-3 help_box text-center'>
+				<p> In the boxes to the right, write down as many words as
+				you can remember.   
+				</p>
+			</div>
+			<div id='recall-help-box-xs' class='col-lg-3 help_box text-center'>
+				<p> In the boxes below, write down as many words as
+				you can remember.   
+				</p>
+			</div>
+		<div class='col-lg-6 text-center'>
+			<ol id='recalledwordslist'>
+			</ol>
+			<div id='results' class='ButtonBox'>
+				<span id='submitresults' class='button'>Submit</span>
+			</div>
+		</div>
+		<div class='col-lg-3'>
+			<div id='morelessoptions'>
+				<span id='moreoptionsbutton' class="button">More options</span>
+				<span id='lessoptionsbutton' class="button">Less options</span>
+				<div id='morelessoptionshelp'>
+				<p class='HelpBox'> 
+				You can make more boxes by clicking the &#8220;More options&#8221; button.   
+				</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock stimulus_content %}

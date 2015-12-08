@@ -1,0 +1,36 @@
+{% extends 'bartlett/widget.html' %}
+
+{% block widget_id %}'recognitiontest_widget'{% endblock widget_id %} 
+
+{% block instructions_content %}
+
+<li>
+	<p>You will now be presented with a list of words, shown one word at a time.</p> 
+</li>
+
+<li>
+	<p>For each word you are shown, you should state whether that word was
+	<em>present</em> or <em>absent</em> in the
+	{{slide_template_data.memorandum_type}} you just saw.
+	You should try to make this response within at most
+	{{widget_template_data.stimulus_timeout_duration}}.</p>
+</li>
+
+<li>
+	<p>Altogether, you will be shown {{widget_template_data.wordlist_length}}
+	words.
+</li>
+
+{% endblock instructions_content %}
+
+{% block stimulus_content %}
+<div id="StimulusTag">
+    <div id='word_box' class='WordBox'>
+	<span class='MemoryWord'>&nbsp;<span id='test_word'></span>&nbsp;</span>
+    </div>
+    <div id='response_box' class='ButtonBox'> 
+	<span id='present_button' class="button">present</span>
+	<span id='absent_button' class="button">absent</span>
+    </div>
+</div>
+{% endblock stimulus_content %}

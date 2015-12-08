@@ -1,0 +1,48 @@
+{% extends 'bartlett/widget.html' %}
+
+{% block widget_id %}'textdisplay_widget'{% endblock widget_id %} 
+
+
+{% block instructions_content %}
+
+<li>
+	<p>You will now be shown a text entitled
+	<em>{{widget_template_data.title}}</em>. It is
+	around
+	{{widget_template_data.approx_text_length}}
+	words long.</p> 
+</li>
+
+<li>
+	<p>You should try to read this text at your
+	normal reading speed.</p> 
+</li>
+
+<li>
+	<p> It will stay on screen for up to
+	{{widget_template_data.max_duration}}, but if you are finished reading,
+	you can move on to the next part of the experiment after
+	{{widget_template_data.min_duration}}.</p>
+</li>
+
+{% endblock instructions_content %}
+
+
+
+{% block stimulus_content %}
+
+<div id='text_box' class='BemboBox'>
+	<div id='title_box' class='TitleBox'>Text Title</div>
+	<div id='text_p_box' >Text box</div>
+</div>
+<div id='move_box' class='row'>
+	<div class='col-xs-12 col-md-8 move_box_instructions'>
+		<p> You may proceed when you are ready.</br> This page will automatically move
+		on in <span id='countdown_box'>clock</span> seconds.</p>
+	</div>
+	<div class='col-xs-12 col-md-4' id='move_button_box'>
+		<span id='move_button' class='button'>Next</span>
+	</div>
+</div>
+
+{% endblock stimulus_content %}

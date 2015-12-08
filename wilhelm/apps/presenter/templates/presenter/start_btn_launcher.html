@@ -1,0 +1,40 @@
+{% extends "presenter/launcher.html" %}
+
+{% block next_slide_content %} 
+
+<div id='next_slide'>
+
+	{% block start_btn_message  %}
+	{% endblock start_btn_message %}
+
+	<div class='text-center' id="instructions-nav-buttons">
+		{% block other_btns %}
+		{% endblock other_btns %}
+		<span id='StartButton' class='button'>Start Experiment</span>
+	</div>
+
+</div>
+
+{% endblock next_slide_content %}
+
+{% block javascript %}
+
+{{ block.super }}
+
+<script>
+$(document).ready(function() {
+
+	$("#StartButton").one('click', function (event) {  
+		event.preventDefault();
+		window.location.href = "/{{experiment_name}}/{{short_uid}}";
+		$(this).prop('disabled', true);
+	});
+
+	{% block document_onload_javascript %}
+
+	{% endblock %}
+
+});
+</script>
+
+{% endblock javascript %}

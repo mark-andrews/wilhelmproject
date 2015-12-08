@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% block head %}
+<meta http-equiv="Cache-control" content="no-cache">
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+<!-- favicon -->
+<link rel="icon" href="/static/front/favicon.ico" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon">
+
+<!-- Web fonts block -->
+
+{% block fout_false %}
+{% endblock fout_false %}
+
+<!-- personal fonts.com subscription -->
+<script type="text/javascript" src="//fast.fonts.net/jsapi/17de145c-225a-4992-a066-22fbc11ec323.js"></script>
+
+<!-- End web fonts block -->
+
+{% endblock %}
+
+{% block css %}
+<!-- jquery ui css -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+{% endblock %}
+
+<title>
+    {% block title %}{% endblock title %}
+</title>
+
+</head>
+
+<body>
+
+	{% block header %}
+        {% endblock header %}    
+
+	{% block content %}{% endblock content %}    
+
+	{% block footer %}
+        {% endblock footer %}    
+
+	{% block javascript %}
+       	    <script type="text/javascript" src='/static/jquery-1.11.1.min.js'></script>
+	    <script type="text/javascript" src='/static/jquery-ui.min.js'></script>
+	{% endblock javascript %}
+</body>
+
+
+</html>

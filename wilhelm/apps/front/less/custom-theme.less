@@ -1,0 +1,266 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+a {
+ color: @pastel-dark-blue;
+}
+
+a:hover,
+a:focus {
+ text-decoration: none;
+ background-color:@light;
+ color:@bloodred;
+}
+
+body {
+    font-family: @gill; 
+    width: 100%;
+    height: 100%;
+    color: @dark;
+    background-color: @light; 
+    padding-top: 0px;
+}
+
+p {
+    margin: 0 0 35px;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.img-jumbotron {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.container .jumbotron {
+	padding: 60px 0 60px 0;
+        background-color: @light;
+}
+
+.container .jumbotron h1 {
+	text-align: center;
+	padding-bottom: 40px;
+}
+
+.take-part {
+	text-align: center;
+}
+
+.take-part .btn {
+   font-size:24px;
+   font-family:@gill;
+}
+
+.container .jumbotron .in-beta {
+   vertical-align: super;
+   font-size: 20px;
+}
+
+.navbar {
+	background-color: @light;
+}
+
+.navbar > .container .navbar-brand {
+ color: @bloodred;
+ margin-left: -15px;
+ font-size:20px;
+}
+
+.navbar > .container .navbar-brand .in-beta {
+ vertical-align: super;
+ font-size:12px;
+}
+
+#the-bottom-navbar {
+    padding-top: 150px;
+}
+
+#frontpage-blurb {
+   padding-top: 50px;
+   padding-bottom: 50px;
+
+   p {
+    margin: 0px;
+    font-size: 14px;
+   }
+
+   #read-more {
+     margin-top: 5px;
+     margin-right: 10px;
+     text-align: right;
+   }
+
+}
+
+.blurb {
+
+   h2 {
+   	padding-bottom: 35px;
+	text-align: center;
+   }
+
+   padding-top: 0px;
+   padding-bottom: 50px;
+
+   p {
+    font-size: 20px;
+   }
+
+}
+
+.navbar a {
+   color: #000000;
+   font-size: 18px;
+}
+
+.navbar a:focus, a:active, a:hover {
+	background-color: #FFFFFF;
+	outline-style: none;
+}
+
+#the-bottom-navbar {
+  text-align: center;
+}
+
+#the-bottom-navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+.btn {
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+
+.btn-default {
+    border: 1px solid @spanish-gray;
+    background-color: @light-light-gray;
+    &:hover,
+    &:focus {
+        outline: none;
+        background-color: @pastel-gray;
+    }
+}
+
+.content-section {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+	background-color:@light;
+	color:@bloodred;
+}
+
+.nav li .notfoo {
+	display: inline;
+}
+
+.nav li .foo {
+	line-height: 20px;
+	display: block;
+	padding: 15px;
+}
+
+.foo-label {
+    padding-left:0px;
+    padding-right:0px;
+}
+
+.foo-media {
+    padding-right:35px;
+}
+
+
+/* Now customize at the different screen sizes. */
+
+@media (max-width: @screen-md) {
+
+    body {
+        background-color: @light;
+    }
+
+/*    p {
+        margin: 0 0 25px;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+    */
+
+}
+
+@media (max-width: @screen-sm) {
+
+    body {
+        background-color: @light;
+    }
+
+}
+
+@media (max-width: @screen-xs) {
+
+    body {
+        background-color: @light;
+        }
+
+    .take-part .btn {
+        font-size:16px;
+    }
+
+    .img-jumbotron {
+        padding: 0px;
+    }
+
+    #frontpage-blurb {
+        padding: 0px;
+    }
+
+    .container {
+    
+        .jumbotron {
+            padding: 0px;
+
+            h1 {
+                padding-bottom: 20px;
+                font-size:24px;
+            }
+
+            .in-beta {
+                vertical-align: super;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+#login-banner {
+    padding-top: 2px;
+    color: @spanish-gray;
+    font-size: 14px;
+
+    .username {
+        font-family: @gill;
+    }
+
+    .signed-in-as {
+    }
+
+    .sign-out {
+        padding-right: 15px;
+    }
+
+    a {
+        color: @spanish-gray;
+    }
+
+    a:hover, a:focus {
+        color: @bloodred;
+    }
+}
+
+

@@ -1,0 +1,15 @@
+{% load projector_tags %}
+
+{% for widget_object_name in widget_object_names %}
+
+    {% if forloop.first %}
+	{{ widget_object_name }}.activate();
+    {% endif %}
+
+    {% if forloop.last %}
+	{{ widget_object_name }}.next_in_chain = function() { slide_hangup(uid); } ;
+    {% else %}
+	{{ widget_object_name }}.next_in_chain = function() { {{ widget_object_names |next_widget_object_name:forloop.counter0 }}.activate(); } ;
+    {% endif %}
+
+{% endfor %}

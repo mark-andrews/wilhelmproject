@@ -1,0 +1,42 @@
+from __future__ import absolute_import
+
+#=============================================================================
+# Standard library imports.
+#=============================================================================
+import os
+
+#=============================================================================
+# Third party imports.
+#=============================================================================
+import configobj
+
+#=============================================================================
+# Wilhelm imports
+#=============================================================================
+from apps.core.utils import sys, strings
+from contrib.bartlett.models import (Playlist, 
+                                   TextRecognitionMemoryTest,
+                                   WordlistRecognitionMemoryTest,
+                                   WordlistRecallMemoryTest)
+
+
+#================================ End Imports ================================
+
+class PlaylistFactory(object):
+
+    @classmethod
+    def new(cls):
+
+        return Playlist.new(cls.slides)
+
+def stimuluspath(filename):
+
+    '''
+    Return the full path of the stimulus file `filename`.
+
+    '''
+
+    this_dir = sys.thisDir(__file__)
+    stimuli_dir = os.path.join(this_dir, 'stimuli')
+
+    return os.path.abspath(os.path.join(stimuli_dir, filename))

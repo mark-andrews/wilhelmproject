@@ -1,0 +1,100 @@
+{% extends 'subjects/member_login.html' %}
+
+{% block login-or-signup-form %}
+
+<div id='member-login' class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">	
+
+	<h3>Create an Account</h3>
+
+	<form class="loginForm" action="" autocomplete="off" method="POST">
+
+	<div class='form-instructions'></div>
+	<div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user fa-lg"></i></span>
+	    <input value='{{firstname_starting_value}}' type="text" class="form-control" name="firstname" placeholder="{{ firstname_placeholder }}">
+	</div>
+
+        {% if firstname_error_msg %}
+            <span class="firstname-error help-block">{{firstname_error_msg}}</span>
+        {% else %}
+            <span class="firstname-live-error help-block"></span>
+        {% endif %}
+
+	<div class='form-instructions'></div>
+	<div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope fa-lg"></i></span>
+	    <input value='{{username_starting_value}}' type="text" class="form-control" name="username" placeholder="{{ username_placeholder }}">
+	</div>
+
+        {% if username_error_msg %}
+            <span class="username-error help-block">{{username_error_msg}}</span>
+        {% else %}
+            <span class="username-live-error help-block"></span>
+        {% endif %}
+
+	<div class='form-instructions'></div>
+	<div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-lock fa-lg"></i></span>
+            <input value='{{password_starting_value}}' type="password" class="form-control" name="password" 
+	    placeholder="Choose a password ({{ minimal_password_length }} chars or more)">
+	</div>
+        <span class="password-live-error help-block"></span>
+
+	<div class='form-instructions'></div>
+	<div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-lock fa-lg"></i></span>
+            <input value='{{confirmpassword_starting_value}}'  type="password" class="form-control" name="confirmpassword" 
+	    placeholder="Now repeat the password">
+	</div>
+
+        {% if password_error_msg %}
+            <span class="check-password-error help-block">{{password_error_msg}}</span>
+        {% else %}
+	    <span class="check-password-live-error help-block"></span>
+        {% endif %}
+
+        {% if create_subject_error_msg %}
+            <span class="check-password-error help-block">{{create_subject_error_msg}}</span>
+        {% endif %}
+
+	<button id='signup' class="btn btn-lg btn-default btn-block submit-btn" type="submit">Sign up</button>
+
+	</form>
+
+</div>
+
+{% endblock login-or-signup-form %}
+
+{% block social-media-login-title %}
+	<h3>Sign up with any of these services:</h3>
+{% endblock social-media-login-title %}
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src='static/subjects/javascript/bday-picker.js'></script>
+<script type="text/javascript" src='static/subjects/javascript/bday-picker-initialize.js'></script>
+<script type="text/javascript" src='static/subjects/javascript/stringfmt.js'></script>
+<script type="text/javascript" src='static/subjects/javascript/signupform.js'></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	bday_picker_initialize("{{ birthdate_placeholder }}");
+
+        {% if minimal_password_length %}
+            var minimal_password_length = {{minimal_password_length}};
+        {% else %}
+            var minimal_password_length = 8;
+        {% endif %}
+
+        $("form").submit(function(event) {
+            return(process_signupform(minimal_password_length));
+        });
+
+
+});
+
+
+</script>
+
+
+{% endblock javascript %}

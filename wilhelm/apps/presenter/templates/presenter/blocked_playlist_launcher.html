@@ -1,0 +1,103 @@
+{% extends "presenter/launcher.html" %}
+
+{% block next_slide_content %} 
+
+<div id='next_slide'>
+
+        {% if blockage_type == 'nowplaying' %}
+
+            <div class="MessageBox">        
+                It looks like you are attempting to start or continue with
+                experiment {{ experiment_name }}. 
+
+		However, a part of this experiment is already active in this
+		browser session.
+
+		This could have happened if you pressed the <em>Back</em> button or hit
+		<em>Reload</em>.
+
+                You can continue the experiment now by skipping to the next
+                part by pressing Continue.
+            </div>
+
+            <div id='ContinueBox' class='ButtonBox'>
+                <div id='ContinueButton' class='button'>Continue</div>
+            </div>
+
+        {% elif blockage_type == 'live_session_elsewhere' %}
+
+            <div class="MessageBox">        
+                It looks like you are attempting to start (or possibly continue
+                with) experiment {{ experiment_name }}. 
+
+                However, it seems that you have another experiment running in
+                another browser session, possibly on another computer or device.
+
+                You will need to shut this down, or let it time itself out, before
+                you can continue here.
+            </div>
+
+            <div id='ExitBox' class='ButtonBox'>
+                <div id='ExitButton' class='button'>Exit</div>
+            </div>
+
+        {% elif blockage_type == 'another_experiment_in_browser' %}
+
+            <div class="MessageBox">        
+                It looks like you are attempting to start (or possibly continue
+                with) experiment {{ experiment_name }}. 
+
+                However, it seems that you have another experiment already running
+                in this browser session, possibly in another browser window.
+
+                You will need to shut this down, or let it time itself out, before
+                you can continue here.
+            </div>
+
+            <div id='ExitBox' class='ButtonBox'>
+                <div id='ExitButton' class='button'>Exit</div>
+            </div>
+
+        {% elif blockage_type == 'attempts_complete' %}
+
+            <div class="MessageBox">        
+                It looks like you are attempting to start experiment {{ experiment_name }}. 
+
+                However, it seems that you have already completed the maximum
+                number of allowed attempts at this experiment. 
+            </div>
+
+            <div id='ExitBox' class='ButtonBox'>
+                <div id='ExitButton' class='button'>Exit</div>
+            </div>
+
+        {% endif %}
+
+</div>
+ 
+{% endblock next_slide_content %}
+
+{% block javascript %}
+
+{{ block.super }}
+
+<script>
+   $(document).ready(function() {
+
+        $('#ContinueButton').click(
+            function() {
+                window.location.href = "/{{experiment_name}}";
+            }
+        );
+
+        $('#ExitButton').click(
+            function() {
+                window.location.href = "/";
+            }
+        );
+
+   });
+</script>
+
+{% endblock javascript %}
+

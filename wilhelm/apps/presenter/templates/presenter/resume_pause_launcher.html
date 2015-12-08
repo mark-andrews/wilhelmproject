@@ -1,0 +1,56 @@
+{% extends "presenter/launcher.html" %}
+
+{% block next_slide_content %} 
+
+<div id='next_slide'>
+
+	{% if experiment_start_status == 'repeat' %}
+
+	<div class='InstructionBox'>        
+		You are about to repeat experiment "{{ experiment_name }}". 
+	</div>
+
+	{% elif experiment_start_status == 'resume' %}
+	<div class="InstructionBox">        
+
+		<p>You are about to resume experiment "{{ experiment_name }}", 
+		which you paused on 
+		{{ last_activity|date:"P, D d M, Y" }}.
+
+		You have already completed {{ slides_done }} 
+		part{{slides_done|pluralize }}
+		of this experiment. 
+
+		There {{ slides_remaining|pluralize:"is,are" }} 
+		{{ slides_remaining}} 
+		part{{ slides_remaining|pluralize }} remaining.
+		</p>
+	</div>
+
+	{% endif %}
+
+	<div id='StartBox' class='ButtonBox'>
+		<div id='StartButton' class='button'>Start</div>
+	</div>
+
+</div>
+
+{% endblock next_slide_content %}
+
+{% block javascript %}
+
+{{ block.super }}
+
+<script>
+$(document).ready(function() {
+
+	$("#StartButton").one('click', function (event) {  
+		event.preventDefault();
+		window.location.href = "/{{experiment_name}}/{{short_uid}}";
+		$(this).prop('disabled', true);
+	});
+
+});
+</script>
+
+{% endblock javascript %}

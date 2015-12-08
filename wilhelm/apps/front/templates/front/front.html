@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %} {{title}} {% endblock title %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="/static/front/css/main.css">
+<link href="/static/front/css/font-awesome.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+
+{% if user.is_authenticated %}
+<div id='login-banner'>
+	<div class='container'>
+	<div class="pull-right">
+            <span class='signed-in-as'><span class='username'>{{user.username}}</span></span>
+	    | <span class='sign-out'><a href='//{{MAIN_SUBDOMAIN_NAME}}/logout'>Sign out</a></span>
+		<!--|<span class='sign-out'><a class='btn btn-xs btn-default' href='/logout'>Sign out</a></span>
+                -->
+	</div>
+	</div>
+</div>
+{% endif %}
+
+<nav class='navbar navbar-static-top' role='navigation'>
+    <div class='container'>
+
+	<div class='navbar-header'>
+            <a href = "//{{MAIN_SUBDOMAIN_NAME}}" class='navbar-brand'>Cognition Experiments <span class='in-beta'>Beta</span></a>
+
+	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+		<i class="fa fa-bars"></i>
+	</button>
+	</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+	<ul class="nav navbar-nav">
+		{% block collapsing-nav-links %}
+
+                <li><a href='//{{MAIN_SUBDOMAIN_NAME}}/experiments'>Experiments</a></li>
+
+			{% if not user.is_authenticated %}
+
+				{% if not no_show_signup %}
+                                <li><a href='//{{MAIN_SUBDOMAIN_NAME}}/signup'>Create an Account</a></li>
+				{% endif %}
+
+				{% if not no_show_login %}
+                                <li><a href='//{{MAIN_SUBDOMAIN_NAME}}/login'>Sign in</a></li>
+				{% endif %}
+                        {% else %}
+                        <!--				<li><a href='/logout'>Sign out</a></li> -->
+			{% endif %}
+
+		{% endblock collapsing-nav-links  %}
+	</ul>
+	</div>
+	<!-- /.navbar-collapse -->
+
+    </div>
+</nav>
+
+{% endblock header %}
+
+{% block content %}{% endblock content %}    
+
+{% block footer %}
+<div id='the-bottom-navbar' class='navbar navbar-static-bottom'>
+    <div class='container'>
+
+        <ul class='nav navbar-nav'>
+            <li><a href='//{{MAIN_SUBDOMAIN_NAME}}/about'>About</a></li>
+            <li><a href='//{{MAIN_SUBDOMAIN_NAME}}/takingpart'>Taking Part</a></li>
+            <li><a href='//{{MAIN_SUBDOMAIN_NAME}}/privacy'>Privacy &amp; Confidentiality</a></li>
+        </ul>
+
+    </div>
+</div>
+{% endblock footer %}
+
+{% block javascript %}
+{{block.super}}
+<script src='/static/front/javascript/bootstrap.min.js'></script>
+{% endblock javascript %}

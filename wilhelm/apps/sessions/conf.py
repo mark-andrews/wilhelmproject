@@ -1,0 +1,5 @@
+status_completed = 'status_completed'
+status_part_completed = 'status_part_completed'
+status_initialized = 'status_initialized'
+status_paused = 'status_paused'
+status_live = 'status_live'

@@ -1,0 +1,75 @@
+{% extends 'front/front.html' %}
+
+{% block content %}
+
+<div class='container profile'>
+
+<div class="row">
+
+	<div class='col-xs-12 col-sm-8 col-sm-offset-2'>
+	{% if user.first_name %}
+		<h3>Hi {{user.first_name}},</h3>
+	{% else %}
+		<h3>Hi {{user.username}},</h3>
+	{% endif %}
+
+
+	{% if demographic_templates %}
+
+            <p>Before you proceed, we'd just like you to ask you to provide the
+            following details. As with everything on this site, this demographic
+            information is stored confidentially and anonymously along with all
+            other data that you provide.</p>
+
+	{% endif %}
+
+	</div>
+</div>
+
+
+<div class="row">
+
+	<div class='col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4'>
+	<form class="loginForm" action="" autocomplete="off" method="POST">
+
+	{% if demographic_templates %}
+
+            {% for demographic_template in demographic_templates %}
+                {% include demographic_template %}
+            {% endfor %}
+
+	{% endif %}
+
+	<button id='demographics_submit' class="btn btn-lg btn-default btn-block submit-btn" type="submit">Submit</button>
+
+	</form>
+
+	</div>
+
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+{{block.super}}
+<script type="text/javascript" src='static/subjects/javascript/bday-picker.js'></script>
+<script type="text/javascript" src='static/subjects/javascript/bday-picker-initialize.js'></script>
+<script type="text/javascript" src='static/subjects/javascript/other_language.js'></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+   // Taken from http://stackoverflow.com/a/11175380/1009979
+   if (window.location.hash == '#_=_') {
+      window.location.hash = '';
+   }
+
+   {% if Date_of_Birth_placeholder %}
+	   bday_picker_initialize("{{ Date_of_Birth_placeholder }}");
+   {% else %}
+	   bday_picker_initialize('1980-01-05');
+   {% endif %}
+
+});
+</script>
+{% endblock javascript %}

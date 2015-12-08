@@ -1,0 +1,30 @@
+<div class='form-group'>
+	<label for='sex-pick' id='sex-label'>Sex</label>
+
+	<div class='form-group' id='sex-pick'>
+
+        {% if Sex_placeholder == 'male' %}
+
+            <label class="radio-inline">
+                    <input type="radio" name="sex" id="male" value="male" checked>Male
+            </label>
+
+            <label class="radio-inline">
+                    <input type="radio" name="sex" id="female" value="female">Female
+            </label>
+
+        {% elif Sex_placeholder == 'female' %}
+
+            <label class="radio-inline">
+                    <input type="radio" name="sex" id="male" value="male">Male
+            </label>
+
+            <label class="radio-inline">
+                    <input type="radio" name="sex" id="female" value="female"
+                    checked>Female
+            </label>
+
+        {% endif %}
+
+	</div>
+</div>

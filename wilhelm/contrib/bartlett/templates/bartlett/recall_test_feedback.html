@@ -1,0 +1,91 @@
+{% load bartlett_tags %}
+
+<div class='recognition_test_feedback'>
+
+	<p>
+	Test {{test_count}} was a recall memory test. You were first shown a 
+	{{feedback.Memoranda_type|memorandumname}}
+
+	{% if feedback.Memoranda_type == 'Text' %}
+		entitled <em>{{feedback.Text_title}}</em> 
+		that began "{{feedback.Text_abbreviated}}".
+	{% elif feedback.Memoranda_type == 'Wordlist' %}
+		with {{feedback.List_length}} items.
+	{% endif %}
+
+	You were then  asked to recall as many as possible of the words that appeared in the 
+	{% if feedback.Memoranda_type == 'Text' %}
+		text you just read.
+	{% elif feedback.Memoranda_type == 'Wordlist' %}
+		word list you just saw.
+	{% endif %}
+
+	</p>
+
+	<p>
+
+	You recalled {{feedback.recall_count}} words from the {{feedback.Memoranda_type|memorandumname}}.
+
+
+	{% if not feedback.false_recall_rate == None %}
+		{% if feedback.false_recall_count > 0 %}
+
+		<span class='main-feedback-take-home'>Your "true recall" rate was {{ feedback.true_recall_percentage}}%.</span>
+		Your "false recall" rate was {{ feedback.false_recall_percentage}}%. 
+
+		Exactly {{feedback.false_recall_count}} of the {{feedback.recall_count}}
+		word{{feedback.recall_count|pluralize}} you recalled did not
+		in fact occur in the 
+		{% if feedback.Memoranda_type == 'Text' %}
+			text you just read.
+		{% elif feedback.Memoranda_type == 'Wordlist' %}
+			word list you just saw.
+		{% endif %}
+	
+		{% endif %}
+	{% endif %}
+		
+	</p>
+
+	<p>
+	From the table below, you can see exactly which words you got right and
+	which you got wrong. 
+
+	<table>
+	<tr>
+
+	  <tr>
+	    <th>True recalls</th>
+	    <th>False recalls</th>
+	  </tr>
+
+	  <td>
+	   <ul>
+		   {% if feedback.true_recall_count == 0 %}
+			   <li>(No true recalls)</li>
+		   {% else %}
+			   {% for word in feedback.true_recalls %}
+			   <li>{{ word }}</li>
+			   {% endfor %}
+		   {% endif %}
+	   </ul>
+	  </td>
+
+	  <td>
+	   <ul>
+		   {% if feedback.false_recall_count == 0 %}
+			   <li>(No false recalls)</li>
+		   {% else %}
+			   {% for word in feedback.false_recalls %}
+			   <li>{{ word }}</li>
+			   {% endfor %}
+		   {% endif %}
+
+	   </ul>
+	  </td>
+
+	</tr>
+
+	</table>
+	</p>
+</div>

@@ -1,0 +1,68 @@
+.ReadingBox {
+    .TextBox(22px, @garamond);
+}
+
+.HelpBox {
+    .TextBox(12px, @optima);
+}
+
+.BemboBox {
+    .TextBox(24px, @bembo);
+    .TitleBox {
+        font-family: @bemboitalic;
+        font-size: 36px;
+        padding-top:10px;
+        padding-bottom:10px;
+        margin:0px;
+    }
+}
+
+.PalatinoBox {
+    .TextBox(22px, @palatino);
+}
+
+.PerpetuaBox {
+    .TextBox(24px, @perpetua);
+}
+
+.MessageBox {
+    .TextBox(22px, @sansfont);
+}
+
+.InstructionBox {
+    .TextBox(22px, @sansfont);
+}
+
+#instructions-list {
+
+	padding: 0px;
+
+	li {
+	    list-style-type: none;
+	}
+
+}
+
+
+
+.SabonBox {
+    .TextBox(24px, @sabon);
+}
+
+#move_box {
+	margin-top: 20px;
+}
+
+#move_button_box {
+
+	text-align:right;
+
+	@media (max-width: 767px) {
+		text-align:center;
+	}
+}
+
+.move_box_instructions p {
+	font-family: @sansfont_alt;
+	font-size:16px;
+}

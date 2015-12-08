@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load presenter_tags %}
+
+{% block fout_false %}
+<!-- A script to avoid FOUT -->
+<script type="text/javascript">
+    MTIConfig = {};
+    MTIConfig.EnableCustomFOUTHandler = true // true = prevent FOUT
+</script>
+{% endblock fout_false %}
+
+{% block css %}
+{{ block.super }}
+<style type="text/css">
+a.ui-dialog-titlebar-close { display:none }
+#timeout-confirm-dialog {
+	padding:10px;
+	font-size:12px;
+	display: none;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="/static/front/css/main.css">
+{% for cssfile in cssfiles %}
+<link rel="stylesheet" type="text/css" href="/static/{{cssfile}}">
+{% endfor %}
+{% endblock css %} 
+
+{% block content %} 
+<!-- The "Are You Sure You Want To Stop?" dialog. -->
+<div id="timeout-confirm-dialog">
+	<!--<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>-->
+
+	<p>This experiment session will time out in <span id="timeout-countdown" style="font-weight:bold"></span> seconds.</p>
+
+	<p>Do you want to continue the experiment?</p>
+</div>
+
+
+<div id='widgetlist' class="container">
+	{% for widget_js_object in widget_js_objects %}
+	<div class='row'>
+	{% include widget_js_object.template_name with widget_template_data=widget_js_object.widget_template_data %}
+	</div>
+	{% endfor %}
+</div>
+
+
+{% endblock content %}
+
+{% block javascript %}
+{{ block.super }}
+
+<script src='/static/base/widgets/ping.js'></script>
+<script src='/static/base/widgets/hangup.js'></script>
+
+{% for jsfile in jsfiles %}
+<script src="/static/{{jsfile}}"></script>
+{% endfor %}
+
+{% for widget_js_object in widget_js_objects %}
+<script src='/static/{{widget_js_object.path}}/widgets/{{widget_js_object.name}}.js'></script> 
+{% endfor %}
+
+<script>
+$(document).ready(function() {
+
+	$('#timeout-confirm-dialog').hide();
+	var ping_uid = '{{ ping_uid }}' ;
+	ping('/ping_gateway', ping_uid, 10000);
+
+
+	{% for widget_js_object in widget_js_objects %}
+	{% autoescape off %}
+	var {{widget_js_object.instance_name}} = new {{widget_js_object.class_name}}( {{ widget_js_object.args | joinby:', ' }} );
+	{% endautoescape %}
+	{% endfor %}
+
+	// The widget chain.
+	{% for widget_js_object in widget_js_objects %}
+
+	{% if forloop.first %}
+	{{ widget_js_object.instance_name }}.activate();
+	{% endif %}
+
+	{% if forloop.last %}
+	{{ widget_js_object.instance_name }}.next_in_chain = function() { slide_hangup(ping_uid); } ;
+	{% else %}
+	{{ widget_js_object.instance_name }}.next_in_chain = function() { {{ widget_js_object.next_in_chain }}.activate(); } ;
+	{% endif %}
+
+	{% endfor %}
+
+});
+</script>
+
+{% endblock javascript %}
+
+

@@ -1,0 +1,82 @@
+{% extends "presenter/launcher.html" %}
+
+{% block javascript %}
+
+{{ block.super }}
+
+<script>
+$(document).ready(function() {
+
+	$('#ContinueButton').click(
+			function() {
+				window.location.href = "/{{experiment_name}}/{{short_uid}}";
+			}
+			);
+
+	$('#PauseButton').click(
+			function() {
+				stay_or_go('pause_playlist');
+			}
+			);
+
+	$('#FeedbackButton').click(
+			function() {
+				stay_or_go('get_playlist_feedback');
+			}
+			);
+
+	$('#StopButton').click(
+			function() {
+				stay_or_go('stop_playlist');
+			}
+			);
+
+});
+</script>
+
+{% endblock javascript %}
+
+
+{% block next_slide_content %} 
+<div id='next_slide'>
+	<div class='MessageBox'>        
+
+		You have finished Part {{ slides_done }} of the experiment "{{ experiment_name }}".
+
+		{% if slides_remaining > 0 %}
+
+		There {{ slides_remaining|pluralize:"is,are" }} {{ slides_remaining}} part{{ slides_remaining|pluralize }} remaining.
+
+		To continue the experiment now, you can press the "{{button.next }}" button.
+
+		To continue later, you can press the "{{ button.pause }}" button.
+
+		{% else %}
+
+		The experiment is now over. To see how you performed, you can
+		press the "{{ button.feedback }}" button, or else just press 
+		"{{ button.stop }}" to return to the main page.
+
+		{% endif %}
+	</div>
+
+
+	<div id='EndOfSlideForm' class="ButtonBox">
+		{% if slides_remaining > 0 %}
+		<div id='ContinueButton' class='button'>{{ button.next }}</div>
+		<div id='PauseButton' class='button'>{{ button.pause }}</div>
+		{% else %}
+		<div id='StopButton' class='button'>{{ button.stop }}</div>
+		<div id='FeedbackButton' class='button'>{{ button.feedback }}</div>
+		{% endif %}
+	</div>
+
+</div>
+
+{% if slides_remaining == 0 %}
+<script>
+setTimeout(function(){ stay_or_go('stop_playlist'); }, 10000);
+</script>
+{% endif %}
+
+{% endblock next_slide_content %}

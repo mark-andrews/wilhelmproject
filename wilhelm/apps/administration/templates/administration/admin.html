@@ -1,0 +1,25 @@
+{% extends 'front/front.html' %}
+
+{% block collapsing-nav-links %}
+	<li><a href='#'>Front</a></li>
+	<li><a href='#'>Experiments</a></li>
+{% endblock collapsing-nav-links %}
+
+{% block content %}
+
+<div class='container content-section'>
+
+	<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+	<form action='' autocomplete='off' method='POST'>
+	<textarea class="form-control" rows="3"></textarea>
+	<textarea class="form-control" rows="3"></textarea>
+	<textarea class="form-control" rows="3"></textarea>
+	<div style='text-align:center'>
+	<button class='btn btn-lg btn-default' type='submit'>Update</button>
+	</div>
+	</form>
+	</div>
+
+</div>
+
+{% endblock content %}

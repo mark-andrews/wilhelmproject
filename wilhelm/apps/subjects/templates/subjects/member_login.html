@@ -1,0 +1,24 @@
+{% extends 'front/front.html' %}
+
+{% block content %}
+
+<div class="container login">
+
+    <div class="row">
+
+	{% block social-media-login %}
+		{% include "subjects/_social_media_login.html" %}
+	{% endblock social-media-login %}
+
+        <div class="login-or col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <hr class="hr-or">
+        <span class="span-or">or</span>
+        </div>
+
+	{% block login-or-signup-form %}
+		{% include "subjects/_login.html" %}
+	{% endblock login-or-signup-form %}
+    </div>
+</div>
+
+{% endblock content %}

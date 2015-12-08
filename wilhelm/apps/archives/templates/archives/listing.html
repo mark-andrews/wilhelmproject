@@ -1,0 +1,39 @@
+{% extends "front/front.html" %}
+
+{% block content %} 
+
+<div class='container'>
+
+	<section class='container content-section'>
+		<div class='row'>
+			<div class='col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1'>
+
+
+			{% for experiment in experiments %}
+
+			<div class='media'>
+				<a class='media-left foo-media hidden-sm hidden-xs' href='/{{experiment.url}}'>
+					<img src='static/front/Phrenologychart.png' width='150'>
+				</a>
+
+				<div class='media-body experiment-listing'>
+				<h2> <a href="/{{ experiment.url }}">{{experiment.title}} &raquo;</a>  </h2>
+				<h5> Code name: {{experiment.name}} </h5>
+					{{ experiment.blurb | safe }}
+
+					<div style='text-align:left'>
+						<a class='btn btn-default' href="/{{ experiment.url }}">Start experiment &raquo;</a>
+					</div>
+				</div>
+			</div>
+
+			{% endfor %}
+
+
+			</div>
+		</div>
+	</section>
+
+</div>
+
+{% endblock content %}

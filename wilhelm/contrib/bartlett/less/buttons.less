@@ -1,0 +1,78 @@
+/*
+The button style here is based on one found here: 
+http://www.red-team-design.com/just-another-awesome-css3-buttons
+*/
+
+@ButtonGrey: #cccccc;
+@ButtonLighterGrey: #dddddd;
+@ButtonDarkerWhite: #eeeeee;
+@ButtonWhite: #fafafa;
+
+.ButtonGradient(@darkcolor; @lightcolor) {
+	background-color: @darkcolor;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(@lightcolor), to(@darkcolor));
+	background-image: -webkit-linear-gradient(top, @lightcolor, @darkcolor);
+	background-image: -moz-linear-gradient(top, @lightcolor, @darkcolor);
+	background-image: -ms-linear-gradient(top, @lightcolor, @darkcolor);
+	background-image: -o-linear-gradient(top, @lightcolor, @darkcolor);
+	background-image: linear-gradient(top, @lightcolor, @darkcolor);
+        filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorstr='@{lightcolor}', endColorstr='@{darkcolor}')";
+}
+
+.Button(@fontfamily; @fontsize)
+{        
+	display: inline-block;
+	white-space: nowrap;
+	.ButtonGradient(@ButtonGrey; @ButtonDarkerWhite);
+	border: 1px solid #777;
+	padding: 0.5em 1.50em;
+	margin: 0.5em;
+        font-family: @fontfamily;
+        font-size: @fontsize;
+	text-decoration: none;
+	color: #333;
+	text-shadow: 0 1px 0 rgba(255,255,255,.8);
+	-moz-border-radius: .2em;
+	-webkit-border-radius: .2em;
+	border-radius: .2em;
+	-moz-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+	-webkit-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+	box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+        cursor: pointer; 
+	cursor: hand;
+	&:hover
+		{
+			.ButtonGradient(@ButtonLighterGrey; @ButtonWhite);
+		}
+
+	&:active
+		{
+			-moz-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+			-webkit-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+			box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+			position: relative;
+			top: 1px;
+		}
+
+	&:focus
+		{
+			outline: 0;
+			background: #fafafa;
+		}
+}
+
+.button {
+	.Button(@sansfont; 1em);
+}
+
+
+/* 
+This is a fixed width response button. I.e. for when you need to say yes/no.
+*/
+
+.responsebutton {
+	.Button(@sansfont; 24px);
+	text-align:center;
+	width:6em;
+}
+

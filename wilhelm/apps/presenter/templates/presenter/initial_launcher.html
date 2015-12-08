@@ -1,0 +1,73 @@
+{% extends "presenter/start_btn_launcher.html" %}
+
+{% block start_btn_message %} 
+
+    {% if instructions %}
+
+        <div class="InstructionBox">        
+            <ol id='instructions-list'>
+        {% for instruction in instructions %}
+            <li>{{ instruction | safe}}</li>
+        {% endfor %}
+            </ol>
+        </div>
+
+    {% else %}
+
+        <div>        
+            You are about to start experiment "{{ experiment_name }}". 
+        </div>
+
+    {% endif %}
+
+{% endblock start_btn_message %}
+
+{% block other_btns %}
+    <span id='previous-instruction' class='button'>Previous</span>
+    <span id='next-instruction' class='button'>Next</span>
+{% endblock %}
+
+{% block document_onload_javascript %}
+    var instructions_list = $('#instructions-list li');
+    var start_btn = $('#StartButton');
+
+    $('#previous-instruction').click(function () {
+        if (i > 0) {
+            instructions_list.hide();
+            instructions_list.eq(--i).fadeIn(1000);
+            activate_deactivate_buttons(i);
+        }
+    });
+
+    $('#next-instruction').click(function () {
+        if (i < instructions_list.length - 1) {
+            instructions_list.hide();
+            instructions_list.eq(++i).fadeIn(1000);
+            activate_deactivate_buttons(i);
+        }
+    });
+
+    var activate_deactivate_buttons = function (i) {
+        
+        if (i === 0) {
+            $('#previous-instruction').hide();
+            $('#next-instruction').show();
+            start_btn.hide();
+        } else if (i == (instructions_list.length - 1)) {
+            $('#previous-instruction').show();
+            $('#next-instruction').hide();
+            start_btn.show();
+        } else {
+            $('#previous-instruction').show();
+            $('#next-instruction').show();
+            start_btn.hide();
+        }
+
+    };
+
+    instructions_list.hide();
+    var i = 0;
+    activate_deactivate_buttons(i);
+    instructions_list.eq(i).fadeIn(1000);
+
+{% endblock document_onload_javascript %}

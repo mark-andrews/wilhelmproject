@@ -1,0 +1,80 @@
+{% extends 'front/front.html' %}
+
+{% block content %}
+
+<div class='container profile'>
+
+<div class="row">
+
+	<div class='col-xs-12 col-sm-8 col-sm-offset-2'>
+	{% if user.first_name %}
+		<h3>Hi {{user.first_name}},</h3>
+	{% else %}
+		<h3>Hi {{user.username}},</h3>
+	{% endif %}
+
+        <p>
+        The following are your demographic details that we have on record.
+        As with all the data you provide, these details are stored confidentially and anonymously.
+        </p>
+
+	</div>
+</div>
+
+
+<div class="row">
+
+	<div class='col-xs-12 col-sm-6 col-sm-offset-3'>
+
+            <ul class='demographic-details'>
+
+                <li><span class='description'>Date of birth: </span> 
+                {% if demographics.dob %}
+                    {{demographics.dob}}
+                {% else %}
+                    Unknown
+                {% endif %}
+                </li>
+
+                <li><span class='description'>Age: </span> 
+                {% if demographics.age %}
+                    {{demographics.age}}
+                {% else %}
+                    Unknown
+                {% endif %}
+                </li>
+
+                <li><span class='description'>Sex: </span> 
+                {% if demographics.sex %}
+                    {{demographics.sex}}
+                {% else %}
+                    Unknown
+                {% endif %}
+                </li>
+
+                <li><span class='description'>Handedness: </span> 
+                {% if demographics.handedness %}
+                    {{demographics.handedness}}
+                {% else %}
+                    Unknown
+                {% endif %}
+                </li>
+
+
+                <li><span class='description'>Native language: </span> 
+                {% if demographics.native_language %}
+                    {{demographics.native_language}}
+                {% else %}
+                    Unknown
+                {% endif %}
+                </li>
+
+
+
+            </ul>
+
+	</div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,88 @@
+#recalledwordslist {
+    list-style-type:none;
+    padding:0px;
+    
+    li {
+	 padding-top: 5px;
+	 padding-bottom: 5px;
+      }
+
+    input {
+	    display: block;
+	    margin : 0 auto;
+	    padding-left: 0px;
+	    width: 250px;
+	    background-color:gainsboro;
+	    border-radius: 5px;
+	    font-size:24px;
+	}
+
+    input[type=text] {
+	font-family:@sansfont;
+        }
+}
+
+#morelessoptions  {
+        text-align:center;
+       }
+
+#morelessoptionshelp  {
+        text-align:center;
+	padding-top:10px;
+       }
+
+/*
+A fixed width block button
+*/
+
+.morelessbutton {
+    .Button(@sansfont; 12px);
+    .CenteredBlock(60px);
+}
+
+.help_box {
+    border-width:0px;
+    border-style:solid;
+    padding: 0px;
+    padding-top:5px;
+    margin:0px;
+    margin-top:20px;
+    p {
+	margin:0px;
+	padding:0px;
+	font-family: @sansfont_alt;
+	font-size:12px;
+    }
+}
+
+#results {
+    clear:both;
+    margin-top:20px;
+    padding-top:20px;
+    font-size:24px;
+}
+
+
+
+#recall-help-box-sm {
+
+	@media (min-width: 768px) {
+		display:normal;
+	}
+
+	@media (max-width: 767px) {
+		display:none;
+	}
+
+}
+
+#recall-help-box-xs {
+	@media (min-width: 768px) {
+		display:none;
+	}
+
+	@media (max-width: 767px) {
+		display:normal;
+	}
+
+}

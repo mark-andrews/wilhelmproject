@@ -1,0 +1,19 @@
+{% extends 'front/front.html' %}
+
+{% block content %}
+
+<div class='container'>
+
+<section class="container content-section blurb">
+	<div class="row">
+	<div class="col-lg-8 col-lg-offset-2">
+		<h2>{{ blurb.title }}</h2>
+		{{ blurb.text | safe }}
+	</div>
+	</div>
+</section>
+       
+</div>
+
+
+{% endblock content %}

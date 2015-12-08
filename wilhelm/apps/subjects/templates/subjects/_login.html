@@ -1,0 +1,33 @@
+<div id='member-login' class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">	
+
+	<h3> {{ login_title }} </h3>
+
+	<form class="loginForm" action="" autocomplete="off" method="POST">
+
+	<div class="input-group">
+	    <span class="input-group-addon"><i class="fa fa-envelope fa-lg"></i></span>
+	    <input value='{{username_starting_value}}' type="text" class="form-control" name="username" placeholder="{{ username_placeholder }}">
+	</div>
+
+	<span class="username-error help-block"></span>
+							
+	<div class="input-group">
+	    <span class="input-group-addon"><i class="fa fa-lock fa-lg"></i></span>
+            <input value='{{password_starting_value}}' type="password" class="form-control" name="password" placeholder="Password">
+	</div>
+
+	{% if login_error_msg %}
+            <span class="login-error help-block">{{login_error_msg}}</span>
+        {% endif %}
+
+	<button id='login' class="btn btn-lg btn-default btn-block submit-btn" type="submit">Login</button>
+
+	</form>
+
+
+	<p class='forgotPwd forgotPwd-or-login'>
+	<a href="/forgotpassword">Forgot your password?</a><br>
+	<a href="/signup">Need an account?</a>
+	</p>
+
+</div>

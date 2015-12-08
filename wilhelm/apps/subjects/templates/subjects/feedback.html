@@ -1,0 +1,37 @@
+{% extends "front/front.html" %}
+
+{% block content %} 
+
+<div class='container'>
+
+	<section class='container content-section'>
+		<div class='row'>
+			<div class='col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1'>
+
+
+			{% for experiment in experiments %}
+
+			<div class='media'>
+				<a class='media-left foo-media hidden-sm hidden-xs'
+                                    href='/feedback/{{experiment.name}}'>
+					<img src='/static/front/Phrenologychart.png' width='150'>
+				</a>
+
+				<div class='media-body experiment-listing'>
+				<h2> <a href="/feedback/{{ experiment.name }}">{{experiment.title}}</a>  </h2>
+				<h5> Code name: {{experiment.name}} </h5>
+                                <p>You have {{experiment.completed_attempts}} completed attempts of this experiment.
+
+				</div>
+			</div>
+
+			{% endfor %}
+
+
+			</div>
+		</div>
+	</section>
+
+</div>
+
+{% endblock content %}

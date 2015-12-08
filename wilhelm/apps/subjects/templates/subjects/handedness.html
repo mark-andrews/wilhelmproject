@@ -1,0 +1,26 @@
+<div class='form-group'>
+	<label for='handedness-pick'>Handedness</label>
+
+	<div class='form-group' id='handedness-pick'>
+
+        {% if Handedness_placeholder == 'right' %}
+        
+            <label class="radio-inline">
+            <input type="radio" name="handedness" id="right" value="right" checked>Right handed
+            </label>
+
+            <label class="radio-inline">
+            <input type="radio" name="handedness" id="left" value="left">Left handed
+            </label>
+        {% elif Handedness_placeholder == 'left' %}
+            <label class="radio-inline">
+            <input type="radio" name="handedness" id="right" value="right">Right handed
+            </label>
+
+            <label class="radio-inline">
+            <input type="radio" name="handedness" id="left" value="left" checked>Left handed
+            </label>
+        {% endif %}
+
+	</div>
+</div>

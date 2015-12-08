@@ -26,7 +26,7 @@ Currently, Wilhelm is a alpha software.
 * It is not feature complete
 * Existing features may not even work as planned
 * The API to any given feature may change without warning
-* Any future development could is likely to be backwards incompatible.
+* Any future development is likely to be backwards incompatible
 * There is no documenation
 * In short, use in a production environment is not recommended
 

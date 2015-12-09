@@ -87,3 +87,11 @@ LOGFILE_FILENAME = DOMAIN_NAME + '.log'
 mk_archive_cache_dir(LOGFILE_DIRECTORY, 0775)
 LOGGING['handlers']['file']['filename']\
     = os.path.join(LOGFILE_DIRECTORY, LOGFILE_FILENAME)
+
+
+# Facebook 
+fb_secrets = secrets['social_auth']['facebook-for-staging']
+
+SOCIAL_AUTH_FACEBOOK_KEY = fb_secrets['key']
+SOCIAL_AUTH_FACEBOOK_SECRET = fb_secrets['secret']
+

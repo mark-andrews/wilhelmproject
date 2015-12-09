@@ -22,7 +22,7 @@ WWWURL = 'https://www.%s' % DOMAIN_NAME
 DATA_SUBDOMAIN_PROTOCOL = 'https'
 DATA_PERMALINK_ROOT = DATA_SUBDOMAIN_PROTOCOL + '://' + DATA_SUBDOMAIN_NAME + '/' 
 SESSION_COOKIE_DOMAIN\
-    = configs['domain_names']['staging']['session_cookie_domain']
+    = configs['domain_names']['production']['session_cookie_domain']
 
 
 #=============================================================================

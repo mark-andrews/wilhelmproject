@@ -16,6 +16,7 @@ if settings.IS_PRODUCTION_SERVER:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE",
                           "wilhelm.settings.production")
 else:
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wilhelm.settings.staging")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE",
+                          "wilhelm.settings.production")
 
 application = get_wsgi_application()

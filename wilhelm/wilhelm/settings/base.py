@@ -425,3 +425,5 @@ except IOError:
 # Geoip
 GEOIP_PATH = os.path.join(WILHELM_ROOT, 
                           'apps/dataexport/geolite_databases')
+
+IS_PRODUCTION_SERVER = False # Override for production

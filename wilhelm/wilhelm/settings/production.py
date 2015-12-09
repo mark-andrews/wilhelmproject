@@ -6,6 +6,7 @@ DEBUG = False
 TEMPLATE_DEBUG = True
 
 DEVELOPMENT_SERVER = False
+IS_PRODUCTION_SERVER = True 
 
 ALLOWED_HOSTS = configs['allowed_hosts']['production']
 

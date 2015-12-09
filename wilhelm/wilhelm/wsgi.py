@@ -10,7 +10,12 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+from django.conf import settings
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wilhelm.settings.staging")
+if settings.IS_PRODUCTION_SERVER:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE",
+                          "wilhelm.settings.production")
+else:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wilhelm.settings.staging")
 
 application = get_wsgi_application()

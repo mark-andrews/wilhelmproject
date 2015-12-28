@@ -1,14 +1,49 @@
 {% extends 'bartlett/widget.html' %}
 
-{% block widget_id %}'tetris_widget'{% endblock widget_id %} 
+{% block widget_id %}'tetris_widget'{% endblock widget_id %}
 
 {% block instructions_content %}
 
 <li>
-    <p>You will now play a game of tetris for around {{widget_template_data.approx_game_time}}. You should try
-    to score as many points as you can in this time. After the game, your
-    memory for the {{slide_template_data.memorandum_type}} you just saw will be
-    tested.</p>
+    <p>You will now play a game of Tetris for around {{widget_template_data.approx_game_time}}. After the game, your memory for the
+    {{slide_template_data.memorandum_type}} you just
+     {% if slide_template_data.memorandum_type == 'text' %}
+        read
+    {% elif slide_template_data.memorandum_type == 'word list' %}
+        saw
+    {% endif %}
+    will be tested.
+    </p>
+
+    <p>The aim of Tetris is to rotate or move falling blocks so that you form
+    unbroken rows of tiles. If you've never played Tetris before, or need a
+    reminder of how it works, you can click <span id='show-tetris-instructions'>here</span> for more
+    instructions.</p>
+
+</li>
+<li id='tetris-extra-instructions'>
+
+    <p>As you can see from the animation below, you use the buttons at the
+    bottom to rotate or move the falling blocks.
+
+    <img id="tetris-example-gif" src="/static/bartlett/tetris_example_animation.64bit.gif" /><br>
+
+    When the blocks form an unbroken row of tiles, you score a point.
+    </p>
+    <div id='tetris-controls-instructions'>
+    The controls for the game are as follows:
+    <ol>
+        <li><span class='button'><i class="fa fa-undo"></i></span>Rotate block</li>
+        <li><span class='button'><i class="fa fa-arrow-left"></i></span>Move block to left</li>
+        <li><span class='button'><i class="fa fa-arrow-right"></i></span>Move block to right</li>
+        <li><span class='button'><i class="fa fa-arrow-down"></i></span>Move block down</li>
+    </ol>
+    </div>
+
+</li>
+
+<li>
+    <p>Whenever you are ready, you can press Start to start the game.</p>
 </li>
 
 {% endblock instructions_content %}
@@ -16,39 +51,39 @@
 {% block stimulus_content %}
 <div class='container'>
 
-	<div id='gamebox' class='row'>
+    <div id='gamebox' class='row'>
 
-	        <div class='col-lg-3 col-lg-offset-1 hidden-sm hidden-xs'>
-			<p id='tetris-help' class='HelpBox'>
-                        Use the controls to rotate or move the pieces. 
+            <div class='col-lg-3 col-lg-offset-1 hidden-sm hidden-xs'>
+            <p id='tetris-help' class='HelpBox'>
+                        Use the controls to rotate or move the pieces.
                         <br> You can also use the keys r for rotate, d for down, j for left, k for right.
                         <br> You'll score a point for every full row of tiles.
-			</p>
-		</div>
+            </p>
+        </div>
 
-		<div class='col-lg-4 text-center'>
+        <div class='col-lg-4 text-center'>
 
-			<div id='scoreboard'>
-			<div id='scoreboard-score' >
-				Score: <span id='score'></span>
-			</div>
-			<div id='scoreboard-countdown' >
-				Countdown: <span id='countdown-time'></span>
-			</div>
-			</div>
+            <div id='scoreboard'>
+            <div id='scoreboard-score' >
+                Score: <span id='score'></span>
+            </div>
+            <div id='scoreboard-countdown' >
+                Countdown: <span id='countdown-time'></span>
+            </div>
+            </div>
 
-			<canvas id="tetris-board"></canvas>
+            <canvas id="tetris-board"></canvas>
                         <div id='GameOver'></div>
 
-			<div id='tetris-controls' class='ButtonBox'>
-			<span id='rotate' class='button'><i class="fa fa-undo"></i></span>
-			<span id='left' class='button'><i class="fa fa-arrow-left"></i></span>
-			<span id='right' class='button'><i class="fa fa-arrow-right"></i></span>
-			<span id='down' class='button'><i class="fa fa-arrow-down"></i></span>
-			</div>
-		</div>
+            <div id='tetris-controls' class='ButtonBox'>
+            <span id='rotate' class='button'><i class="fa fa-undo"></i></span>
+            <span id='left' class='button'><i class="fa fa-arrow-left"></i></span>
+            <span id='right' class='button'><i class="fa fa-arrow-right"></i></span>
+            <span id='down' class='button'><i class="fa fa-arrow-down"></i></span>
+            </div>
+        </div>
 
-		</div>
+        </div>
 
 
 </div>
@@ -58,5 +93,5 @@
 
 {% block javascript %}
 {{ block.super }}
-       	    <script type="text/javascript" src='/static/games/widgets/tetris.js'></script>
+               <script type="text/javascript" src='/static/games/widgets/tetris.js'></script>
 {% endblock javascript %}

@@ -2,8 +2,11 @@
 // https://github.com/jonhoo/tetris-tutorial.git, db0b589, Copyright by Jon Gjengset 2014, 2105
 // which is released by Creative Commons Attribution 4.0 International Public License
 // https://creativecommons.org/licenses/by/4.0/legalcode
-
-
+$('#show-tetris-instructions').click(
+        function(){
+            $('#tetris-extra-instructions').show();
+        }
+);
 
 var TetrisObject = function (domtag, gatewayurl, ping_uid) {
 

@@ -87,3 +87,8 @@ LOGGING['handlers']['file']['filename']\
 # Unlimited attempts
 #=============================================================================
 UNLIMITED_EXPERIMENT_ATTEMPTS = True # Setting to True is useful for development
+
+#=============================================================================
+# Add django_extensions to INSTALLED_APPS
+#=============================================================================
+INSTALLED_APPS += ('django_extensions',)

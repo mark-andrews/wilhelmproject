@@ -113,7 +113,8 @@ class SlideLauncherFactory(object):
 
             # And that should be pointing to a status=live experiment.
             browser_live_session = browser_live_sessions[0]
-            assert browser_live_session.experiment_session.is_live
+            assert browser_live_session.experiment_session.is_live,\
+                'Browser session unexpectedly pointing to live experiment session'
 
     def experiment_session_state_check(self):
         '''

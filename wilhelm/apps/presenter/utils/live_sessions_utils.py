@@ -9,6 +9,7 @@ import logging
 #=============================================================================
 # Django imports
 #=============================================================================
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 from django.contrib.sessions.backends.db import SessionStore
@@ -31,10 +32,18 @@ def get_user_browser_sessions(user, live_session):
     for session in Session.objects.all():
         _session = session.get_decoded()
         uid = _session.get('_auth_user_id')
-        if User.objects.get(pk=uid) == user:
-            live_experiment = _session.get('live_experiment')
-            if live_experiment and live_session.pk == live_experiment:
-                return session
+
+        try:
+
+            if User.objects.get(pk=uid) == user:
+                live_experiment = _session.get('live_experiment')
+                if live_experiment and live_session.pk == live_experiment:
+                    return session
+
+        except ObjectDoesNotExist:
+            pass
+
+    logger.critical('User %s not found in Sessions.' % user)
 
 def del_browser_live_session_store(browser_session):
 

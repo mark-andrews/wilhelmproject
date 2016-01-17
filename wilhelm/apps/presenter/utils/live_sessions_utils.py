@@ -24,6 +24,25 @@ from apps.core.utils import strings
 #================================ End Imports ================================
 logger = logging.getLogger('wilhelm')
 
+def get_corrupted_browser_sessions():
+
+    points_to_dead_live_experiment\
+        = lambda session: not LiveExperimentSession.objects\
+        .get(pk=session.get_decoded()['live_experiment']).alive
+
+    browser_sessions_with_live_experiment_keys\
+        = [x for x in Session.objects.all() if 'live_experiment' in x.get_decoded()]
+
+    return filter(points_to_dead_live_experiment,
+                  browser_sessions_with_live_experiment_keys)
+
+
+def delete_corrupted_browser_sessions():
+
+    map(del_browser_live_session_store,
+        get_corrupted_browser_sessions())
+
+
 def get_user_browser_sessions(user, live_session):
 
     '''Get the browser session belonging to user that points to

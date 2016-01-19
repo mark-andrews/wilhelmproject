@@ -76,7 +76,10 @@ class SessionWordRecallTest(SessionWidget):
 
     @property
     def recalledwords(self):
-        return json.loads(self.recalledwords_json)
+        if self.recalledwords_json:
+            return json.loads(self.recalledwords_json)
+        else:
+            return ''
 
     def data_export(self, to_json=True):
 

@@ -177,9 +177,36 @@ INSTALLED_APPS = (
 # Template settings.
 #=============================================================================
 
-TEMPLATE_DIRS = (
-os.path.join(WILHELM_ROOT,'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+            os.path.join(WILHELM_ROOT,'templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                "social.apps.django_app.context_processors.backends",
+                "social.apps.django_app.context_processors.login_redirect",
+                'wilhelm.context_processors.domain_name',
+                'wilhelm.context_processors.data_subdomain',
+                'wilhelm.context_processors.main_subdomain'
+            ],
+        },
+    },
+]
+#
+#TEMPLATE_DIRS = (
+#os.path.join(WILHELM_ROOT,'templates'),
+#)
 
 ## List of callables that know how to import templates from various sources.
 #TEMPLATE_LOADERS = (
@@ -187,20 +214,20 @@ os.path.join(WILHELM_ROOT,'templates'),
 #    'django.template.loaders.app_directories.load_template_source',
 ##     'django.template.loaders.eggs.load_template_source',
 #)
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    "social.apps.django_app.context_processors.backends",
-    "social.apps.django_app.context_processors.login_redirect",
-    'wilhelm.context_processors.domain_name',
-    'wilhelm.context_processors.data_subdomain',
-    'wilhelm.context_processors.main_subdomain'
-)
+#TEMPLATE_CONTEXT_PROCESSORS = (
+#    "django.contrib.auth.context_processors.auth",
+#    "django.core.context_processors.debug",
+#    "django.core.context_processors.i18n",
+#    "django.core.context_processors.media",
+#    "django.core.context_processors.static",
+#    "django.core.context_processors.tz",
+#    "django.contrib.messages.context_processors.messages",
+#    "social.apps.django_app.context_processors.backends",
+#    "social.apps.django_app.context_processors.login_redirect",
+#    'wilhelm.context_processors.domain_name',
+#    'wilhelm.context_processors.data_subdomain',
+#    'wilhelm.context_processors.main_subdomain'
+#)
 
 
 #=============================================================================

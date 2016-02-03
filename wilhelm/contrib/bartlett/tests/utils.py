@@ -236,15 +236,13 @@ def wait_until_some_elements_displayed(driver,
         [element.is_displayed(_driver) for element in elements]
     )
 
-    ui.WebDriverWait(driver, timeout).until(condition)
+    return ui.WebDriverWait(driver, timeout).until(condition)
+
 
 def test_visibility(driver, element_labels, test_function):
 
     elements = [Element(element_label, attribute_type='xpath')
                 for element_label in element_labels]
-
-    print([element.exists(driver) for element in elements])
-    print([element.is_displayed(driver) for element in elements])
 
     return test_function([element.is_displayed(driver) for element in elements])
 

@@ -5,7 +5,12 @@ from __future__ import absolute_import
 #=============================================================================
 import json
 import logging
-from collections import OrderedDict
+
+#=============================================================================
+# Django imports
+#=============================================================================
+from django.db import models
+
 
 #=============================================================================
 # Wilhelm imports
@@ -37,10 +42,10 @@ class WordlistDisplay(Widget, WordlistMixin):
     '''
 
     wordliststimulus = fields.ForeignKey(WordlistStimulus)
-    isi = fields.DurationField(default=0.2)
-    fadeInDuration = fields.DurationField(default=0.2)
-    fadeOutDuration = fields.DurationField(default=0.2)
-    stimulusDuration = fields.DurationField(default=3)
+    isi = models.FloatField(null=True,default=0.2)
+    fadeInDuration = models.FloatField(null=True,default=0.2)
+    fadeOutDuration = models.FloatField(null=True,default=0.2)
+    stimulusDuration = models.FloatField(null=True,default=3)
 
     @classmethod
     def new(cls, 

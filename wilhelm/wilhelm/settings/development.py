@@ -92,3 +92,9 @@ UNLIMITED_EXPERIMENT_ATTEMPTS = True # Setting to True is useful for development
 # Add django_extensions to INSTALLED_APPS
 #=============================================================================
 INSTALLED_APPS += ('django_extensions',)
+
+# Facebook 
+fb_secrets = secrets['social_auth']['facebook-for-development']
+
+SOCIAL_AUTH_FACEBOOK_KEY = fb_secrets['key']
+SOCIAL_AUTH_FACEBOOK_SECRET = fb_secrets['secret']

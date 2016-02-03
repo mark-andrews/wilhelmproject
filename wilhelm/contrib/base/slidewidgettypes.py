@@ -216,9 +216,9 @@ class WidgetTypes(SlideOrWidgetTypes):
         template_name = self.get_html_template_name()
         template = loader.get_template(template_name)
 
-        context = Context()
+        #context = Context()
 
-        return template.render(context)
+        return template.render({})
 
     def get_widget_js_object(self):
 

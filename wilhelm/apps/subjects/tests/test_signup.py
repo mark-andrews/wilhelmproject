@@ -87,7 +87,7 @@ class SignUpTestCase(StaticLiveServerTestCase):
 
         self.driver = webdriver.Firefox()
         self.driver.maximize_window()
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(60)
 
     def tearDown(self):
 

@@ -50,8 +50,10 @@ def http_response(request, template, context):
     '''
 
     template = loader.get_template(template)
-    context = RequestContext(request, context)
-    rendered_template = template.render(context)
+    # context = RequestContext(request, context)
+    # rendered_template = template.render(context)
+
+    rendered_template = template.render(context, request=request)
 
     return HttpResponse(rendered_template)
 

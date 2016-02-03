@@ -1,10 +1,16 @@
 from __future__ import absolute_import
+
 #=============================================================================
 # Standard library
 #=============================================================================
 import json
 import logging
  
+#=============================================================================
+# Django imports
+#=============================================================================
+from django.db import models
+
 #=============================================================================
 # Wilhelm imports
 #=============================================================================
@@ -33,8 +39,8 @@ class TextDisplay(Widget):
     '''
 
     textstimulus = fields.ForeignKey(TextStimulus)
-    minimum_reading_time = fields.DurationField(default=60)
-    maximum_reading_time = fields.DurationField(default=180)
+    minimum_reading_time = models.FloatField(null=True,default=60)
+    maximum_reading_time = models.FloatField(null=True,default=180)
 
     @classmethod
     def new(cls,

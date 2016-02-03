@@ -308,9 +308,10 @@ class SessionSlide(SessionModel):
         template_data['ping_uid'] = self.ping_uid
 
         template = loader.get_template(self.slide.slide_type.htmltemplate)
-        context = Context(template_data)
+        #context = Context(template_data)
         
-        return template.render(context)
+        #return template.render(context)
+        return template.render(template_data)
 
     @property
     def ping_uid_short(self):

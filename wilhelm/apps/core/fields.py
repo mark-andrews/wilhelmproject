@@ -279,7 +279,7 @@ class DurationField(models.FloatField):
 
     description = "Temporal duration in units of seconds."
 
-    __metaclass__ = models.SubfieldBase
+    #__metaclass__ = models.SubfieldBase
 
     def __init__(self, *args, **kwargs):
 

@@ -402,9 +402,10 @@ class SlideLauncher(object):
         template = loader.get_template(
             os.path.join(self.app_label, self.template_filename)
         )
-        context = Context(self.template_data)
+        #context = Context(self.template_data)
         
-        return template.render(context)
+        #return template.render(context)
+        return template.render(self.template_data)
 
 
 class LivePlaylistSlideLauncher(SlideLauncher):

@@ -17,7 +17,6 @@ from django.db import models
 from .widgets import (Widget, 
                       SessionWidget)
 
-from apps.core import fields
 from apps.dataexport.utils import safe_export_data
 from apps.core.utils.datetime import approximate_minutes_from_seconds
 
@@ -34,7 +33,7 @@ class Tetris(Widget):
 
     '''
 
-    duration = fields.DurationField(default=120)
+    duration = models.FloatField(null=True,default=120)
     speed = models.FloatField(default=300)
 
     @classmethod

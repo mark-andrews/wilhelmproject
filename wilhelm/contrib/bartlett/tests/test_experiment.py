@@ -40,19 +40,21 @@ from apps.sessions.models import ExperimentSession
 from apps.subjects.models import Subject
 from apps.testing.utils import rndemail, rndpasswd, rndstring
 from contrib.bartlett.models import (Playlist, 
-                                   SessionPlaylist,
-                                   SessionTextDisplay,
-                                   SessionTextRecallMemoryTest,
-                                   SessionTextRecognitionMemoryTest,
-                                   SessionWordlistDisplay,
-                                   SessionWordlistRecallMemoryTest,
-                                   SessionWordlistRecognitionMemoryTest,
-                                   SessionWordRecallTest,
-                                   SessionWordRecognitionTest,
-                                   WordRecognitionTest,
-                                   WordRecallTest,
-                                   TextDisplay, 
-                                   WordlistDisplay)
+                                     SessionPlaylist,
+                                     SessionTextDisplay,
+                                     SessionTetris,
+                                     SessionTextRecallMemoryTest,
+                                     SessionTextRecognitionMemoryTest,
+                                     SessionWordlistDisplay,
+                                     SessionWordlistRecallMemoryTest,
+                                     SessionWordlistRecognitionMemoryTest,
+                                     SessionWordRecallTest,
+                                     SessionWordRecognitionTest,
+                                     WordRecognitionTest,
+                                     WordRecallTest,
+                                     TextDisplay, 
+                                     Tetris,
+                                     WordlistDisplay)
 
 #=============================================================================
 # Local imports.
@@ -230,12 +232,16 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         self.assertIn(type(widgets[0]), 
                       (TextDisplay, WordlistDisplay))
 
-        # Second has to be a wordlist display or text display.
-        self.assertIn(type(session_widgets[1]),
+        # Second has to be Tetris
+        self.assertEqual(type(session_widgets[1]), SessionTetris)
+        self.assertEqual(type(widgets[1]), Tetris)
+
+        # Third has to be a wordlist display or text display.
+        self.assertIn(type(session_widgets[2]),
                       (SessionWordRecallTest, 
                        SessionWordRecognitionTest))
 
-        self.assertIn(type(widgets[1]), 
+        self.assertIn(type(widgets[2]), 
                       (WordRecallTest, WordRecognitionTest))
 
         return widgets, session_widgets
@@ -419,7 +425,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
 
         # Now is only the second page displayed?
         test_is_instruction_page_displayed(instruction_items, 
-                                           (False, True, False))
+                                           (False, True, False, False))
 
         # The Previous and Next buttons should be displayed.
         test_is_button_displayed(buttons, (True, True, False))
@@ -430,17 +436,17 @@ class ExperimentTestCase(StaticLiveServerTestCase):
 
         # Now is only the third page displayed?
         test_is_instruction_page_displayed(instruction_items, 
-                                           (False, False, True))
+                                           (False, False, True, False))
 
         # The Previous and Start Experiment buttons should be displayed.
-        test_is_button_displayed(buttons, (True, False, True))
+        test_is_button_displayed(buttons, (True, True, False))
 
         # Back one page ...
         click_previous()
 
         # Now is only the second page displayed?
         test_is_instruction_page_displayed(instruction_items, 
-                                           (False, True, False))
+                                           (False, True, False, False))
 
         # The Previous and Next buttons should be displayed.
         test_is_button_displayed(buttons, (True, True, False))
@@ -450,7 +456,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
 
         # Now is only the first page displayed?
         test_is_instruction_page_displayed(instruction_items, 
-                                           (True, False, False))
+                                           (True, False, False, False))
 
         # Only the Previous button should be displayed.
         test_is_button_displayed(buttons, (False, True, False))
@@ -459,9 +465,10 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         # A random walk through the instructions pages.
         #=====================================================================
         page_and_button_display_conditions\
-            = (((True, False, False), (False, True, False)),
-               ((False, True, False), (True, True, False)),
-               ((False, False, True), (True, False, True)))
+            = (((True, False, False, False), (False, True, False)),
+               ((False, True, False, False), (True, True, False)),
+               ((False, False, True, False), (True, True, False)),
+               ((False, False, False, True), (True, False, True)))
 
         def test_page_and_buttons(page=0):
 
@@ -475,7 +482,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
 
         def forward(page=0):
 
-            if page < 2:
+            if page < 3:
                 wait(0.5)
                 click_next()
                 page +=1
@@ -557,6 +564,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         click_next\
             = self.driver.find_element_by_id('next-instruction').click
 
+        click_next()
         click_next()
         click_next()
 
@@ -787,15 +795,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
             self.test_stimuli_display()
 
     #######################
-
     def test_stimuli_display(self):
-
-        iteration = 0
-
-#        while not (text_display_widget_tested and
-#                   wordlist_display_widget_tested and iteration > 10):
-#
-        iteration += 1
 
         minimum_time = int(uniform(3, 10))
         maximum_time = int(uniform(12, 20))
@@ -805,8 +805,6 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         self.start_experiment()
 
         slide_number = 0
-
-        #while True:
 
         widgets, session_widgets = self.get_current_widgets()
 
@@ -821,9 +819,6 @@ class ExperimentTestCase(StaticLiveServerTestCase):
             .find_element_by_id('StartButton')
 
         start_button.click()
-
-        #wait(3.0)
-
 
         ### Widget 1 ###
 
@@ -845,7 +840,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
 
         ### Widget 2 ###
 
-        element_labels = ('recognitiontest_widget', 'recalltest_widget')
+        element_labels = ('tetris_widget',)
 
         wait_until_some_elements_displayed(self.driver,
                                            element_labels=element_labels,
@@ -853,31 +848,28 @@ class ExperimentTestCase(StaticLiveServerTestCase):
 
         wait(3)
 
-        if type(widgets[1]) is WordRecognitionTest:
+        self.assertEquals(type(widgets[1]), Tetris) 
+        self.subtest_tetris(session_widgets[1])
+
+        if type(widgets[2]) is WordRecognitionTest:
 
             self.subtest_wordrecognitionwidget()
 
-        elif type(widgets[1]) is WordRecallTest:
+        elif type(widgets[2]) is WordRecallTest:
 
             self.subtest_wordrecallwidget()
 
         else:
-            self.fail('Neither WordRecognitionTest nor WordRecall test')
+            self.fail('Should be word recognition test or recall test')
         
-        wait(3)
+        wait(10)
 
         continue_or_stop, continue_or_stop_button\
             = self.subtest_next_slide_page(slide_number)
 
-        slide_number += 1
-
         wait(3)
 
         continue_or_stop_button.click()
-
-        if continue_or_stop == 'stop':
-            pass
-            #break 
 
         wait(10)
 
@@ -889,6 +881,108 @@ class ExperimentTestCase(StaticLiveServerTestCase):
 #        if ALLDONE:
 #            break
 
+#    def old_test_stimuli_display(self): # delete this
+#
+#        iteration = 0
+#
+##        while not (text_display_widget_tested and
+##                   wordlist_display_widget_tested and iteration > 10):
+##
+#        iteration += 1
+#
+#        minimum_time = int(uniform(3, 10))
+#        maximum_time = int(uniform(12, 20))
+#
+#        reset_text_times(minimum_time, maximum_time)
+#
+#        self.start_experiment()
+#
+#        slide_number = 0
+#
+#        #while True:
+#
+#        widgets, session_widgets = self.get_current_widgets()
+#
+#        element_labels = ('textdisplay_widget', 'wordlist_widget')
+#
+#        wait_until_some_elements_displayed(self.driver,
+#                                           element_labels=element_labels,
+#                                           timeout=20.0)
+#
+#        start_button\
+#            = self.driver.find_element_by_id('widget-start-button')\
+#            .find_element_by_id('StartButton')
+#
+#        start_button.click()
+#
+#        #wait(3.0)
+#
+#
+#        ### Widget 1 ###
+#
+#        if type(widgets[0]) is TextDisplay:
+#
+#            self.text_display_widget_tested\
+#                = self.subtest_textdisplay(session_widgets[0],
+#                                           minimum_time,
+#                                           maximum_time)
+#
+#        elif type(widgets[0]) is WordlistDisplay:
+#
+#            self.wordlist_display_widget_tested\
+#                = self.subtest_wordlistdisplay(session_widgets[0])
+#
+#        else:
+#
+#            self.fail('Neither TextDisplay nor WordlistDisplay')
+#
+#        ### Widget 2 ###
+#
+#        element_labels = ('recognitiontest_widget', 'recalltest_widget')
+#
+#        wait_until_some_elements_displayed(self.driver,
+#                                           element_labels=element_labels,
+#                                           timeout=3.0)
+#
+#        wait(3)
+#
+#        self.assertEquals(type(widgets[1]), Tetris) 
+##
+##        if type(widgets[1]) is WordRecognitionTest:
+##
+##            self.subtest_wordrecognitionwidget()
+##
+##        elif type(widgets[1]) is WordRecallTest:
+##
+##            self.subtest_wordrecallwidget()
+##
+##        else:
+##        
+#        wait(3)
+#
+#        continue_or_stop, continue_or_stop_button\
+#            = self.subtest_next_slide_page(slide_number)
+#
+#        slide_number += 1
+#
+#        wait(3)
+#
+#        continue_or_stop_button.click()
+#
+#        if continue_or_stop == 'stop':
+#            pass
+#            #break 
+#
+#        wait(10)
+#
+#        self.driver.get(self.live_server_url)
+#        self.wilhelmlogout()
+#
+#         # ALLDONE = True
+#
+##        if ALLDONE:
+##            break
+#
     #=========================================================================
     # Widget sub-tests.
     #=========================================================================
@@ -953,6 +1047,95 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         self.assertFalse(text_box.is_displayed())
 
         return True
+
+    def subtest_tetris(self, session_widget):
+
+        self.assertEquals(type(session_widget.widget), 
+                          Tetris)
+
+        self.assertEquals(type(session_widget), 
+                          SessionTetris)
+
+        stimulus_display_box\
+            = self.driver.find_element_by_id('tetris_widget')
+
+        extra_instructions\
+            = stimulus_display_box.find_element_by_id('tetris-extra-instructions')
+       
+        instruction_box\
+            = stimulus_display_box.find_element_by_class_name('InstructionBox')
+
+        startbutton\
+            = stimulus_display_box.find_element_by_id('StartButton')
+
+        stimulus_box\
+            = stimulus_display_box.find_element_by_id('StimulusBox')
+
+        gameover_box\
+            = stimulus_display_box.find_element_by_id('GameOver')
+
+        gamebox\
+            = stimulus_display_box.find_element_by_id('gamebox')
+
+
+        self.assertTrue(stimulus_display_box.is_displayed())
+        self.assertFalse(extra_instructions.is_displayed())
+        self.assertTrue(instruction_box.is_displayed())
+        self.assertTrue(startbutton.is_displayed())
+        self.assertFalse(stimulus_box.is_displayed())
+        self.assertFalse(gameover_box.is_displayed())
+        self.assertFalse(gamebox.is_displayed())
+
+ 
+        wait(3)
+        startbutton.click()
+        wait(3)
+
+        self.assertTrue(gamebox.is_displayed())
+
+
+        wait(30)
+
+#        self.assertEqual(text_p_box.text,
+#                         session_widget.widget.text)
+#
+#        self.assertEqual(title_box.text,
+#                         session_widget.widget.title)
+#
+#        move_box = stimulus_box.find_element_by_id('move_box')
+#
+#        self.assertTrue(text_box.is_displayed())
+#        self.assertFalse(move_box.is_displayed())
+#        
+#        self.tic()
+#
+#        wait_until_element_displayed(self.driver, 
+#                                     element_label='move_box',
+#                                     timeout=minimum_time*2)
+#
+#        self.assertLessEqual(minimum_time,
+#                             ceil(self.toc())
+#                             )
+#
+#        wait_until_element_not_displayed(self.driver, 
+#                                         'move_box',
+#                                         timeout=(maximum_time-minimum_time)*2)
+#
+#        self.assertLessEqual(maximum_time,
+#                             ceil(self.toc())
+#                             )
+#
+#        self.assertFalse(move_box.is_displayed())
+#
+#        wait_until_element_not_displayed(self.driver, 
+#                                         element_label='text_box',
+#                                         timeout=1.0)
+#
+#        self.assertFalse(text_box.is_displayed())
+
+        return True
+
+
 
 
     def subtest_wordlistdisplay(self, session_widget):
@@ -1050,9 +1233,9 @@ class ExperimentTestCase(StaticLiveServerTestCase):
                     slides_remaining=0,
                     button=button)]
 
-        context = Context(slide_context[slide_number])
-
-        rendered_template = template.render(context)
+        #context = Context(slide_context[slide_number])
+        #rendered_template = template.render(context)
+        rendered_template = template.render(slide_context[slide_number])
             
         self.assertEqual(
             fill(get_inner_html(rendered_template, 'MessageBox')),
@@ -1175,7 +1358,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         absent_button\
             = self.driver.find_element_by_xpath(absent_button_xpath)
 
-        presentation_widget, response_widget = self.get_session_widgets()
+        presentation_widget, game_widget, response_widget = self.get_session_widgets()
 
         wordlist_permutation = response_widget.wordlist_permutation
 
@@ -1216,9 +1399,11 @@ class ExperimentTestCase(StaticLiveServerTestCase):
 
 
             action_label, action = choice(random_actions.items())
+            print(action_label)
 
             actions.append(action_label)
 
+            wait(2)
             self.tic()
             action()
 
@@ -1474,7 +1659,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         for random_word, item in zip(random_words, items):
             self.assertEqual(random_word, item.text)
 
-        presentation_widget, response_widget\
+        presentation_widget, game_widget, response_widget\
             = self.get_session_widgets()
 
         self.assertEqual(random_words, response_widget.recalledwords)

@@ -19,6 +19,7 @@ from django.http import Http404
 #=============================================================================
 # Wilhelm imports.
 #=============================================================================
+from apps.presenter.conf import PLAY_EXPERIMENT_ROOT
 from apps.dataexport import models
 from apps.core.utils.django import http_response
 
@@ -72,6 +73,7 @@ def archive_listing(request):
         )
 
     context = dict(title = 'Experiment data listing',
+                   PLAY_EXPERIMENT_ROOT = PLAY_EXPERIMENT_ROOT,
                    export_list = export_list)
 
     return http_response(request, 'dataexport/listing.html', context)

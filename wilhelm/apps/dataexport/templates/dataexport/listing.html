@@ -12,7 +12,7 @@
 
    <ol class='data-export-list'>
    {% for export in export_list %}
-   <li> Experiment <a href="//{{MAIN_SUBDOMAIN_NAME}}/{{export.name}}">{{export.name|capfirst}}</a>.
+   <li> Experiment <a href="//{{MAIN_SUBDOMAIN_NAME}}{{PLAY_EXPERIMENT_ROOT}}{{export.name}}">{{export.name|capfirst}}</a>.
 	Recorded at {{export.datetime | date:"H:i:s, l, F j, Y"}}. 
 	<a href="{{export.url}}">[Download]</a> ({{export.filesize}}).
    </li>

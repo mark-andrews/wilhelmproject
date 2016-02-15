@@ -34,6 +34,7 @@ from .utils.viewutils import (presenter_error_response,
 #================================ End Imports ================================
 logger = logging.getLogger('wilhelm')
 
+
 def experiment_exists_or_404(experiment_name):
     
     """
@@ -82,7 +83,7 @@ def try_experiment(request, experiment_name, short_uid):
 def experiment_launcher(request, experiment_name):
 
     if user_not_authenticated(request):
-        return redirect_login_redirect(request, '/' + experiment_name)
+        return redirect_login_redirect(request, conf.PLAY_EXPERIMENT_ROOT + experiment_name)
 
     else:
         try:
@@ -111,7 +112,7 @@ def experiment(request, experiment_name, short_uid):
     '''
 
     if user_not_authenticated(request):
-        return redirect_login_redirect(request, '/' + experiment_name)
+        return redirect_login_redirect(request, conf.PLAY_EXPERIMENT_ROOT + experiment_name)
 
     else:
 
@@ -250,7 +251,7 @@ def hangup_nowplaying_gateway(request):
             live_experiment.hangup_nowplaying()
 
             data = json.dumps({'is_hangup': True,
-                               'experiment_uri': '/'+ live_experiment.name})
+                               'experiment_uri': conf.PLAY_EXPERIMENT_ROOT+ live_experiment.name})
 
         else:
             data = json.dumps({'is_hangup': False})
@@ -281,7 +282,7 @@ def hangup_playlist_gateway(request):
 
             elif 'get_playlist_feedback' in request.POST['next_playlist_action']:
                 live_experiment.hangup(status='completed')
-                next_uri = conf.feedback_uri + '/' + live_experiment.experiment.name
+                next_uri = conf.feedback_uri + conf.PLAY_EXPERIMENT_ROOT + live_experiment.experiment.name
 
             return django.jsonResponse(json.dumps({'next_uri': next_uri}))
 

@@ -1,6 +1,4 @@
-from django.conf.urls import patterns, url, include
-from django.conf.urls.static import static
-from django.conf import settings
+from django.conf.urls import url, include
 
 experiment_name_regex = r'[a-zA-Z0-9]+'
 
@@ -11,6 +9,9 @@ import apps.front.views
 import apps.archives.views
 import apps.subjects.views
 import apps.presenter.views
+
+from apps.presenter.conf import PLAY_EXPERIMENT_ROOT
+PLAY_EXPERIMENT_ROOT = PLAY_EXPERIMENT_ROOT.strip('/')
 
 urlpatterns = [
 
@@ -23,8 +24,9 @@ urlpatterns = [
     ############
     # Archives #
     ############
-    url(r'^experiments$', apps.archives.views.listing),
+    url(r'^experiments[/]*$', apps.archives.views.listing),
     url(r'^listing$', apps.archives.views.listing),
+    url(r'^experiments/(?P<experiment_name>'+experiment_name_regex+')[/]*$', apps.archives.views.experiment_homepage),
 
     #=========================================================================
     # Social media logins
@@ -65,13 +67,15 @@ urlpatterns = [
     url(r'^widget_gateway/(?P<widget_name>.*)/$', apps.presenter.views.widget_gateway),
     url(r'^ping_gateway$', apps.presenter.views.ping_gateway),
 
+    #############################
+    # Match playing experiments #
+    #############################
+    url(r'^' + PLAY_EXPERIMENT_ROOT + '/(?P<experiment_name>'+experiment_name_regex+')[/]*$', apps.presenter.views.try_experiment_launcher),
+    url(r'^' + PLAY_EXPERIMENT_ROOT + '/(?P<experiment_name>'+experiment_name_regex+')/(?P<short_uid>[0-9a-f]{7})[/]*$', apps.presenter.views.try_experiment),
+
     # Put this last!
     ##########################
     # Match experiment names #
     ##########################
-    #url(r'[a-z]*[/]*$', 'apps.presenter.views.foobar'),
-    url(r'^(?P<experiment_name>'+experiment_name_regex+')[/]*$', 
-        apps.presenter.views.try_experiment_launcher),
-    url(r'^(?P<experiment_name>'+experiment_name_regex+')/(?P<short_uid>[0-9a-f]{7})[/]*$',
-    apps.presenter.views.try_experiment),
+    url(r'^(?P<experiment_name>'+experiment_name_regex+')[/]*$', apps.archives.views.experiment_homepage),
 ]

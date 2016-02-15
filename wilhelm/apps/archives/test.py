@@ -476,16 +476,30 @@ class ExperimentListing(TestCase):
         shutil.rmtree(self.mock_repository.path)
         shutil.rmtree(self.mock_repository_setup_dir)
 
-    def test_url_resolves(self):
+    def test_listing_url_resolves(self):
+
         listing_response = resolve('/listing')
         self.assertEqual(listing_response.func, views.listing)
 
-    def _test_response_returns_correct_html(self):
-        request = HttpRequest()
-        response = views.listing(request)
-        self.assertTrue(response.content.startswith('<!DOCTYPE html>'))
-        self.assertTrue(response.content.endswith('</html>\n'))
+        listing_response = resolve('/experiments')
+        self.assertEqual(listing_response.func, views.listing)
 
-        for mock_experiments in testing_conf.mock_experiment_names:
-            self.assertIn(mock_experiments.lower(), 
-                          response.content)
+        listing_response = resolve('/experiments/')
+        self.assertEqual(listing_response.func, views.listing)
+
+    def test_experiment_url_resolves(self):
+
+        for mock_experiment in testing_conf.mock_experiment_names:
+            experiment_response = resolve('/experiments/' + mock_experiment)
+            self.assertEqual(experiment_response.func, 
+                             views.experiment_homepage)
+#
+#    def test_response_returns_correct_html(self):
+#        request = HttpRequest()
+#        response = views.listing(request)
+#        self.assertTrue(response.content.startswith('<!DOCTYPE html>'))
+#        self.assertTrue(response.content.endswith('</html>\n'))
+#
+#        for mock_experiments in testing_conf.mock_experiment_names:
+#            self.assertIn(mock_experiments.lower(), 
+#                          response.content)

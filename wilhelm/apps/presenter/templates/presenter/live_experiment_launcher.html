@@ -9,7 +9,7 @@ $(document).ready(function() {
 
 	$('#ContinueButton').click(
 			function() {
-				window.location.href = "/{{experiment_name}}/{{short_uid}}";
+				window.location.href = "{{PLAY_EXPERIMENT_ROOT}}{{experiment_name}}/{{short_uid}}";
 			}
 			);
 

@@ -367,6 +367,7 @@ class SlideLauncher(object):
         self.template_data['jsfiles'] = self.jsfiles
         self.template_data['experiment_name'] = experiment_name
         self.template_data['experiment_title'] = experiment_name.capitalize()
+        self.template_data['PLAY_EXPERIMENT_ROOT'] = conf.PLAY_EXPERIMENT_ROOT
 
         self.ping_uid = django.uid() # This is the baptism.
 

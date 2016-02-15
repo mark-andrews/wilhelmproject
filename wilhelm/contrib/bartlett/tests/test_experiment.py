@@ -35,7 +35,7 @@ from apps.archives.models import Experiment, ExperimentVersion
 from apps.core.utils.docutils import rst2innerhtml
 from apps.core.utils.strings import fill
 
-from apps.presenter.conf import button
+from apps.presenter.conf import button, PLAY_EXPERIMENT_ROOT
 from apps.sessions.models import ExperimentSession
 from apps.subjects.models import Subject
 from apps.testing.utils import rndemail, rndpasswd, rndstring
@@ -306,7 +306,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         self._test_signup_new_user()
 
         self.driver.get(
-            self.live_server_url + '/{0}'.format(self.experiment_name)
+            self.live_server_url + PLAY_EXPERIMENT_ROOT + '{0}'.format(self.experiment_name)
         )
 
         self.assertEquals('Experiment: {0}'.format(self.experiment_title), 
@@ -364,7 +364,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         self._test_signup_new_user()
 
         self.driver.get(
-            self.live_server_url + '/{0}'.format(self.experiment_name)
+            self.live_server_url + PLAY_EXPERIMENT_ROOT + '{0}'.format(self.experiment_name)
         )
 
         wait(1.0)
@@ -554,7 +554,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
         self._test_signup_new_user()
 
         self.driver.get(
-            self.live_server_url + '/{0}'.format(self.experiment_name)
+            self.live_server_url + PLAY_EXPERIMENT_ROOT + '{0}'.format(self.experiment_name)
         )
 
         #=============================================================================

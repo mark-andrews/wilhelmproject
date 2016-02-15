@@ -35,6 +35,7 @@ from apps.sessions import conf as sessions_conf
 from apps.front.conf import login_url
 from apps.core.utils.django import (push_redirection_url_stack,
                                     http_redirect)
+from apps.presenter.conf import PLAY_EXPERIMENT_ROOT
 
 #================================ End Imports ================================
 
@@ -230,7 +231,7 @@ class SlideLauncherSlideView(TestCase):
 
         '''
 
-        found = resolve('/' + experiment_name)
+        found = resolve(PLAY_EXPERIMENT_ROOT + experiment_name)
         self.assertEqual(found.func, views.try_experiment_launcher)
 
         response = views.try_experiment_launcher(request, experiment_name)
@@ -255,8 +256,9 @@ class SlideLauncherSlideView(TestCase):
             msg = 'Slideview type is %s.' % slide_to_be_launched_info.slideview_type
         )
 
-        response_contents.append('window.location.href = "/%s/%s"' %
-                                 (experiment_name,
+        response_contents.append('window.location.href = "%s%s/%s"' %
+                                 (PLAY_EXPERIMENT_ROOT,
+                                  experiment_name,
                                   slide_to_be_launched_info.ping_uid_short))
 
 
@@ -274,7 +276,7 @@ class SlideLauncherSlideView(TestCase):
         experiment_url\
             = '/'.join([experiment_name, slide_to_be_launched_info.ping_uid_short])
 
-        found = resolve('/'+experiment_url)
+        found = resolve(PLAY_EXPERIMENT_ROOT+experiment_url)
 
         self.assertEqual(found.func, views.try_experiment)
 
@@ -392,7 +394,7 @@ class SlideLauncherSlideView(TestCase):
         '''
 
         for experiment_name in self.experiment_names:
-            response = self.client.get('/' + experiment_name)
+            response = self.client.get(PLAY_EXPERIMENT_ROOT + experiment_name)
             self.assertRedirects(response, login_url)
 
     #=========================================================================
@@ -664,5 +666,10 @@ class RedirectionStackTestCase(TestCase):
         self.assertEqual(len(self.request.session['redirection_url_stack']), 
                          0)
 
-        self.assertEqual('/', http_redirect(self.request).url)
-        self.assertEqual('/', http_redirect(self.request).url)
+        self.assertEqual(PLAY_EXPERIMENT_ROOT, 
+                         http_redirect(self.request,
+                                       default_url=PLAY_EXPERIMENT_ROOT).url)
+
+        self.assertEqual(PLAY_EXPERIMENT_ROOT, 
+                         http_redirect(self.request,
+                                       default_url=PLAY_EXPERIMENT_ROOT).url)

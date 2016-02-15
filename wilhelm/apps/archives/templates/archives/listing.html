@@ -12,17 +12,17 @@
 			{% for experiment in experiments %}
 
 			<div class='media'>
-				<a class='media-left foo-media hidden-sm hidden-xs' href='/{{experiment.url}}'>
+				<a class='media-left foo-media hidden-sm hidden-xs' href='{{PLAY_EXPERIMENT_ROOT}}{{experiment.url}}'>
 					<img src='static/front/Phrenologychart.png' width='150'>
 				</a>
 
 				<div class='media-body experiment-listing'>
-				<h2> <a href="/{{ experiment.url }}">{{experiment.title}} &raquo;</a>  </h2>
+					<h2> <a href="{{PLAY_EXPERIMENT_ROOT}}{{ experiment.url }}">{{experiment.title}} &raquo;</a>  </h2>
 				<h5> Code name: {{experiment.name}} </h5>
 					{{ experiment.blurb | safe }}
 
 					<div style='text-align:left'>
-						<a class='btn btn-default' href="/{{ experiment.url }}">Start experiment &raquo;</a>
+						<a class='btn btn-default' href="{{PLAY_EXPERIMENT_ROOT}}{{ experiment.url }}">Start experiment &raquo;</a>
 					</div>
 				</div>
 			</div>

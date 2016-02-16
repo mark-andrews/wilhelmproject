@@ -212,6 +212,18 @@ class OrderedGenericElementToContainerModelManager(GenericElementToContainerMode
  
         return elements
 
+    def filter_by_container(self, container):
+        '''
+        Filter the GenericElementToContainerModel by container.
+        I.e., query for all instances of the container.
+        '''
+
+        return self.filter(
+            container_uid = container.uid,
+            container_ct = ContentType.objects.get_for_model(container)
+        ).order_by('rank')
+
+
  
 class OrderedGenericElementToContainerModel(GenericElementToContainerModel):
 

@@ -31,11 +31,20 @@ MEDIA_URL = '/data-archives/'
 #=============================================================================
 # Database settings.
 #=============================================================================
+DATABASE_SETTINGS = secrets['database']['postgresql-development']
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.sqlite3', 
-    'NAME': os.path.join(WILHELM_ROOT,'wilhelm.db'),                      
-}
+#'default': {
+#    'ENGINE': 'django.db.backends.sqlite3', 
+#    'NAME': os.path.join(WILHELM_ROOT,'wilhelm.db'),                      
+#}
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DATABASE_SETTINGS['name'],
+        'USER': DATABASE_SETTINGS['username'],
+        'PASSWORD': DATABASE_SETTINGS['password'],
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
 
 #=============================================================================

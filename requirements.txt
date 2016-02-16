@@ -44,6 +44,7 @@ path.py==8.1.2
 pep8==1.7.0
 pexpect==4.0.1
 pickleshare==0.6
+psycopg2==2.6.1
 ptyprocess==0.5.1
 Pygments==2.1
 PyJWT==1.4.0

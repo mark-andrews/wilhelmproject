@@ -99,23 +99,30 @@ class ExperimentSessionManager(models.Manager):
             return my_experiment_sessions.last()
 
     def get_my_completions(self, experiment, subject):
+
         ''' 
         Get number of times `user` has completed experiment
         `experiment`.
-        If there are experiment sessions for request.user to do experiment
-        `experiment_name`, then they should all be "completed".
         '''
 
-        my_sessions = self.get_my_this_experiment_sessions(experiment, subject)
+        return len(self.filter(subject=subject,
+                           experiment_version__experiment=experiment,
+                           status=conf.status_completed))
 
-        if my_sessions:
-            assert all([session.status == conf.status_completed 
-                        for session in my_sessions])
-            completions = len(my_sessions)
-        else:
-            completions = 0
+        # TODO (Sun 21 Feb 2016 00:44:22 GMT): This was an accident waiting to happen.
+        # An assert error would be raised if all sessions were not completed when this
+        # function was called. Why should they be completed?
 
-        return completions
+#        my_sessions = self.get_my_this_experiment_sessions(experiment, subject)
+#
+#        if my_sessions:
+#            assert all([session.status == conf.status_completed 
+#                        for session in my_sessions])
+#            completions = len(my_sessions)
+#        else:
+#            completions = 0
+#
+#        return completions
 
 
 class ExperimentSession(models.Model):

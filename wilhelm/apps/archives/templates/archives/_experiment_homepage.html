@@ -1,0 +1,49 @@
+{% load humanize %}
+
+<div class='media'>
+	<a class='media-left foo-media hidden-sm hidden-xs' href='{{PLAY_EXPERIMENT_ROOT}}{{experiment.url}}'>
+		<img src='/static/front/Phrenologychart.png' width='150'>
+	</a>
+
+	<div class='media-body experiment-listing'>
+		<h2> <a href="{{PLAY_EXPERIMENT_ROOT}}{{ experiment.url }}">{{experiment.title}} &raquo;</a>  </h2>
+	<h5> Code name: {{experiment.name}} </h5>
+		{{ experiment.blurb | safe }}
+
+		<div style='text-align:left'>
+		{% if experiment.visited %}
+
+			{% if experiment.most_recent_attempt_status == 'paused' %}
+				<a class='btn btn-default' href="{{PLAY_EXPERIMENT_ROOT}}{{experiment.url}}">Resume experiment &raquo;</a>
+			{% elif experiment.most_recent_attempt_status == 'live' %}
+				<a class='btn btn-default not-active' href="{{PLAY_EXPERIMENT_ROOT}}{{experiment.url}}">Experiment live</a>
+			{% elif experiment.most_recent_attempt_status == 'completed' %}
+				{% if experiment.attempts_remaining %}
+				<div class='info'>You have done this experiment 
+					on {{experiment.number_of_completions|apnumber}} 
+					previous
+					occasion{{experiment.number_of_completions|pluralize}} already. </div>
+					<a class='btn btn-default' href="{{PLAY_EXPERIMENT_ROOT}}{{experiment.url}}">Do experiment again &raquo;</a>
+					<a class='btn btn-default' href="/feedback/{{experiment.url}}">Feedback so far &raquo;</a>
+				{% else %}
+
+				{% if experiment.single_attempt_only %}
+				<div class='info'>You completed this experiment on {{experiment.date_completed |date:"d M, Y"}}.</div>
+				{% else %}
+				<div class='info'>You completed the maximum 
+					number of attempts of this experiment on {{experiment.date_completed |date:"d M, Y"}}.</div>
+				{% endif %}
+
+
+
+					<a class='btn btn-default' href="/feedback/{{experiment.url}}">Feedback &raquo;</a>
+				{% endif %}
+			{% endif %}
+
+
+		{% else %}
+			<a class='btn btn-default' href="{{PLAY_EXPERIMENT_ROOT}}{{experiment.url}}">Start experiment &raquo;</a>
+		{% endif %}
+		</div>
+	</div>
+</div>

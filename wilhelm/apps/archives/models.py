@@ -430,6 +430,9 @@ class Experiment(models.Model):
     are pointers to the experiment tar balls.
     '''
 
+    #=========================================================================
+    # Model fields
+    #=========================================================================
     class_name = models.CharField(max_length=50, primary_key=True)
     date_created = models.DateTimeField(null=True, blank=True)
 
@@ -448,12 +451,15 @@ class Experiment(models.Model):
     # Max number of attempts by each subject. If null, then unlimited.
     attempts = models.IntegerField(null=True, default=1)
 
-    @property
-    def name(self):
-        return self.class_name.lower()
-
+    #=========================================================================
+    # Model manager
+    #=========================================================================
     objects = ExperimentManager()
 
+
+    #=========================================================================
+    # Class methods
+    #=========================================================================
     @classmethod
     def new(cls, class_name):
 
@@ -468,6 +474,9 @@ class Experiment(models.Model):
 
         return experiment
 
+    #=========================================================================
+    # Instance methods
+    #=========================================================================
     def set_default_current_version(self):
 
         '''
@@ -511,3 +520,25 @@ class Experiment(models.Model):
         """
 
         return ExperimentVersion.objects.filter(experiment=self)
+
+    #=========================================================================
+    # Properties
+    #=========================================================================
+    @property
+    def name(self):
+        return self.class_name.lower()
+
+    @property
+    def single_attempt_only(self):
+
+        '''
+        If attempts == 1, then only one attempt at this experiment is allowed.
+        If attempts > 1, then more than one attempt is allowed.
+        If attempts == None, then an unlimited number of attempts are allowed.
+        '''
+
+        if self.attempts == 1:
+            return True
+        else:
+            return False
+

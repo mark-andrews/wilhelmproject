@@ -24,6 +24,9 @@ var process_signupform = function(minimal_password_length) {
     if (username_and_email == '') {
         $('.username-live-error').text('Email address should not be empty.').show();
         valid = false;
+    } else if (username_and_email.length > 30) {
+        $('.username-live-error').text('Your email address should be less than 30 characters.').show();
+        valid = false;
     } else if (NotIsEmail(username_and_email)) {
         $('.username-live-error').text('That email address does not look valid.').show();
         valid = false;

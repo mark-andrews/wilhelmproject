@@ -331,6 +331,7 @@ class SignUpForm(object):
 
         emailaddr = self.postdict['username'].strip()
         assert len(emailaddr), 'Email address should not be empty'
+        assert len(emailaddr) < 30, 'Email address should be less than 30 characters'
         assert validate_email(emailaddr), 'Invalid email address.'
         assert user_does_not_exist(emailaddr), msg('''
                 An account using the email "%s" already exists. Do you already

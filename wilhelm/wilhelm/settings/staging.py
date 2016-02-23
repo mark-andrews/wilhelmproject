@@ -3,11 +3,13 @@ from __future__ import absolute_import
 from .base import *
 
 DEBUG = False
-TEMPLATE_DEBUG = True
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 DEVELOPMENT_SERVER = False
 
 ALLOWED_HOSTS = configs['allowed_hosts']['staging']
+
+STAGING_VAR_ROOT = "/tmp/var/wilhelm/"
 
 #=============================================================================
 # domain/subdomain stuff
@@ -26,7 +28,7 @@ SESSION_COOKIE_DOMAIN\
 # Static files settings.
 #=============================================================================
 STATIC_URL = '/static/'
-STATIC_ROOT = '/tmp/var/static'
+STATIC_ROOT = STAGING_VAR_ROOT + 'static'
 
 STATICFILES_DIRS = (
     os.path.join(WILHELM_ROOT, "static"),
@@ -35,13 +37,13 @@ STATICFILES_DIRS = (
 #=============================================================================
 # EXPERIMENT_ARCHIVES_CACHE
 #=============================================================================
-EXPERIMENT_ARCHIVES_CACHE = '/tmp/var/wilhelm/data-archives'
+EXPERIMENT_ARCHIVES_CACHE = STAGING_VAR_ROOT + 'data-archives'
 mk_archive_cache_dir(EXPERIMENT_ARCHIVES_CACHE, 0775)
 
 #=============================================================================
 # DATA_ARCHIVES_CACHE & MEDIA 
 #=============================================================================
-DATA_ARCHIVES_CACHE = '/tmp/var/wilhelm/cache/data'
+DATA_ARCHIVES_CACHE = STAGING_VAR_ROOT + 'cache/data'
 mk_archive_cache_dir(DATA_ARCHIVES_CACHE, 0775)
 MEDIA_ROOT = DATA_ARCHIVES_CACHE
 MEDIA_URL = '/data-archives/'
@@ -50,13 +52,17 @@ MEDIA_URL = '/data-archives/'
 #=============================================================================
 # Database settings.
 #=============================================================================
+DATABASE_SETTINGS = secrets['database']['postgresql-staging']
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.sqlite3', 
-    'NAME': os.path.join(WILHELM_ROOT,'wilhelm.db'),                      
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DATABASE_SETTINGS['name'],
+        'USER': DATABASE_SETTINGS['username'],
+        'PASSWORD': DATABASE_SETTINGS['password'],
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
-}
-
 #=============================================================================
 # Django lockdown
 #=============================================================================
@@ -87,6 +93,11 @@ LOGFILE_FILENAME = DOMAIN_NAME + '.log'
 mk_archive_cache_dir(LOGFILE_DIRECTORY, 0775)
 LOGGING['handlers']['file']['filename']\
     = os.path.join(LOGFILE_DIRECTORY, LOGFILE_FILENAME)
+
+#=============================================================================
+# Add django_extensions to INSTALLED_APPS
+#=============================================================================
+INSTALLED_APPS += ('django_extensions',)
 
 
 # Facebook 

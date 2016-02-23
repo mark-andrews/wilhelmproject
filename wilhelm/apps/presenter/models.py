@@ -155,13 +155,13 @@ class LiveExperimentSession(models.Model):
     #=============================================================================
     # User agent information
     #=============================================================================
-    ua_string = models.CharField(max_length=250, null=True)
-    ua_string_pp = models.CharField(max_length=250, null=True)
-    ua_browser = models.CharField(max_length=100, null=True)
-    ua_browser_version = models.CharField(max_length=10, null=True)
-    ua_os = models.CharField(max_length=100, null=True)
-    ua_os_version = models.CharField(max_length=10, null=True)
-    ua_device = models.CharField(max_length=100, null=True)
+    ua_string = models.TextField(null=True)
+    ua_string_pp = models.TextField(null=True)
+    ua_browser = models.TextField(null=True)
+    ua_browser_version = models.TextField(null=True)
+    ua_os = models.TextField(null=True)
+    ua_os_version = models.TextField(null=True)
+    ua_device = models.TextField(null=True)
     ua_is_mobile = models.NullBooleanField()
     ua_is_tablet = models.NullBooleanField()
     ua_is_touch_capable = models.NullBooleanField()
@@ -171,11 +171,11 @@ class LiveExperimentSession(models.Model):
     #=============================================================================
     # Ip and geo-IP information
     #=============================================================================
-    ip_address = models.CharField(max_length=20, null=True)
-    city = models.CharField(max_length=100, null=True)
-    country_name = models.CharField(max_length=100, null=True)
-    country_code = models.CharField(max_length=100, null=True)
-    country_code_alt = models.CharField(max_length=100, null=True)
+    ip_address = models.TextField(null=True)
+    city = models.TextField(null=True)
+    country_name = models.TextField(null=True)
+    country_code = models.TextField(null=True)
+    country_code_alt = models.TextField(null=True)
     longitude = models.FloatField(null=True)
     latitude = models.FloatField(null=True)
 

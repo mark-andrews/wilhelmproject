@@ -418,21 +418,21 @@ class SignUpTestCase(StaticLiveServerTestCase):
 
         self.assertIn(expected_error_msg, error_msg_span.text)
 
-    def test_catch_blank_username(self):
+    def test_long_email(self):
 
         '''
         Test that in the signup form, the subject's username (email address) is
-        not blank. 
+        not too long (>30 chars).
 
         '''
 
         firstname = fakeuser['firstname']
         password = rndpasswd(minimal_password_length + 1)
 
-        expected_error_msg = 'Email address should not be empty.'
+        expected_error_msg ='Your email address should be less than 30 characters.' 
 
         self.signup_new_user(firstname = firstname,
-                             username = '',
+                             username = 'wilhelm.foo@wilhelmtest.foobar.org',
                              password = password,
                              confirmpassword = password)
 
@@ -526,7 +526,7 @@ class SignUpTestCase(StaticLiveServerTestCase):
         SocialMedia = dict()
 
         SocialMedia['Facebook']\
-            = (('btn-facebook', 'email', 'pass', 'u_0_2'),
+            = (('btn-facebook', 'email', 'pass', 'loginbutton'),
                ('testing.wilhelmproject@gmail.com', 'a)9Ft0|O', 'WilhelmTester')
                )
 
@@ -566,7 +566,7 @@ class SignUpTestCase(StaticLiveServerTestCase):
                 password_object.send_keys(password)
 
                 login_btn = self.driver.find_element_by_id(signin_tag)
-                login_btn.submit()
+                login_btn.click()
 
             signed_in_as\
                 = self.driver.find_element_by_class_name('signed-in-as')\

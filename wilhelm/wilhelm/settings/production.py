@@ -1,9 +1,12 @@
 from __future__ import absolute_import
-
 from .base import *
 
+#=============================================================================
+# Django project parameters.
+#=============================================================================
+
 DEBUG = False
-TEMPLATE_DEBUG = True
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 
 DEVELOPMENT_SERVER = False
 IS_PRODUCTION_SERVER = True 
@@ -59,6 +62,11 @@ DATABASES = {
     'NAME': os.path.join(WILHELM_ROOT,'wilhelm.db'),                      
 }
 }
+
+#=============================================================================
+# Add django_extensions to INSTALLED_APPS
+#=============================================================================
+INSTALLED_APPS += ('django_extensions',)
 
 
 #=============================================================================

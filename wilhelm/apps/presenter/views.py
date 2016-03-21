@@ -282,7 +282,7 @@ def hangup_playlist_gateway(request):
 
             elif 'get_playlist_feedback' in request.POST['next_playlist_action']:
                 live_experiment.hangup(status='completed')
-                next_uri = conf.feedback_uri + conf.PLAY_EXPERIMENT_ROOT + live_experiment.experiment.name
+                next_uri = conf.feedback_uri + '/' + live_experiment.experiment.name
 
             return django.jsonResponse(json.dumps({'next_uri': next_uri}))
 

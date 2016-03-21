@@ -66,6 +66,6 @@ ping_grace_period = 30
 
 error_template = 'presenter/error.html'
 
-feedback_uri = 'feedback'
+feedback_uri = '/feedback'
 
 PLAY_EXPERIMENT_ROOT = '/play/'

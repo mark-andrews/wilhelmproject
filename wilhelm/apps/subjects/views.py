@@ -262,8 +262,12 @@ def getdemographicsview(request):
 
 def get_completed_experiment_sessions(request, experiment_name):
 
-    """
-    Find all completed experiments
+    """ Find all experiments session, with name `experiment_name`, that were
+    completed by the subject in request.
+
+    Return:
+        A QuerySet of ExperimentSessions, reverse ordered by attempt.
+
     """
 
     subject = get_subject_from_request(request)
@@ -305,11 +309,41 @@ def experiment_feedback(request, experiment_name):
 
     context = dict(feedbacks=completed_sessions_feedback,
                    jsonfeedback=tojson(completed_sessions_feedback))
+    
+    # TODO (Tue 07 Jun 2016 16:19:56 BST): This is a hack. 
+    # There should be a feedback template associated with this experiment, i.e.
+    # at the Playlist level. That template should be used here.
 
-    return http_response(request, 'subjects/experiment_feedback.html', context)
+    # TODO (Tue 07 Jun 2016 16:48:17 BST): This is an even bigger hack.
+    # Here, we are doing special processing of the feedback for bartlett based
+    # memory tests. But really, this should be done in a bartlett/views.py. 
+    # Well, maybe.
+    # There are other ways.
+    # We could 
+    if experiment_name in ('brisbane', 'malmo'):
+        template = 'bartlett/experiment_feedback.html'
+        context = dict(feedback=completed_sessions_feedback[0],
+                       jsonfeedback=tojson(completed_sessions_feedback))
+     
+    else:
+        context = dict(feedbacks=completed_sessions_feedback,
+                       jsonfeedback=tojson(completed_sessions_feedback))
+        template = 'subjects/experiment_feedback.html'
+
+    return http_response(request, template, context)
 
 @login_required
 def feedback(request):
+
+    '''
+    Render a feedback listing page for the Subject of the request.
+
+    Returns:
+        A http_response object with the 'subject/feedback.html' rendered to
+        list out all completed experiments.
+
+
+    '''
 
     subject = get_subject_from_request(request)
 

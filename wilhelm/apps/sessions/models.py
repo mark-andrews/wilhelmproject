@@ -35,6 +35,21 @@ logger = logging.getLogger('wilhelm')
 
 class ExperimentSessionManager(models.Manager):
 
+    def get_experiment_sessions(self, experiment_pk):
+
+        """Get all "ExperimentSession"s belonging to Experiment=experiment_pk.
+
+        Find all "ExperimentSession"s whose parent Experiment has pk
+        `experiment_pk`, e.g. 'Brisbane'.
+
+        Returns:
+            A QuerySet of Experiment objects.
+
+        """
+
+        return self.filter(experiment_version__experiment = experiment_pk)
+
+
     def get_all_my_experiment_sessions(self, subject):
         '''
         Get experiment sessions of `experiment_name` that belong to `subject`.

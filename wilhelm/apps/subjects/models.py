@@ -11,6 +11,7 @@ import datetime
 #=============================================================================
 # Django imports 
 #=============================================================================
+from django.db.models import Q
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -65,6 +66,82 @@ class SubjectManager(models.Manager):
         return Subject.objects.create(uid=subject_uid, 
                                       user=user, 
                                       **kwargs)
+    def get_real_subjects(self):
+
+        """Return all real subjects.
+
+        Real subjects are any Subject objects whose temp_subject and
+        test_subject attributes are False.
+
+        Returns:
+            A QuerySet of "Subject"s.
+
+        """
+
+        return self.filter(Q(temp_subject=False) & Q(test_subject=False))
+
+    def get_not_real_subjects(self):
+
+        """Return all not real subjects.
+
+        Not real or fake subjects are any Subject objects whose temp_subject
+        or test_subject attributes are True.
+
+        Returns:
+            A QuerySet of "Subject"s.
+
+        """
+
+        return self.filter(Q(temp_subject=True) | Q(test_subject=True))
+
+    def get_temp_subjects(self):
+        
+        """Return temp subjects.
+
+        Temp "Subject"s are any Subject objects whose temp_subject attribute is
+        True.
+
+        Returns:
+            A QuerySet of "Subject"s.
+
+        """
+
+        return self.filter(temp_subject=True)
+
+    def get_test_subjects(self):
+
+        """Return test subjects.
+
+        Temp "Subject"s are any Subject objects whose test_subject attribute is
+        True.
+
+        Returns:
+            A QuerySet of "Subject"s.
+
+        """
+
+        return self.filter(test_subject=True)
+
+    def set_to_test_subject(self, subject_uids):
+
+        """Set "Subject"s as test subjects.
+
+        For every Subject whose uid is in subject_uids, set its test_subject
+        attribute to True.
+
+        Args:
+            subject_uids: A list of subject uids.
+
+        Returns:
+            None.
+
+        """
+        
+        for subject in self.filter(uid__in = subject_uids):
+
+            subject.test_subject = True
+            subject.save()
+
 
 class Subject(models.Model):
     objects = SubjectManager()
@@ -73,6 +150,8 @@ class Subject(models.Model):
     user = models.ForeignKey(User)
 
     temp_subject = models.BooleanField(default=False)
+    test_subject = models.BooleanField(default=False)
+
     created = models.DateTimeField(null=True)
 
     login_method = models.CharField(max_length=100, 

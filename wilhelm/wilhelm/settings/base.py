@@ -234,7 +234,7 @@ TEMPLATES = [
 #=============================================================================
 # Authentication settings.
 #=============================================================================
-
+ALLOW_PASSWORDLESS_LOGIN = False
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "apps.presenter.utils.TempSubjectBackend",

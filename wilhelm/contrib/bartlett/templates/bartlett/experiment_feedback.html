@@ -1,0 +1,132 @@
+{% extends 'front/front.html' %}
+{% load humanize %}
+
+{% block head %}
+
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="/static/bartlett/css/bartlett.css">
+
+{% endblock %}
+
+{% block content %}
+
+<div class='container profile'>
+
+    <div class="row">
+        <div class='feedback_page'>
+
+            <div class='col-xs-12 col-sm-8 col-sm-offset-2'>
+
+                <h1>Experiment Feedback</h1>
+
+                <p>
+                In this experiment, there were {{feedback.Slides | length}} memory tests.
+                There w{{feedback.test_type_counter.Recognition|pluralize:"as,ere"}} 
+                {{feedback.test_type_counter.Recognition}} recognition 
+                test{{feedback.test_type_counter.Recognition|pluralize}},
+                and {{feedback.test_type_counter.Recall}}
+                recall test{{feedback.test_type_counter.Recall|pluralize}}.
+                In summary, your performance was as follows: 
+                </p>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>Score</th>
+                            <th>Percentile</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for slide in feedback.Slides %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{slide.Test_type}}</td>
+
+                            {% if slide.Test_type == 'Recognition' %}
+
+                                {% if slide.accuracy == None %}
+                                    <td>Missing</td>
+                                {% else %}
+                                    <td>{% widthratio slide.accuracy 1 100 %}</td>
+                                {% endif %}
+                                
+                            {% elif slide.Test_type == 'Recall' %}
+
+                                {% if slide.f1 == None %}
+                                    <td>Missing</td>
+                                {% else %}
+                                    <td>{% widthratio slide.f1 1 100 %}</td>
+                                {% endif %}
+
+                            {% endif %}
+
+                            <td>
+
+                                {% if slide.percentile_of_score == None %}
+					
+                                	<div class='null-barbox'>
+                                    	<span>
+				        </span>
+					</div>
+
+				{% else %}
+
+                                <div class='barbox'>
+					{% if slide.percentile_of_score < 5 %}
+					    <div style='width:{{ slide.percentile_of_score | add:"3" }}%' class='barbox-bar'>
+					{% else %}
+					    <div style='width:{{ slide.percentile_of_score | add:"3" }}%' class='barbox-bar'>
+					{% endif %}
+					    {{ slide.percentile_of_score}}
+					    </div>
+                                </div>
+
+				{% endif %}
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <p> The Percentile tells you about your
+                performance relative to all the {{feedback.n_unique_subjects}} people who did this
+                                experiment so far. So, if you
+                got a Percentile value of 35, that means you
+                performed better than 35% of the {{feedback.n_unique_subjects}} people who did
+                the test.</p>
+
+                {% for slide in feedback.Slides %}
+                <h3>Test {{forloop.counter}}</h3>
+                {% if slide == None %}
+                <p> Unfortunately, due to an error in processing, we can not
+                provide any feedback for this part of the experiment.</p> 
+                {% else %}
+		
+			{% if slide.percentile_of_score == None %}
+				<p>
+				Your score on this test is missing. Usually, this is because the test was interrupted and so was not completed properly.
+				</p>
+
+			{% else %}
+				{% if slide.Test_type == 'Recognition' %}
+				{% include 'bartlett/recognition_test_feedback.html' with feedback=slide test_count=forloop.counter %}
+				{% elif slide.Test_type == 'Recall' %}
+				{% include 'bartlett/recall_test_feedback.html' with feedback=slide test_count=forloop.counter %}
+				{% endif %}
+			{% endif %}
+
+                {% endif %}
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+    {% endblock content %}

@@ -24,22 +24,39 @@
 
 	<p>
 
+
+	{% if not feedback.f1 == None %}
+
+		<span class='main-feedback-take-home'>Your score on this test
+			was {{ feedback.true_recall_percentage}}, and you
+			performed better than {{ feedback.percentile_of_score }}% of the others who did this test</span>.
+		
+		This score was calculated with a formula based on the total
+		number of words you recalled, and how many of these occurred in
+		the 
+		{% if feedback.Memoranda_type == 'Text' %}
+			text you read.
+		{% elif feedback.Memoranda_type == 'Wordlist' %}
+			word list you saw.
+		{% endif %}
+
+	{% endif %}
 	You recalled {{feedback.recall_count}} words from the {{feedback.Memoranda_type|memorandumname}}.
 
 
 	{% if not feedback.false_recall_rate == None %}
 		{% if feedback.false_recall_count > 0 %}
 
-		<span class='main-feedback-take-home'>Your "true recall" rate was {{ feedback.true_recall_percentage}}%.</span>
+		Your "true recall" rate was {{ feedback.true_recall_percentage}}%.
 		Your "false recall" rate was {{ feedback.false_recall_percentage}}%. 
 
-		Exactly {{feedback.false_recall_count}} of the {{feedback.recall_count}}
+		So exactly {{feedback.false_recall_count}} of the {{feedback.recall_count}}
 		word{{feedback.recall_count|pluralize}} you recalled did not
 		in fact occur in the 
 		{% if feedback.Memoranda_type == 'Text' %}
-			text you just read.
+			text you read.
 		{% elif feedback.Memoranda_type == 'Wordlist' %}
-			word list you just saw.
+			word list you saw.
 		{% endif %}
 	
 		{% endif %}

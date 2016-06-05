@@ -1,7 +1,31 @@
 from __future__ import division
 
 from apps.core.utils import strings 
+from .conf import recall_f1_score_number_of_relevant_items as f1_recall_denominator
 
+def f1score(true_recall_count,
+            true_recall_rate,
+            f1_recall_denominator):
+
+    """Return the F1 score for a recall test.
+
+    Returns:
+        A float.
+
+    """
+
+    try:
+        recall = min(1.0, true_recall_count/f1_recall_denominator)
+        precision = true_recall_rate
+        f1 = 2.0*recall*precision/float(recall+precision)
+    except TypeError:
+            f1 = None
+    except ZeroDivisionError:
+            f1 = 0.0
+
+    return f1
+
+  
 def WordRecognitionTestStimuliCheck(memorandum, inwords, outwords):
 
     '''
@@ -52,6 +76,7 @@ def WordRecognitionTestStimuliCheck(memorandum, inwords, outwords):
 
         raise AssertionError('\n\n'.join([ErrMsgA, ErrMsgB, ErrMsgC]))
 
+
 def calculate_recall_rates(memoranda, recalled_words):
 
         recall_count = len(recalled_words)
@@ -85,17 +110,23 @@ def calculate_recall_rates(memoranda, recalled_words):
             false_recall_rate = None
             false_recall_percentage = None
 
+        f1 = f1score(true_recall_count,
+                     true_recall_rate,
+                     f1_recall_denominator)
+
         summary = dict(true_recalls = true_recalls,
                        false_recalls = false_recalls,
                        true_recall_count = true_recall_count,
                        false_recall_count = false_recall_count,
                        recall_count = recall_count,
                        true_recall_rate = true_recall_rate,
+                       f1 = f1,
                        true_recall_percentage = true_recall_percentage,
                        false_recall_percentage = false_recall_percentage,
                        false_recall_rate = false_recall_rate)
 
         return summary
+
 
 def nonstopword_unique_tokens(words):
 

@@ -109,7 +109,11 @@ class SessionWordlistDisplay(SessionWordlistMixin, SessionWidget):
 
     @property
     def wordlist(self):
-        return self.wordliststimulus.wordlist
+        try:
+            return self.wordliststimulus.wordlist
+        except AttributeError as e:
+            logger.warning(e)
+            return None
 
 
     def data_export(self):
@@ -145,7 +149,13 @@ class SessionWordlistDisplay(SessionWordlistMixin, SessionWidget):
         summary = {}
 
         summary['Memoranda_type'] = 'Wordlist'
-        summary['Wordlist'] = self.wordlist
-        summary['List_length'] = len(self.wordlist)
+        try:
+            summary['Wordlist'] = self.wordlist
+            summary['List_length'] = len(self.wordlist)
+        except Exception as e:
+            logger.error(e)
+            summary['Wordlist'] = None
+            summary['List_length'] = 0
+            
 
         return summary

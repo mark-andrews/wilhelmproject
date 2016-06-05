@@ -107,3 +107,8 @@ fb_secrets = secrets['social_auth']['facebook-for-development']
 
 SOCIAL_AUTH_FACEBOOK_KEY = fb_secrets['key']
 SOCIAL_AUTH_FACEBOOK_SECRET = fb_secrets['secret']
+
+AUTHENTICATION_BACKENDS\
+    = ("apps.presenter.utils.PasswordlessAuthBackend",) + AUTHENTICATION_BACKENDS
+
+ALLOW_PASSWORDLESS_LOGIN = True

@@ -48,7 +48,9 @@ def dump_traceback():
 
     return exception_details
 
+
 def list_all_nontemp_subjects():
+
     '''
     Return a list of strings that provide details of each non-temp subject.
     '''
@@ -80,7 +82,9 @@ def list_all_nontemp_subjects():
 
     return S
 
+
 def subject_enroll(enroll_cfg):
+
     '''
     The enroll_cfg should be configobj parsed file. 
 
@@ -218,23 +222,27 @@ def social_media_user_subject_create(**kwargs):
 
 def wilhelmlogin(request, username, password):
 
+    if settings.ALLOW_PASSWORDLESS_LOGIN:
+        user = authenticate(username=username)
+
+    else:
         user = authenticate(username=username, 
                             password=password)
 
-        assert user is not None,\
-            msg('The username or password you entered is incorrect.')
+    assert user is not None,\
+        msg('The username or password you entered is incorrect.')
 
-        assert user.is_active, msg('Your account is not active.')
+    assert user.is_active, msg('Your account is not active.')
 
-        login(request, user)
+    login(request, user)
 
-        if is_demo_account(request):
-            subject = Subject.objects.create_temp_subject(user)
-            request.session['temp_subject_uid'] = subject.uid
-        else:
-            subject = Subject.objects.get(user=user)
+    if is_demo_account(request):
+        subject = Subject.objects.create_temp_subject(user)
+        request.session['temp_subject_uid'] = subject.uid
+    else:
+        subject = Subject.objects.get(user=user)
 
-        return user, subject
+    return user, subject
 
 class SignUpForm(object):
 

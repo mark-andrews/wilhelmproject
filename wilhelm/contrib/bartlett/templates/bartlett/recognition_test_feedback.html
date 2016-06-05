@@ -29,11 +29,10 @@
 	</p>
 
 	<p>
-
 	{% if not feedback.accuracy == None %}
-	<span class='main-feedback-take-home'>Your overall accuracy was {% widthratio feedback.accuracy 1 100 %}%</span>:
+		<span class='main-feedback-take-home'>Your score on this test was {% widthratio feedback.accuracy 1 100 %},
+			and you performed better than {{ feedback.percentile_of_score }}% of the others who did this test</span>.
 		You responded correctly to {{feedback.total_true}} out of {{feedback.total}} items.
-
 	{% endif %}
 
 	{% if feedback.false_positive_rate == None %}

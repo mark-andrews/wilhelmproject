@@ -1,36 +1,58 @@
 {% extends "front/front.html" %}
 
+{% load humanize %}
+
 {% block content %} 
 
 <div class='container'>
 
-	<section class='container content-section'>
-		<div class='row'>
-			<div class='col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1'>
+    <section class='container content-section'>
+        <div class='row'>
+            <div class='col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1'>
 
 
-			{% for experiment in experiments %}
+                {% for experiment in experiments %}
 
-			<div class='media'>
-				<a class='media-left foo-media hidden-sm hidden-xs'
-                                    href='/feedback/{{experiment.name}}'>
-					<img src='/static/front/Phrenologychart.png' width='150'>
-				</a>
+                <div class='media'>
+                    <a class='media-left foo-media hidden-sm hidden-xs'
+                        href='/feedback/{{experiment.name}}'>
+                        <img src='/static/front/Phrenologychart.png' width='150'>
+                    </a>
 
-				<div class='media-body experiment-listing'>
-				<h2> <a href="/feedback/{{ experiment.name }}">{{experiment.title}}</a>  </h2>
-				<h5> Code name: {{experiment.name}} </h5>
-                                <p>You have {{experiment.completed_attempts}} completed attempts of this experiment.
+                    <div class='media-body experiment-listing'>
+                        <h2> <a href="/feedback/{{ experiment.name }}">{{experiment.title}}</a>  </h2>
+                        <h5> Code name: {{experiment.name}} </h5>
+                        <p>
 
-				</div>
-			</div>
+                        {% if experiment.attempts_remaining %}
+                        <div class='info'>You have done this experiment 
+                            on {{experiment.number_of_completions|apnumber}} 
+                            previous
+                            occasion{{experiment.number_of_completions|pluralize}} already. </div>
+                        <a class='btn btn-default' href="/feedback/{{experiment.url}}">Feedback so far &raquo;</a>
+                        {% else %}
 
-			{% endfor %}
+                        {% if experiment.single_attempt_only %}
+                        <div class='info'>You completed this experiment on {{experiment.date_completed |date:"d M, Y"}}.</div>
+                        {% else %}
+                        <div class='info'>You completed the maximum 
+                            number of attempts of this experiment on {{experiment.date_completed |date:"d M, Y"}}.</div>
+                        {% endif %}
+
+                        <a class='btn btn-default' href="/feedback/{{experiment.url}}">Feedback &raquo;</a>
+
+                        {% endif %}
+                        </p>
+
+                    </div>
+                </div>
+
+                {% endfor %}
 
 
-			</div>
-		</div>
-	</section>
+            </div>
+        </div>
+    </section>
 
 </div>
 

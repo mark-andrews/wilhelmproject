@@ -26,12 +26,18 @@ from .utils import (SignUpForm,
                     DemographicsForm,
                     is_demo_account,
                     get_subject_from_request)
-from apps.core.utils.django import http_response, form_view
+from apps.core.utils.django import (http_response,
+                                    form_view,
+                                    push_redirection_url_stack)
 from apps.sessions.models import ExperimentSession
 from apps.sessions.conf import status_completed
 from apps.archives.models import Experiment
+from apps.archives.views import get_most_recent_attempt_status
 from apps.dataexport.utils import tojson
 from apps.core.utils.django import http_redirect
+from apps.subjects.utils import has_unlimited_experiment_attempts
+from apps.core.utils.docutils import rst2innerhtml
+
 
 #================================ End Imports ================================
 logger = logging.getLogger('wilhelm')
@@ -104,6 +110,10 @@ def logoutview(request):
     return HttpResponseRedirect('/')
 
 def loginview(request, admin=False):
+
+    if 'next' in request.GET:
+        push_redirection_url_stack(request, request.GET['next'])
+
 
     # TODO (Thu 26 Feb 2015 00:07:10 GMT): Why are we doing @loginrequired?
     if not request.user.is_authenticated():
@@ -298,39 +308,50 @@ def experiment_feedback(request, experiment_name):
 
     """
     Return the subject's feedback for experiment `experiment_name`.
+
+    If there is no feedback for that experiment, i.e., subject has not
+    completed the experiment, then send them to a 'no feedback yet' page.
+
     """
 
     completed_experiment_sessions\
         = get_completed_experiment_sessions(request, experiment_name)
 
-    completed_sessions_feedback\
-        = [experiment_session.feedback() 
-           for experiment_session in completed_experiment_sessions]
+    if len(completed_experiment_sessions) == 0:
 
-    context = dict(feedbacks=completed_sessions_feedback,
-                   jsonfeedback=tojson(completed_sessions_feedback))
-    
-    # TODO (Tue 07 Jun 2016 16:19:56 BST): This is a hack. 
-    # There should be a feedback template associated with this experiment, i.e.
-    # at the Playlist level. That template should be used here.
+        return http_response(request, 
+                             template='subjects/no_experiment_feedback.html', 
+                             context=dict(experiment_name=experiment_name))
 
-    # TODO (Tue 07 Jun 2016 16:48:17 BST): This is an even bigger hack.
-    # Here, we are doing special processing of the feedback for bartlett based
-    # memory tests. But really, this should be done in a bartlett/views.py. 
-    # Well, maybe.
-    # There are other ways.
-    # We could 
-    if experiment_name in ('brisbane', 'malmo'):
-        template = 'bartlett/experiment_feedback.html'
-        context = dict(feedback=completed_sessions_feedback[0],
-                       jsonfeedback=tojson(completed_sessions_feedback))
-     
     else:
+        completed_sessions_feedback\
+            = [experiment_session.feedback() 
+               for experiment_session in completed_experiment_sessions]
+
         context = dict(feedbacks=completed_sessions_feedback,
                        jsonfeedback=tojson(completed_sessions_feedback))
-        template = 'subjects/experiment_feedback.html'
+        
+        # TODO (Tue 07 Jun 2016 16:19:56 BST): This is a hack. 
+        # There should be a feedback template associated with this experiment, i.e.
+        # at the Playlist level. That template should be used here.
 
-    return http_response(request, template, context)
+        # TODO (Tue 07 Jun 2016 16:48:17 BST): This is an even bigger hack.
+        # Here, we are doing special processing of the feedback for bartlett based
+        # memory tests. But really, this should be done in a bartlett/views.py. 
+        # Well, maybe.
+        # There are other ways.
+        # We could 
+        if experiment_name in ('brisbane', 'malmo'):
+            template = 'bartlett/experiment_feedback.html'
+            context = dict(feedback=completed_sessions_feedback[0],
+                           jsonfeedback=tojson(completed_sessions_feedback))
+         
+        else:
+            context = dict(feedbacks=completed_sessions_feedback,
+                           jsonfeedback=tojson(completed_sessions_feedback))
+            template = 'subjects/experiment_feedback.html'
+
+        return http_response(request, template, context)
 
 @login_required
 def feedback(request):
@@ -347,29 +368,54 @@ def feedback(request):
 
     subject = get_subject_from_request(request)
 
-    # This malarkey will get a unique list of experiments.
-    completed_experiments\
-        = {session.name:session.experiment_version.experiment.title 
-           for session in\
-           ExperimentSession.objects.filter(subject=subject,
-                                            status=status_completed)}
+
+    # This will get a unique list of experiments that have been
+    # *completed* by the subject.
+    completed_experiments = []
+    for experiment_session in ExperimentSession.objects.filter(subject=subject,
+                                                               status=status_completed):
+           completed_experiments.append(experiment_session.experiment_version.experiment)
+
+    completed_experiments = set(completed_experiments)
+
+
     experiments = []
-    for name, title in completed_experiments.items():
+    for experiment in completed_experiments:
 
-        completed_attempts\
-            = len(
-                ExperimentSession\
-                   .objects\
-                   .filter(subject=subject, 
-                           experiment_version__experiment__class_name=name.capitalize())\
-                   .filter(status = status_completed)
-            )
+        experiment_context = dict(
+            url = experiment.name,
+            name = experiment.class_name,
+            title = experiment.title,
+            blurb = rst2innerhtml(experiment.blurb),
+            single_attempt_only = experiment.single_attempt_only,
+        )
 
-        experiment = dict(name = name,
-                          title = title,
-                          completed_attempts = completed_attempts)
+        experiment_sessions\
+            = ExperimentSession.objects.get_my_this_experiment_sessions(experiment,
+                                                                        subject)
 
-        experiments.append(experiment)
+        completions = ExperimentSession.objects.get_my_completions(experiment,
+                                                                   subject)
+
+        experiment_context['number_of_completions'] = completions
+
+        if (has_unlimited_experiment_attempts(request)
+                or (completions < experiment.attempts)):
+
+            experiment_context['attempts_remaining'] = True
+            experiment_context['number_of_attempts_remaining']\
+                = experiment.attempts - completions
+        else:
+            experiment_context['attempts_remaining'] = False
+            experiment_context['number_of_attempts_remaining'] = 0
+
+        (experiment_context['most_recent_attempt_status'],
+        experiment_context['date_started'],
+        experiment_context['date_completed'])\
+            = get_most_recent_attempt_status(experiment_sessions)
+
+
+        experiments.append(experiment_context)
 
     context = dict(experiments = experiments)
 

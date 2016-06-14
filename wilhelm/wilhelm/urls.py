@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^logout$', apps.subjects.views.logoutview),
     url(r'^forgotpassword$', apps.subjects.views.forgotpasswordview),
     url(r'^signup$', apps.subjects.views.signupview),
+    url(r'^notifications$', apps.subjects.views.notifyme),
     url(r'^profile[/]*$', apps.subjects.views.profileview),
     url('^initialize[/]*$', apps.subjects.views.subject_initialization_routine),
     url(r'^feedback/(?P<experiment_name>'+experiment_name_regex+')$', 

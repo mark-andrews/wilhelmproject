@@ -145,6 +145,36 @@ def loginview(request, admin=False):
 
         return HttpResponseRedirect('/')
 
+@login_required
+def notifyme(request):
+
+    subject = get_subject_from_request(request)
+
+    if subject.has_notification_status:
+        notifyme_placeholder = subject.notification_status
+    else:
+        notifyme_placeholder = conf.notifyme_placeholder
+
+    context = dict(notifyme_placeholder = notifyme_placeholder)
+
+    def process(request):
+        notifyme_post = request.POST['notifyme']
+        feedback = dict(notifyme_placeholder = notifyme_post)
+        if notifyme_post in ('yes', 'no'):
+            subject.set_notification_status(notifyme_post)
+            return True, feedback
+        else:
+            return False, feedback
+
+    return form_view(request,
+                     template = 'subjects/notifications.html',
+                     context=context,
+                     process=process,
+                     prgobject_key = 'handednessform_context',
+                     url_on_valid = lambda: '/',
+                     url_on_invalid = lambda: '/notifyme')
+
+ 
 def forgotpasswordview(request):
 
     if not request.user.is_authenticated():

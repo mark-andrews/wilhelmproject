@@ -7,6 +7,7 @@ minimal_password_length = 8
 birthdate_placeholder = '1980-02-16'
 sex_placeholder = 'male'
 handedness_placeholder = 'right'
+notifyme_placeholder = 'no'
 language_placeholder = 'english'
 firstname_placeholder = 'Your first name'
 username_placeholder = 'Your email address'

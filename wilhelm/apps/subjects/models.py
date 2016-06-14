@@ -152,6 +152,7 @@ class Subject(models.Model):
     temp_subject = models.BooleanField(default=False)
     test_subject = models.BooleanField(default=False)
 
+
     created = models.DateTimeField(null=True)
 
     login_method = models.CharField(max_length=100, 
@@ -162,6 +163,9 @@ class Subject(models.Model):
     @property
     def social_media_login(self):
         return self.login_method != 'wilhelm'
+
+
+    receive_notifications = models.NullBooleanField()
 
     ################
     # Demographics #
@@ -194,6 +198,14 @@ class Subject(models.Model):
     def has_language(self):
         ''' Return True if we have the subject's native language info.'''
         return not (self.is_english_speaker is None and self.native_language is None)
+
+    @property
+    def has_notification_status(self):
+        ''' Return True if subject has explicitly indicated that they would be
+        notified by email about new experiment, or explicitly indicated that
+        wish to be not notified.'''
+
+        return not (self.receive_notifications is None)
 
     def has(self, variable):
 
@@ -229,6 +241,16 @@ class Subject(models.Model):
         if self.has_handedness:
             return 'Right handed' if self.right_handed else 'Left handed'
 
+    @property
+    def notification_status(self):
+
+        if self.receive_notifications == True:
+            return 'yes'
+        elif self.receive_notifications == False:
+            return 'no'
+        else:
+            return None
+
     def profile_export(self):
 
         """
@@ -249,3 +271,15 @@ class Subject(models.Model):
         export_dict['Subject created'] = self.created
 
         return export_dict
+
+
+    def set_notification_status(self, notify_me = 'no'):
+        if notify_me == 'no':
+            self.receive_notifications = False
+            self.save()
+        elif notify_me == 'yes':
+            self.receive_notifications = True
+            self.save()
+
+
+

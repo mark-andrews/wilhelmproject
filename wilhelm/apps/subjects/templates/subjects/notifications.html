@@ -1,0 +1,77 @@
+{% extends 'front/front.html' %}
+
+{% block content %}
+
+<div class='container profile'>
+
+    <div class="row">
+
+        <div class='col-xs-12 col-sm-8 col-sm-offset-2'>
+            {% if user.first_name %}
+            <h3>Hi {{user.first_name}},</h3>
+            {% else %}
+            <h3>Hi {{user.username}},</h3>
+            {% endif %}
+
+	    <p>The study of cognition is only possible due to the participation
+	    of people like you in experiments like those found on this website.
+	    We would be very grateful if you will allow us to occasionally
+	    contact you by email about any future experiments that we do here.  
+            </p>
+
+	    <p> These notifications are likely to be quite infrequent, and
+	    you will be able to easily unsubscribe whenever you wish. And, of course, 
+            your email address will never be passed on to anyone else. 
+            </p>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class='col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4'>
+            <form class="loginForm" action="" autocomplete="off" method="POST">
+
+                <div class='form-group'>
+                    <label for='notifyme-pick'>Notify me about new experiments</label>
+
+                    <div class='form-group' id='notifyme-pick'>
+
+                        {% if notifyme_placeholder == 'yes' %}
+
+				<label class="radio-inline">
+				    <input type="radio" name="notifyme" id="yes" value="yes" checked>Yes
+				</label>
+
+				<label class="radio-inline">
+				    <input type="radio" name="notifyme" id="no" value="no">No
+				</label>
+
+                        {% elif notifyme_placeholder == 'no' %}
+
+				<label class="radio-inline">
+				    <input type="radio" name="notifyme" id="yes" value="yes">Yes
+				</label>
+
+				<label class="radio-inline">
+				    <input type="radio" name="notifyme" id="no" value="no" checked>No
+				</label>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+
+
+                <button id='notifyme_submit' class="btn btn-lg btn-default btn-block submit-btn" type="submit">Submit</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

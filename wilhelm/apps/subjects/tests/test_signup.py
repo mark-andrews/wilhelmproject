@@ -85,7 +85,8 @@ class SignUpTestCase(StaticLiveServerTestCase):
 
     def setUp(self):
 
-        self.driver = webdriver.Firefox()
+        #self.driver = webdriver.Firefox()
+        self.driver = webdriver.Chrome()
         self.driver.maximize_window()
         self.driver.implicitly_wait(60)
 

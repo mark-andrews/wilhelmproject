@@ -92,7 +92,7 @@ class ExperimentTestCase(StaticLiveServerTestCase):
          self.experiment_class_name, 
          self.experiment_title) = create_experiment()
 
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Chrome()
         self.driver.maximize_window()
         self.implicit_wait = 0.0
         self.driver.implicitly_wait(self.implicit_wait)

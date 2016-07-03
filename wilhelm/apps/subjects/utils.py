@@ -223,7 +223,7 @@ def social_media_user_subject_create(**kwargs):
 def wilhelmlogin(request, username, password):
 
     if settings.ALLOW_PASSWORDLESS_LOGIN:
-        user = authenticate(username=username)
+        user = authenticate(username=username, password=password)
 
     else:
         user = authenticate(username=username, 

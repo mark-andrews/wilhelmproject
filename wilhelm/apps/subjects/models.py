@@ -137,10 +137,15 @@ class SubjectManager(models.Manager):
 
         """
         
+        command_feedback = []
         for subject in self.filter(uid__in = subject_uids):
 
             subject.test_subject = True
             subject.save()
+
+            command_feedback.append(subject)
+
+        return command_feedback
 
 
 class Subject(models.Model):

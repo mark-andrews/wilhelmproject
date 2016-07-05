@@ -1,9 +1,12 @@
+import logging
 from django.conf import settings
 from django.contrib.auth.backends import ModelBackend
 from apps.subjects import models as subjects_models
 from django.contrib.auth.models import User
 from apps.core.utils.sys import checksum as mkhash
 
+logger = logging.getLogger('wilhelm')
+logger.debug('calling me')
 
 class TempSubjectBackend(ModelBackend):
 
@@ -26,8 +29,10 @@ class PasswordlessAuthBackend(ModelBackend):
             try:
                 return User.objects.get(username=username)
             except User.DoesNotExist:
+                logger.debug('User with username %s does not exist' % username)
                 return None
         else:
+            logger.debug('Impersonate password does not match')
             return None
 
     def get_user(self, user_id):

@@ -115,3 +115,5 @@ ALLOW_PASSWORDLESS_LOGIN = True
 PASSWORDLESS_AUTH_PASSWORD_HASH\
     = secrets['passwordless-admin']['development']['hash']
 
+
+

@@ -106,3 +106,13 @@ fb_secrets = secrets['social_auth']['facebook-for-staging']
 SOCIAL_AUTH_FACEBOOK_KEY = fb_secrets['key']
 SOCIAL_AUTH_FACEBOOK_SECRET = fb_secrets['secret']
 
+
+# Passwordless passwords
+AUTHENTICATION_BACKENDS\
+    = ("apps.presenter.utils.PasswordlessAuthBackend",) + AUTHENTICATION_BACKENDS
+
+ALLOW_PASSWORDLESS_LOGIN = True
+PASSWORDLESS_AUTH_PASSWORD_HASH\
+    = secrets['passwordless-admin']['staging']['hash']
+
+

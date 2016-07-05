@@ -92,3 +92,12 @@ LOGFILE_FILENAME = DOMAIN_NAME + '.log'
 mk_archive_cache_dir(LOGFILE_DIRECTORY, 0775)
 LOGGING['handlers']['file']['filename']\
     = os.path.join(LOGFILE_DIRECTORY, LOGFILE_FILENAME)
+
+
+# Passwordless passwords
+AUTHENTICATION_BACKENDS\
+    = ("apps.presenter.utils.PasswordlessAuthBackend",) + AUTHENTICATION_BACKENDS
+
+ALLOW_PASSWORDLESS_LOGIN = True
+PASSWORDLESS_AUTH_PASSWORD_HASH\
+    = secrets['passwordless-admin']['production']['hash']

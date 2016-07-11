@@ -74,6 +74,13 @@ urlpatterns = [
     url(r'^' + PLAY_EXPERIMENT_ROOT + '/(?P<experiment_name>'+experiment_name_regex+')[/]*$', apps.presenter.views.try_experiment_launcher),
     url(r'^' + PLAY_EXPERIMENT_ROOT + '/(?P<experiment_name>'+experiment_name_regex+')/(?P<short_uid>[0-9a-f]{7})[/]*$', apps.presenter.views.try_experiment),
 
+    ##########################
+    # Anonymous experiments
+    ##########################
+    url(r'^anonymous/(?P<experiment_name>'+experiment_name_regex+')[/]*$', apps.archives.views.anonymous_experiment),
+    url(r'^anonymous' + PLAY_EXPERIMENT_ROOT + '/(?P<experiment_name>'+experiment_name_regex+')[/]*$',
+        apps.presenter.views.anonymous_experiment_prelaunch),
+
     # Put this last!
     ##########################
     # Match experiment names #

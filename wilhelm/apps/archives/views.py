@@ -9,6 +9,7 @@ import logging
 #=============================================================================
 # Django imports.
 #=============================================================================
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.http import Http404
 
@@ -16,11 +17,16 @@ from django.http import Http404
 # Wilhelm imports.
 #=============================================================================
 from apps.presenter.conf import PLAY_EXPERIMENT_ROOT
+from apps.presenter.utils.viewutils import user_not_authenticated
+
+from apps.subjects.models import Subject
+from apps.subjects.utils import wilhelmlogin
 from apps.archives import models
 from apps.archives.models import Experiment
 from apps.subjects.utils import (get_subject_from_request,
                                  has_unlimited_experiment_attempts)
-from apps.core.utils.django import http_response
+from apps.core.utils.django import http_response, push_redirection_url_stack
+from apps.core.utils.strings import uid
 from apps.core.utils.docutils import rst2innerhtml
 from apps.sessions.models import ExperimentSession
 
@@ -132,7 +138,9 @@ def listing(request):
     return http_response(request, 'archives/listing.html', context)
 
 
-def experiment_homepage(request, experiment_name):
+def experiment_homepage(request, experiment_name, anonymous=False):
+
+    
 
     try:
 
@@ -144,6 +152,11 @@ def experiment_homepage(request, experiment_name):
             = dict(title = experiment.name,
                    PLAY_EXPERIMENT_ROOT = PLAY_EXPERIMENT_ROOT,
                    experiment = experiment_context)
+
+        print(context)
+        if anonymous:
+            context['PLAY_EXPERIMENT_ROOT']\
+                = '/anonymous' + PLAY_EXPERIMENT_ROOT.strip('/') + '/'
 
         return http_response(request, 
                              'archives/experiment_homepage.html', 
@@ -166,3 +179,27 @@ def experiment_homepage(request, experiment_name):
         logger.warning(error_msg)
 
         raise Http404(error_msg)
+
+
+def anonymous_experiment(request, experiment_name):
+
+    password = 'anonymoususerpassword'+ uid(k=5)
+
+    if user_not_authenticated(request):
+
+        while True:
+            proposed_username = 'anon' + uid(k=5)
+            if not User.objects.filter(username = proposed_username):
+                break
+
+        user = User.objects.create_user(username = proposed_username,
+                                        first_name = 'Participant',
+                                        password = password)
+
+        user.save()
+
+        Subject.objects.create_subject(user)
+
+        wilhelmlogin(request, proposed_username, password)
+
+    return experiment_homepage(request, experiment_name, anonymous=True)

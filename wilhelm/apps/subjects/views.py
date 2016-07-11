@@ -371,7 +371,7 @@ def experiment_feedback(request, experiment_name):
         # Well, maybe.
         # There are other ways.
         # We could 
-        if experiment_name in ('brisbane', 'malmo'):
+        if experiment_name in ('brisbane', 'malmo', 'lapaz'):
             template = 'bartlett/experiment_feedback.html'
             context = dict(feedback=completed_sessions_feedback[0],
                            jsonfeedback=tojson(completed_sessions_feedback))

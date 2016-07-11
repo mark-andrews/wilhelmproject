@@ -11,7 +11,7 @@ import logging
 #=============================================================================
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.cache import never_cache, cache_control
 
 #=============================================================================
@@ -63,6 +63,21 @@ def try_experiment_launcher(request, experiment_name):
     assert experiment_exists_or_404(experiment_name)
     
     return experiment_launcher(request, experiment_name)
+
+def anonymous_experiment_prelaunch(request, experiment_name):
+
+    """
+    Check if `experiment_name` is a valid experiment name. If so, pass to
+    experiment_launcher.
+
+    """
+
+    assert experiment_exists_or_404(experiment_name)
+
+    django.push_redirection_url_stack(request, 
+                                      conf.PLAY_EXPERIMENT_ROOT + experiment_name)
+    
+    return HttpResponseRedirect('/initialize')
 
 
 def try_experiment(request, experiment_name, short_uid):

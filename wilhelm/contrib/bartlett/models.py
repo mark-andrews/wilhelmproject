@@ -69,7 +69,11 @@ def process_feedback(slide_feedback):
 #=============================================================================
 # Playlists models
 #=============================================================================
-class Playlist(models.Playlist):
+class _Playlist(models.Playlist):
+
+    class Meta:
+        abstract = True
+
     instructions = JSONField(null=True)
     max_slides = IntegerField(default=3, null=True, blank=True)
 
@@ -249,7 +253,10 @@ class Playlist(models.Playlist):
         self.save()
 
 
-class SessionPlaylist(models.SessionPlaylist):
+class _SessionPlaylist(models.SessionPlaylist):
+
+    class Meta:
+        abstract = True
 
     @classmethod
     def new(cls, playlist):
@@ -328,7 +335,7 @@ class SessionPlaylist(models.SessionPlaylist):
 
         try:
 
-            feedback = super(SessionPlaylist, self).feedback()
+            feedback = super(_SessionPlaylist, self).feedback()
 
             try:
                 n_unique_subjects, aggregate_scores = self.playlist.misc
@@ -362,3 +369,65 @@ class SessionPlaylist(models.SessionPlaylist):
             feedback = {}
 
         return feedback
+
+
+class Playlist(_Playlist):
+    pass
+
+class PlaylistV2(_Playlist):
+    pass
+
+class SessionPlaylist(_SessionPlaylist):
+    pass
+
+class SessionPlaylistV2(_SessionPlaylist):
+
+    '''
+    A Playlist type to handle test/control wordlists.
+    '''
+
+
+    def make_session_slides(self, slides, K=1):
+
+        """
+        Randomly sample K slides. Make session slides from them.
+
+        If anything goes wrong, return session slides for *all* slides.
+
+        And we do not want the same text coming up as a word recall and a word
+        recognition and we do not want the same wordlist doing the same.
+
+        """
+
+
+        try:
+
+            N = len(slides)
+
+            session_slides = []
+
+            category_labels = []
+            for i in permutation(N):
+                slide = slides[i]
+
+                if slide.slide_type.name in ('WordlistRecognitionMemoryTest',
+                                             'WordlistRecallMemoryTest'):
+
+                    test_or_control, category_label, test_type\
+                        = slide.name.split('__')
+
+                    if category_label not in category_labels:
+                        session_slides.append(slide.new_session_model())
+                        category_labels.append(category_label)
+
+                if len(session_slides) == K:
+                    break
+
+            return session_slides
+
+
+        except Exception as e:
+            # In case of error, return everything.
+            logger.error('Could not permute and subsample slides: %s.' %
+                         e.message)
+            return [slides.new_session_model() for slide in slides]

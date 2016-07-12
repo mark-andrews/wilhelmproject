@@ -203,3 +203,7 @@ def anonymous_experiment(request, experiment_name):
         wilhelmlogin(request, proposed_username, password)
 
     return experiment_homepage(request, experiment_name, anonymous=True)
+
+def anonymous_lapaz(request):
+
+    return anonymous_experiment(request, 'lapaz')

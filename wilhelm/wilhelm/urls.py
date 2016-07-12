@@ -74,6 +74,9 @@ urlpatterns = [
     url(r'^' + PLAY_EXPERIMENT_ROOT + '/(?P<experiment_name>'+experiment_name_regex+')[/]*$', apps.presenter.views.try_experiment_launcher),
     url(r'^' + PLAY_EXPERIMENT_ROOT + '/(?P<experiment_name>'+experiment_name_regex+')/(?P<short_uid>[0-9a-f]{7})[/]*$', apps.presenter.views.try_experiment),
 
+    # Get rid of this hack and make a shortener!# TODO (Tue 12 Jul 2016 00:56:13 BST):  
+    url(r'^alapaz[/]*$', apps.archives.views.anonymous_lapaz),
+
     ##########################
     # Anonymous experiments
     ##########################

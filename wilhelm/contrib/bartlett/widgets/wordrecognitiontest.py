@@ -107,6 +107,7 @@ class WordRecognitionTest(Widget, WordlistMixin):
         return dict(wordlist_length = self.wordlist_length,
                     stimulus_timeout_duration = timeout_duration_str)
 
+
 class SessionWordRecognitionTest(SessionWordlistMixin, SessionWidget):
 
     def get(self):

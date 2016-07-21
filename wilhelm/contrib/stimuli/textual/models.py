@@ -96,9 +96,10 @@ class WordlistStimulus(_abc_WordlistStimulus):
         Get or create.
         '''
 
-        wordlist_stimulus = cls.get_wordlist(wordlist)
+        try:
+            wordlist_stimulus = cls.get_wordlist(wordlist)
 
-        if not wordlist_stimulus:
+        except ObjectDoesNotExist:
 
             wordlist_stimulus = cls.objects.create(uid = django.uid())
 
@@ -115,9 +116,22 @@ class WordlistStimulus(_abc_WordlistStimulus):
 
         """
 
+        matching_wordlist_stimuli = []
         for wordlist_stimulus in cls.objects.all():
             if wordlist_stimulus.wordlist == wordlist:
-                return wordlist_stimulus
+                matching_wordlist_stimuli.append(wordlist_stimulus)
+
+        if len(matching_wordlist_stimuli) == 1:
+            return matching_wordlist_stimuli.pop()
+
+        
+        elif len(matching_wordlist_stimuli) > 1:
+
+            raise MultipleObjectsReturned
+
+        else:
+
+            raise ObjectDoesNotExist
 
     #########################################################################
 

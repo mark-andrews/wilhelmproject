@@ -96,21 +96,30 @@ class SessionWordlistDisplay(SessionWordlistMixin, SessionWidget):
     '''
 
     wordliststimulus = fields.ForeignKey(WordlistStimulus)
+    _wordlist = fields.JSONField(null=True)
 
     def post(self, data):
 
         response_data = json.loads(data['responses'])
  
-        self.wordliststimulus = WordlistStimulus.new(
-            wordlist = [datum['word'] for datum in response_data]
-        )
+        wordlist = [datum['word'] for datum in response_data]
+
+        #self.wordliststimulus = WordlistStimulus.new(
+        #    wordlist = wordlist
+        #)
+
+        self._wordlist = wordlist
+
         self.save()
         self.set_completed()
 
     @property
     def wordlist(self):
         try:
-            return self.wordliststimulus.wordlist
+            if self._wordlist:
+                return self._wordlist
+            else:
+                return self.wordliststimulus.wordlist
         except AttributeError as e:
             logger.warning(e)
             return None

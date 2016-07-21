@@ -405,6 +405,18 @@ class ExperimentVersion(models.Model):
 
 class ExperimentManager(models.Manager):
 
+    def update_current_version(self):
+
+        ''' For all experiments, set the current version as the most recent
+        experiment version.'''
+
+        for experiment in self.objects.all():
+            most_recent_experiment_version\
+                = ExperimentVersion.objects.\
+                filter(experiment=experiment).latest('archive__commit_date')
+            experiment.current_version = most_recent_experiment_version
+            experiment.save()
+
     def set_default_current_version(self):
         ''' For all experiment that do not yet have an experiment version as
         their current version, set the current version as the most recent

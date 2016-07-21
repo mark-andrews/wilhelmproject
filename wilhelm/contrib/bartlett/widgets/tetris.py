@@ -69,10 +69,14 @@ class SessionTetris(SessionWidget):
     def post(self, data):
         logger.debug('Posting Tetris data: %s.' % data['responses'])
 
-        posted_data = json.loads(data['responses'])[0]
-        score = posted_data['score']
+        try:
+            posted_data = json.loads(data['responses'])[0]
+            score = posted_data['score']
 
-        logger.debug(score)
+            logger.debug(score)
+
+        except Exception as e:
+            logger.error(e)
 
         self.score = score
 

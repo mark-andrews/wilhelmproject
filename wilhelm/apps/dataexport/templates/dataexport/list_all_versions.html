@@ -1,0 +1,29 @@
+{% extends "front/front.html" %}
+
+{% load hosts %}
+
+{% block content %} 
+
+<div class='container'>
+
+ <section class='container content-section'>
+  <div class='row'>
+   <div class='col-xs-12 col-xs-offset-0 col-sm-8 col-sm-offset-2'>
+
+
+   <h3>Data from experiment <a href="//{{MAIN_SUBDOMAIN_NAME}}/{{experiment_name}}">{{experiment_name|capfirst}}</a></h3>
+   <ol reversed class='data-export-list'>
+   {% for export in export_list %}
+   <li>Data recorded at {{export.datetime | date:"H:i:s, l, F j, Y"}}. 
+	<a href="{{export.url}}">[Download]</a> ({{export.filesize}}).
+   </li>
+   {% endfor %}
+   </ol>
+
+   </div>
+  </div>
+ </section>
+
+</div>
+
+{% endblock content %}

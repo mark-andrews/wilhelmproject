@@ -1,0 +1,125 @@
+{% extends 'front/front.html' %}
+{% load humanize %}
+
+{% block head %}
+
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="/static/bartlett/css/bartlett.css">
+
+{% endblock %}
+
+{% block content %}
+
+<div class='container profile'>
+
+    <div class="row">
+        <div class='feedback_page'>
+
+            <div class='col-xs-12 col-sm-8 col-sm-offset-2'>
+
+                <h1>Experiment Feedback</h1>
+
+                <p>
+                In this experiment, there were {{feedback.Slides | length}}
+                blocks of tests. In summary, your performance was as follows: 
+                </p>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Score</th>
+                            <th>Percentile</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for slide in feedback.Slides %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+
+                                {% if slide.accuracy == None %}
+                                    <td>Missing</td>
+                                {% else %}
+                                    <td>{% widthratio slide.accuracy 1 100 %}</td>
+                                {% endif %}
+                                
+                            <td>
+
+                                {% if slide.percentile_of_score == None %}
+					
+                                	<div class='null-barbox'>
+                                    	<span>
+				        </span>
+					</div>
+
+				{% else %}
+
+                                <div class='barbox'>
+					{% if slide.percentile_of_score < 5 %}
+					    <div style='width:{{ slide.percentile_of_score | add:"3" }}%' class='barbox-bar'>
+					{% else %}
+					    <div style='width:{{ slide.percentile_of_score | add:"3" }}%' class='barbox-bar'>
+					{% endif %}
+					    {{ slide.percentile_of_score}}
+					    </div>
+                                </div>
+
+				{% endif %}
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr>
+                            <td>Overall</td>
+
+                                {% if feedback.overall_accuracy == None %}
+                                    <td>Missing</td>
+                                {% else %}
+                                    <td>{% widthratio feedback.overall_accuracy 1 100 %}</td>
+                                {% endif %}
+                                
+                            <td>
+
+                                {% if feedback.overall_accuracy_percentile == None %}
+					
+                                	<div class='null-barbox'>
+                                    	<span>
+				        </span>
+					</div>
+
+				{% else %}
+
+                                <div class='barbox'>
+					{% if feedback.overall_accuracy_percentile < 5 %}
+					    <div style='width:{{feedback.overall_accuracy_percentile | add:"3" }}%' class='barbox-bar'>
+					{% else %}
+					    <div style='width:{{feedback.overall_accuracy_percentile | add:"3" }}%' class='barbox-bar'>
+					{% endif %}
+					    {{ feedback.overall_accuracy_percentile}}
+					    </div>
+                                </div>
+
+				{% endif %}
+
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+                <p> Your Score is your accuracy percentage. The Percentile tells you about your performance relative to
+                all the {{feedback.approx_number_of_sessions}} people who did this
+                experiment so far. So, if you got a Percentile value of 35,
+                that means you performed better than 35% of the
+                {{feedback.n_unique_subjects}} people who did the test.</p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

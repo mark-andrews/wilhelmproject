@@ -368,18 +368,23 @@ def experiment_feedback(request, experiment_name):
         # TODO (Tue 07 Jun 2016 16:48:17 BST): This is an even bigger hack.
         # Here, we are doing special processing of the feedback for bartlett based
         # memory tests. But really, this should be done in a bartlett/views.py. 
-        # Well, maybe.
-        # There are other ways.
-        # We could 
+        # Or just call template * context from the SessionPlaylist 
         if experiment_name in ('brisbane', 'malmo', 'lapaz'):
+
             template = 'bartlett/experiment_feedback.html'
+            context = dict(feedback=completed_sessions_feedback[0],
+                           jsonfeedback=tojson(completed_sessions_feedback))
+
+        elif experiment_name == 'apia':
+
+            template = 'ans/experiment_feedback.html'
             context = dict(feedback=completed_sessions_feedback[0],
                            jsonfeedback=tojson(completed_sessions_feedback))
          
         else:
+            template = 'subjects/experiment_feedback.html'
             context = dict(feedbacks=completed_sessions_feedback,
                            jsonfeedback=tojson(completed_sessions_feedback))
-            template = 'subjects/experiment_feedback.html'
 
         return http_response(request, template, context)
 

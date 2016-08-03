@@ -73,7 +73,7 @@ class WidgetSlidePlaylistModel(Model):
                                                             conf.SessionModelName)
 
             SessionModel = apps.get_model(SessionModelAppName or app_label, 
-                                     SessionModelName)
+                                          SessionModelName)
 
         except:
 
@@ -137,6 +137,7 @@ class Widget(WidgetSlidePlaylistModel):
         Get or create a new instance of this widget class.
 
         '''
+        print('callin this')
 
         widgettype = cls.get_widget_type()
 

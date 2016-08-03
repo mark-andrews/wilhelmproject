@@ -170,6 +170,7 @@ INSTALLED_APPS = (
     'apps.testing',
     'contrib.bartlett',
     'contrib.base',
+    'contrib.ans',
     'contrib.stimuli.textual',
 )
 

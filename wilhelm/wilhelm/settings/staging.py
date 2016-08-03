@@ -70,6 +70,9 @@ MIDDLEWARE_CLASSES += ('lockdown.middleware.LockdownMiddleware',)
 INSTALLED_APPS += ('lockdown',)
 LOCKDOWN_PASSWORDS = configs['lockdown_passwords']
 
+# Unlimited attempts
+UNLIMITED_EXPERIMENT_ATTEMPTS = True # Setting to True is useful for development
+
 #=============================================================================
 # Email on staging server
 #=============================================================================

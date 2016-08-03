@@ -645,12 +645,19 @@ class SessionPlaylist(SessionModel):
             = [element.session_slide.feedback() 
                for element in self.filter_SlideAndPlaylistJoinModel]
 
-        test_types = Counter([slide['Test_type'] 
-                              for slide in
-                              summary[data_export_conf.playlist_slides]])
-       
-        summary['test_type_counter'] = test_types
-            
+        # TODO (Sat 13 Aug 2016 19:52:15 BST): 
+        # This is really general. It is specific to bartlett. It should be
+        # removed.
+        try:
+            test_types = Counter([slide['Test_type'] 
+                                  for slide in
+                                  summary[data_export_conf.playlist_slides]])
+           
+            summary['test_type_counter'] = test_types
+
+        except:
+
+            pass
 
         return summary
 

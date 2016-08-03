@@ -1,0 +1,574 @@
+@media screen and (max-width: 767px) {
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 768px) {
+}
+@media (max-width: 767px) {
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 768px) {
+}
+@media (max-width: 767px) {
+}
+@media (max-width: 767px) {
+}
+/* Fonts */
+/* Colors */
+/* Sometimes seeing the border of a css box helps.
+ Set this to 0pt when you are ready to run. */
+/*@BodyWidth: 900px;*/
+.DisplayBox {
+  text-align: center;
+  margin-top: 200px;
+  margin-bottom: 100px;
+}
+.widgetvis {
+  /* Landscape tablets and medium desktops */
+  /* Portrait tablets and small desktops */
+  /* Landscape phones and portrait tablets */
+  /* Portrait phones and smaller */
+}
+@media (min-width: 1200px) {
+  .widgetvis {
+    margin-top: 100px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .widgetvis {
+    margin-top: 75px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .widgetvis {
+    margin-top: 50px;
+  }
+}
+@media (max-width: 767px) {
+  .widgetvis {
+    margin-top: 15px;
+  }
+}
+@media (max-width: 480px) {
+  .widgetvis {
+    margin-top: 15px;
+  }
+}
+.widget {
+  display: none;
+  /* Landscape tablets and medium desktops */
+  /* Portrait tablets and small desktops */
+  /* Landscape phones and portrait tablets */
+  /* Portrait phones and smaller */
+}
+@media (min-width: 1200px) {
+  .widget {
+    margin-top: 100px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .widget {
+    margin-top: 75px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .widget {
+    margin-top: 50px;
+  }
+}
+@media (max-width: 767px) {
+  .widget {
+    margin-top: 15px;
+  }
+}
+@media (max-width: 480px) {
+  .widget {
+    margin-top: 15px;
+  }
+}
+.ButtonBox {
+  text-align: center;
+}
+.WordBox {
+  border-width: 0px;
+  border-style: solid;
+  text-align: center;
+  margin-top: 100px;
+}
+@media (max-width: 767px) {
+  .WordBox {
+    margin-top: 50px;
+  }
+}
+.MemoryWord {
+  font-family: 'Gill Sans W01 Book';
+  font-size: 48px;
+}
+body {
+  font-family: 'StempelGaramondW01-Roma';
+  border-width: 0px;
+  border-style: solid;
+}
+#next_slide {
+  /* Landscape tablets and medium desktops */
+  /* Portrait tablets and small desktops */
+  /* Landscape phones and portrait tablets */
+  /* Portrait phones and smaller */
+}
+@media (min-width: 1200px) {
+  #next_slide {
+    margin-top: 100px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  #next_slide {
+    margin-top: 75px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  #next_slide {
+    margin-top: 50px;
+  }
+}
+@media (max-width: 767px) {
+  #next_slide {
+    margin-top: 15px;
+  }
+}
+@media (max-width: 480px) {
+  #next_slide {
+    margin-top: 15px;
+  }
+}
+#next_slide .ButtonBox {
+  margin-top: 20px;
+  text-align: center;
+}
+#FinishBox {
+  text-align: center;
+}
+#FinishMsg {
+  text-align: center;
+}
+/*
+The button style here is based on one found here: 
+http://www.red-team-design.com/just-another-awesome-css3-buttons
+*/
+.button {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #cccccc;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: linear-gradient(top, #eeeeee, #cccccc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#cccccc');
+  border: 1px solid #777;
+  padding: 0.5em 1.50em;
+  margin: 0.5em;
+  font-family: 'Gill Sans W01 Book';
+  font-size: 1em;
+  text-decoration: none;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  -moz-border-radius: .2em;
+  -webkit-border-radius: .2em;
+  border-radius: .2em;
+  -moz-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  cursor: hand;
+}
+.button:hover {
+  background-color: #dddddd;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#dddddd));
+  background-image: -webkit-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -moz-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -ms-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -o-linear-gradient(top, #fafafa, #dddddd);
+  background-image: linear-gradient(top, #fafafa, #dddddd);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#dddddd');
+}
+.button:active {
+  -moz-box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  -webkit-box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  position: relative;
+  top: 1px;
+}
+.button:focus {
+  outline: 0;
+  background: #fafafa;
+}
+/* 
+This is a fixed width response button. I.e. for when you need to say yes/no.
+*/
+.responsebutton {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #cccccc;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: linear-gradient(top, #eeeeee, #cccccc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#cccccc');
+  border: 1px solid #777;
+  padding: 0.5em 1.50em;
+  margin: 0.5em;
+  font-family: 'Gill Sans W01 Book';
+  font-size: 24px;
+  text-decoration: none;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  -moz-border-radius: .2em;
+  -webkit-border-radius: .2em;
+  border-radius: .2em;
+  -moz-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  cursor: hand;
+  text-align: center;
+  width: 6em;
+}
+.responsebutton:hover {
+  background-color: #dddddd;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#dddddd));
+  background-image: -webkit-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -moz-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -ms-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -o-linear-gradient(top, #fafafa, #dddddd);
+  background-image: linear-gradient(top, #fafafa, #dddddd);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#dddddd');
+}
+.responsebutton:active {
+  -moz-box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  -webkit-box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  position: relative;
+  top: 1px;
+}
+.responsebutton:focus {
+  outline: 0;
+  background: #fafafa;
+}
+#recalledwordslist {
+  list-style-type: none;
+  padding: 0px;
+}
+#recalledwordslist li {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+#recalledwordslist input {
+  display: block;
+  margin: 0 auto;
+  padding-left: 0px;
+  width: 250px;
+  background-color: gainsboro;
+  border-radius: 5px;
+  font-size: 24px;
+}
+#recalledwordslist input[type=text] {
+  font-family: 'Gill Sans W01 Book';
+}
+#morelessoptions {
+  text-align: center;
+}
+#morelessoptionshelp {
+  text-align: center;
+  padding-top: 10px;
+}
+/*
+A fixed width block button
+*/
+.morelessbutton {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #cccccc;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
+  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+  background-image: linear-gradient(top, #eeeeee, #cccccc);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#cccccc');
+  border: 1px solid #777;
+  padding: 0.5em 1.50em;
+  margin: 0.5em;
+  font-family: 'Gill Sans W01 Book';
+  font-size: 12px;
+  text-decoration: none;
+  color: #333;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  -moz-border-radius: .2em;
+  -webkit-border-radius: .2em;
+  border-radius: .2em;
+  -moz-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.8) inset, 0 1px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  cursor: hand;
+  width: 60px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.morelessbutton:hover {
+  background-color: #dddddd;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#dddddd));
+  background-image: -webkit-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -moz-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -ms-linear-gradient(top, #fafafa, #dddddd);
+  background-image: -o-linear-gradient(top, #fafafa, #dddddd);
+  background-image: linear-gradient(top, #fafafa, #dddddd);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#dddddd');
+}
+.morelessbutton:active {
+  -moz-box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  -webkit-box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3) inset;
+  position: relative;
+  top: 1px;
+}
+.morelessbutton:focus {
+  outline: 0;
+  background: #fafafa;
+}
+.help_box {
+  border-width: 0px;
+  border-style: solid;
+  padding: 0px;
+  padding-top: 5px;
+  margin: 0px;
+  margin-top: 20px;
+}
+.help_box p {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Optima LT W01 Roman';
+  font-size: 12px;
+}
+#results {
+  clear: both;
+  margin-top: 20px;
+  padding-top: 20px;
+  font-size: 24px;
+}
+@media (min-width: 768px) {
+  #recall-help-box-sm {
+    display: normal;
+  }
+}
+@media (max-width: 767px) {
+  #recall-help-box-sm {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  #recall-help-box-xs {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  #recall-help-box-xs {
+    display: normal;
+  }
+}
+.ReadingBox {
+  font-family: 'StempelGaramondW01-Roma';
+  font-size: 22px;
+  border-width: 0px;
+  border-style: solid;
+}
+.HelpBox {
+  font-family: 'Optima LT W01 Roman';
+  font-size: 12px;
+  border-width: 0px;
+  border-style: solid;
+}
+.BemboBox {
+  font-family: 'Bembo Book W01';
+  font-size: 24px;
+  border-width: 0px;
+  border-style: solid;
+}
+.BemboBox .TitleBox {
+  font-family: 'Bembo Book W01 Italic';
+  font-size: 36px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0px;
+}
+.PalatinoBox {
+  font-family: 'Palatino LT W01 Roman';
+  font-size: 22px;
+  border-width: 0px;
+  border-style: solid;
+}
+.PerpetuaBox {
+  font-family: 'Perpetua MT W01';
+  font-size: 24px;
+  border-width: 0px;
+  border-style: solid;
+}
+.MessageBox {
+  font-family: 'Gill Sans W01 Book';
+  font-size: 22px;
+  border-width: 0px;
+  border-style: solid;
+}
+.InstructionBox {
+  font-family: 'Gill Sans W01 Book';
+  font-size: 22px;
+  border-width: 0px;
+  border-style: solid;
+}
+#instructions-list {
+  padding: 0px;
+}
+#instructions-list li {
+  list-style-type: none;
+}
+.SabonBox {
+  font-family: 'Sabon MT W01';
+  font-size: 24px;
+  border-width: 0px;
+  border-style: solid;
+}
+#move_box {
+  margin-top: 20px;
+}
+#move_button_box {
+  text-align: right;
+}
+@media (max-width: 767px) {
+  #move_button_box {
+    text-align: center;
+  }
+}
+.move_box_instructions p {
+  font-family: 'Optima LT W01 Roman';
+  font-size: 16px;
+}
+#response_box {
+  margin-top: 50px;
+  font-size: 20px;
+}
+@media (max-width: 767px) {
+  #response_box {
+    margin-top: 20px;
+    font-size: 16px;
+  }
+}
+.main-feedback-take-home {
+  color: red;
+  font-style: italic;
+  font-weight: bold;
+}
+.barbox {
+  background-color: LightBlue;
+}
+.null-barbox {
+  background-color: white;
+}
+.barbox-bar {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 0px;
+  color: white;
+}
+.recognition_test_feedback {
+  font-size: 20px;
+}
+.recognition_test_feedback table {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border: solid 0px black;
+  padding: 10px;
+}
+.recognition_test_feedback ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+}
+.recognition_test_feedback th {
+  text-align: center;
+  padding: 20px;
+}
+#tetris-controls {
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */
+}
+#tetris-controls .button {
+  margin: 0px;
+}
+#scoreboard {
+  font-family: 'Gill Sans W01 Book';
+}
+#scoreboard-score {
+  text-align: center;
+}
+#scoreboard-countdown {
+  text-align: center;
+}
+#GameOver {
+  font-family: 'Gill Sans W01 Book';
+  color: red;
+  font-size: 70px;
+  position: absolute;
+  top: 25%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: -1;
+}
+#tetris-help {
+  margin-top: 50px;
+}
+#tetris-example-gif {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#tetris-controls-instructions {
+  margin: 0 0 35px;
+  font-size: 20px;
+  margin-top: 0px;
+}
+#tetris-controls-instructions ol {
+  font-size: 16px;
+}
+#tetris-controls-instructions ol li {
+  margin-right: 10px;
+  display: block;
+  list-style-type: none;
+}
+#show-tetris-instructions {
+  color: red;
+  font-style: italic;
+  cursor: pointer;
+}
+#tetris-extra-instructions {
+  display: none;
+}

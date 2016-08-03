@@ -1,0 +1,14 @@
+{% extends 'bartlett/widget.html' %}
+
+{% block widget_id %}'answidget_widget'{% endblock widget_id %} 
+
+{% block instructions_content %}
+    <li><p>You will now be presented with two sets of random dots.</p> </li>
+    <li><p>Your task is to click, as quickly as you can, on the set that you think is larger.</p></li>
+{% endblock instructions_content %}
+
+{% block stimulus_content %}
+<div id="StimulusTag" class='canvas-bounding-box'>
+    <canvas id="stimulus_canvas"></canvas>
+</div>
+{% endblock stimulus_content %}

@@ -19,6 +19,7 @@ from django.views.decorators.cache import never_cache, cache_control
 #=============================================================================
 from apps.archives.models import Experiment
 from apps.core.utils import django
+from apps.core.utils.json import dumps as my_json_dumps
 
 #=============================================================================
 # Local (Wilhelm) imports.
@@ -243,10 +244,12 @@ def widget_gateway(request, widget_name):
 
         elif request.method == 'POST':
             logger.debug('Widget POST request')
+            logger.debug('POSTed request is: %s.' % request.POST)
             feedback = widget.post(request.POST)
-            feedback = json.dumps(feedback)
+            feedback = my_json_dumps(feedback)
             logger.debug('Data being POSTed is: %s.' % feedback)
             return django.jsonResponse(feedback)
+
 
 def hangup_nowplaying_gateway(request):
     '''

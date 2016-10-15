@@ -76,6 +76,8 @@ urlpatterns = [
 
     # Get rid of this hack and make a shortener!# TODO (Tue 12 Jul 2016 00:56:13 BST):  
     url(r'^alapaz[/]*$', apps.archives.views.anonymous_lapaz),
+    url(r'^amalmo[/]*$', apps.archives.views.anonymous_malmo),
+    url(r'^abrisbane[/]*$', apps.archives.views.anonymous_brisbane),
 
     ##########################
     # Anonymous experiments

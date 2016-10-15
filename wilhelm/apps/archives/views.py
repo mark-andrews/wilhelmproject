@@ -204,6 +204,13 @@ def anonymous_experiment(request, experiment_name):
 
     return experiment_homepage(request, experiment_name, anonymous=True)
 
-def anonymous_lapaz(request):
 
+# TODO (Sat 15 Oct 2016 00:29:00 BST): These have NO PLACE being here!!!
+def anonymous_brisbane(request):
+    return anonymous_experiment(request, 'brisbane')
+
+def anonymous_malmo(request):
+    return anonymous_experiment(request, 'malmo')
+
+def anonymous_lapaz(request):
     return anonymous_experiment(request, 'lapaz')

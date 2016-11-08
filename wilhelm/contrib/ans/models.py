@@ -31,7 +31,7 @@ from contrib.base.models import (Widget,
                                  SessionPlaylist,
                                  SessionSlideAndPlaylistJoinModel)
 
-from apps.core.utils import numerical, datetime
+from apps.core.utils import numerical, datetime, django
 from apps.sessions.models import ExperimentSession
 from apps.archives.models import Experiment
 from apps.subjects.models import Subject
@@ -175,6 +175,8 @@ class ANSWidget(Widget):
         try:
             ans_test = cls.objects.get(**kwargs)
         except ObjectDoesNotExist as e:
+
+            kwargs['uid'] = django.uid()
 
             ans_test = cls.objects.create(**kwargs)
 

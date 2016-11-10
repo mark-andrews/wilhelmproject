@@ -521,9 +521,12 @@ class ANSPlaylist(Playlist):
 
             playlist_session = experiment_session.playlist_session
 
-            all_slides_feedback\
-                = [element.session_slide.feedback() 
-                   for element in playlist_session.filter_SlideAndPlaylistJoinModel]
+            all_slides_feedback = []
+            for element in playlist_session.filter_SlideAndPlaylistJoinModel:
+                try:
+                    all_slides_feedback.append(element.session_slide.feedback())
+                except ObjectDoesNotExist as e:
+                    logger.warning('Trouble getting element.session_slide.feedback: %s.' % e)
 
             for slide_feedback in all_slides_feedback:
                  number_of_trials, number_of_hits, accuracy\

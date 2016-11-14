@@ -203,7 +203,7 @@ class _Playlist(models.Playlist):
 
         except:
             n_unique_subjects = None
-            logger.warning('Could not calculate number of unique subjects.')
+            logger.exception('Could not calculate number of unique subjects.')
 
         aggregate_scores = None
         if sessions:
@@ -216,9 +216,12 @@ class _Playlist(models.Playlist):
                     slides_completed, slides_remaining\
                         = session.slides_completed_slides_remaining
 
-                    for slide_feedback in session.feedback()['Slides'][:slides_completed]:
+                    try:
+                        for slide_feedback in session.feedback()['Slides'][:slides_completed]:
 
-                        results.append(process_feedback(slide_feedback))
+                            results.append(process_feedback(slide_feedback))
+                    except Exception as e:
+                        logger.exception('Something bad happened: %s.' % e)
 
                 aggregate_scores = defaultdict(list)
                 for test, score in results:
@@ -233,7 +236,7 @@ class _Playlist(models.Playlist):
             except Exception as e:
                 print(e)
 
-                logger.warning('Something went wrong: %s.' % e)
+                logger.exception('Something went wrong: %s.' % e)
     
                 aggregate_scores = None
 
@@ -340,7 +343,7 @@ class _SessionPlaylist(models.SessionPlaylist):
             try:
                 n_unique_subjects, aggregate_scores = self.playlist.misc
             except Exception as e:
-                logger.warning('Trouble getting aggregation scores: %s.' % e)
+                logger.exception('Trouble getting aggregation scores: %s.' % e)
                 n_unique_subjects, aggregate_scores = None, None
 
             if len(feedback['Slides']) > 0:
@@ -356,7 +359,7 @@ class _SessionPlaylist(models.SessionPlaylist):
                                                     score)
                             percentile = int(percentile.round())
                     except Exception as e:
-                        logger.warning('Could not calculate percentile: %s.' % e)
+                        logger.exception('Could not calculate percentile: %s.' % e)
                         percentile = None
 
                     slide_feedback['percentile_of_score'] = percentile
@@ -365,7 +368,7 @@ class _SessionPlaylist(models.SessionPlaylist):
 
         except Exception as e:
 
-            logger.warning('Something very unexpected happened: %s.' % e)
+            logger.exception('Something very unexpected happened: %s.' % e)
             feedback = {}
 
         return feedback

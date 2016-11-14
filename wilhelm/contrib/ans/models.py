@@ -274,7 +274,7 @@ class SessionANSWidget(SessionWidget):
 
             except (AssertionError, ObjectDoesNotExist) as e:
 
-                logger.warning(e)
+                logger.exception(e)
 
                 left_size = None
                 right_size = None
@@ -334,7 +334,7 @@ class SessionANSWidget(SessionWidget):
                     response_data.append(_d)
 
                 except Exception as e:
-                    logger.warning('Could not process datum. %s ' % e.message)
+                    logger.exception('Could not process datum. %s ' % e.message)
 
                     response_data.append(None)
 
@@ -342,7 +342,7 @@ class SessionANSWidget(SessionWidget):
             self.save()
 
         except Exception as e:
-            logger.warning('Could not process data. %s ' % e.message)
+            logger.exception('Could not process data. %s ' % e.message)
 
         self.set_completed()
 
@@ -512,7 +512,7 @@ class ANSPlaylist(Playlist):
 
     def get_aggregate_scores(self):
 
-        experiment_sessions = self.get_experiment_session_parents()
+        experiment_sessions = self.get_real_experiment_session_parents()
 
         approx_number_of_experiment_sessions = len(experiment_sessions)
 
@@ -526,7 +526,7 @@ class ANSPlaylist(Playlist):
                 try:
                     all_slides_feedback.append(element.session_slide.feedback())
                 except ObjectDoesNotExist as e:
-                    logger.warning('Trouble getting element.session_slide.feedback: %s.' % e)
+                    logger.exception('Trouble getting element.session_slide.feedback: %s.' % e)
 
             for slide_feedback in all_slides_feedback:
                  number_of_trials, number_of_hits, accuracy\
@@ -536,6 +536,18 @@ class ANSPlaylist(Playlist):
 
         return approx_number_of_experiment_sessions, all_accuracy
 
+    def save_aggregate_scores(self):
+
+        """Save aggregate scores.
+
+        If there are aggregate scores, save them as the value of the misc
+        attribute.
+
+        """
+
+        approx_number_of_experiment_sessions, all_accuracy = self.get_aggregate_scores()
+        self.misc = (approx_number_of_experiment_sessions, all_accuracy)
+        self.save()
 
 def process_feedback(slide_feedback):
 
@@ -579,9 +591,9 @@ class SessionANSPlaylist(SessionPlaylist):
 
             try:
                 approx_number_of_sessions, all_accuracy\
-                    = self.playlist.get_aggregate_scores()
+                    = self.playlist.misc
             except Exception as e:
-                logger.warning('Trouble getting aggregation scores: %s.' % e)
+                logger.exception('Trouble getting aggregation scores: %s.' % e)
                 approx_number_of_sessions, all_accuracy = None, None
 
             if len(feedback['Slides']) > 0:
@@ -602,7 +614,7 @@ class SessionANSPlaylist(SessionPlaylist):
 
                     except Exception as e:
 
-                        logger.warning('Could not calculate percentile: %s.' % e)
+                        logger.exception('Could not calculate percentile: %s.' % e)
                         accuracy = None
                         percentile = None
 
@@ -615,7 +627,7 @@ class SessionANSPlaylist(SessionPlaylist):
                     = percentileofscore(all_accuracy, np.mean(overall_accuracy))
 
             except Exception as e:
-                logger.warning('Could not calculate overall accuracy: %s.' % e)
+                logger.exception('Could not calculate overall accuracy: %s.' % e)
                 feedback['overall_accuracy'] = None
                 feedback['overall_accuracy_percentile'] = None
 
@@ -624,7 +636,7 @@ class SessionANSPlaylist(SessionPlaylist):
 
         except Exception as e:
 
-            logger.warning('Something very unexpected happened: %s.' % e)
+            logger.exception('Something very unexpected happened: %s.' % e)
             feedback = {}
 
         return feedback

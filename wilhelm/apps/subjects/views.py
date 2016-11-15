@@ -369,7 +369,7 @@ def experiment_feedback(request, experiment_name):
         # Here, we are doing special processing of the feedback for bartlett based
         # memory tests. But really, this should be done in a bartlett/views.py. 
         # Or just call template * context from the SessionPlaylist 
-        if experiment_name in ('brisbane', 'malmo', 'lapaz'):
+        if experiment_name in ('brisbane', 'malmo', 'quezon', 'lapaz'):
 
             template = 'bartlett/experiment_feedback.html'
             context = dict(feedback=completed_sessions_feedback[0],

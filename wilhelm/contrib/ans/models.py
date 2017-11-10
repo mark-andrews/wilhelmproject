@@ -600,6 +600,10 @@ class SessionANSPlaylist(SessionPlaylist):
 
                 overall_accuracy = []
                 for slide_feedback in feedback['Slides']:
+
+                    accuracy = None
+                    percentile = None
+
                     try:
 
                         number_of_trials, number_of_hits, accuracy\
@@ -615,20 +619,25 @@ class SessionANSPlaylist(SessionPlaylist):
                     except Exception as e:
 
                         logger.exception('Could not calculate percentile: %s.' % e)
-                        accuracy = None
-                        percentile = None
+
+                        # If there was an exception here, then either accuracy
+                        # or percentile or both will have values of None.
 
                     slide_feedback['accuracy'] = accuracy
                     slide_feedback['percentile_of_score'] = percentile
 
             try:
                 feedback['overall_accuracy'] = np.mean(overall_accuracy)
+            except Exception as e:
+                logger.exception('Could not calculate overall accuracy: %s.' % e)
+                feedback['overall_accuracy'] = None
+
+            try:
                 feedback['overall_accuracy_percentile']\
                     = percentileofscore(all_accuracy, np.mean(overall_accuracy))
 
             except Exception as e:
-                logger.exception('Could not calculate overall accuracy: %s.' % e)
-                feedback['overall_accuracy'] = None
+                logger.exception('Could not calculate overall percentile: %s.' % e)
                 feedback['overall_accuracy_percentile'] = None
 
 

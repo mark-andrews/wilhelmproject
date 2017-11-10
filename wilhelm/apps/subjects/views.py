@@ -375,7 +375,7 @@ def experiment_feedback(request, experiment_name):
             context = dict(feedback=completed_sessions_feedback[0],
                            jsonfeedback=tojson(completed_sessions_feedback))
 
-        elif experiment_name == 'apia':
+        elif experiment_name in ('apia', 'apialite'):
 
             template = 'ans/experiment_feedback.html'
             context = dict(feedback=completed_sessions_feedback[0],

@@ -25,7 +25,7 @@ var WordlistDisplayObject = function(
         self.timings = {
              fadeInDuration: parseFloat(data.fadeInDuration) *1000,
              fadeOutDuration: parseFloat(data.fadeOutDuration) * 1000,
-             stimulusDuration: parseFloat(data.stimulusduration)*1000,
+             stimulusDuration: parseFloat(data.stimulusDuration)*1000,
              isi: parseFloat(data.isi) * 1000
             };
     }

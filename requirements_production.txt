@@ -5,7 +5,7 @@ billiard==3.3.0.20
 celery==3.1.18
 configobj==5.0.6
 coverage==3.7.1
-Django==1.8.2
+Django==1.11.29
 -e git+https://github.com/jezdez/django-hosts.git@6e1bc451cffa5f4082664aa7bdf711097c24e895#egg=django_hosts-dev
 django-ipware==1.1.0
 django-lockdown==1.1

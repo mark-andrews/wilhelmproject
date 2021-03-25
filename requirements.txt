@@ -61,7 +61,7 @@ pyOpenSSL==17.3.0
 python-openid==2.2.5
 python-social-auth==0.2.14
 pytz==2015.7
-PyYAML==3.11
+PyYAML==5.4
 pyzmq==15.2.0
 qtconsole==4.1.1
 requests==2.9.1

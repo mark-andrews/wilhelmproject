@@ -55,7 +55,7 @@ psycopg2==2.6.1
 ptyprocess==0.5.1
 pyasn1==0.1.9
 pycparser==2.18
-Pygments==2.1
+Pygments==2.7.4
 PyJWT==1.4.0
 pyOpenSSL==17.3.0
 python-openid==2.2.5

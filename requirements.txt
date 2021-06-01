@@ -78,6 +78,6 @@ traitlets==4.1.0
 ua-parser==0.6.1
 Unidecode==0.4.19
 Unipath==1.1
-urllib3==1.14
+urllib3==1.26.5
 user-agents==1.0.1
 validate-email==1.3

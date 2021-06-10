@@ -12,7 +12,7 @@ configobj==5.0.6
 coverage==4.0.3
 cryptography==2.1.3
 decorator==4.0.6
-Django==1.9.2
+Django==2.2.24
 django-extensions==1.6.1
 -e git+https://github.com/jezdez/django-hosts.git@6e1bc451cffa5f4082664aa7bdf711097c24e895#egg=django_hosts
 django-ipware==1.1.3
